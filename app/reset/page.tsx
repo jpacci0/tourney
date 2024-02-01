@@ -3,16 +3,15 @@
 import { Button } from "@/components/ui/button";
 import { forgotPassword } from "../login/actions";
 import { Input } from "@/components/ui/input";
-import H1 from "@/components/ui/h1";
+import Header from "@/components/header";
 import { Label } from "@/components/ui/label";
 
 export default function ResetPage({searchParams}: {searchParams: {message?: string}}) {
   return (
     <main className="mt-20 mx-20 w-full">
-      <header>
-        <H1>Reset</H1>
-      </header>
-
+      <Header>
+        Reset
+      </Header>
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-96">
           <Label htmlFor="email" className="text-gray-200 mt-5">

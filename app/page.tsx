@@ -23,32 +23,38 @@
 
 import CardTorneo from "@/components/cardTorneo";
 import { Button } from "@/components/ui/button";
-import H1 from "@/components/ui/h1";
+import Header from "@/components/header";
 import { Separator } from "@/components/ui/separator";
 import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
+import { fetchTournaments } from "@/lib/data";
 
 export default async function Home() {
   const cookieStore = cookies()
   const supabase = createClient(cookieStore)
 
   const { data, error } = await supabase.auth.getUser()
-  console.log(data);
+  // console.log(data);
+  
+  const tournaments: any = await fetchTournaments();
+  // console.log(tournaments);
+  
+  // console.log(data);
   return (
     <main className="mt-20 mx-20 w-full">
-      <header>
-        <H1>Tornei</H1>
-      </header>
+      <Header>
+        Tornei
+      </Header>
       <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Prossimi tornei</h3>
         <Button variant="bottone"><Link href="/crea-torneo">Create tournament</Link></Button>
       </div>
       <Separator className="mt-4" />
-      <section className="grid grid-cols-2 gap-5 w-full mt-14">
-        <CardTorneo />
-        <CardTorneo />
-        <CardTorneo />
+      <section className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 w-full mt-14">
+        {tournaments.map((tournament: any) => (
+          <CardTorneo key={tournament.id} tournament={tournament} />
+        ))}
       </section>
     </main>
   );

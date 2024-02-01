@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import H1 from "@/components/ui/h1";
+import Header from "@/components/header";
 import { fetchUserById, updateUserById, verifySession } from "@/lib/actions";
 import { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
@@ -43,9 +43,9 @@ export default function Profile() {
 
   return (
     <main className="mt-20 mx-20 w-full">
-      <header>
-        <H1>Profile page</H1>
-      </header>
+      <Header>
+        Profile page
+      </Header>
       <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Login/sign-up</h3>
         <form action={signout}>

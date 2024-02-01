@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import H1 from "@/components/ui/h1";
+import Header from "@/components/header";
 import { updatePassword } from "@/app/login/actions";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
@@ -41,9 +41,9 @@ export default function UpdatePasswordPage({
   // };
   return (
     <main className="mt-20 mx-20 w-full">
-      <header>
-        <H1>Reset</H1>
-      </header>
+      <Header>
+        Reset
+      </Header>
 
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-96">

@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { login, signup } from "./actions";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import H1 from "@/components/ui/h1";
+import Header from "@/components/header";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
@@ -20,7 +20,7 @@ export default function LoginPage({
 
   return (
     <main className="mt-20 mx-20 w-full">
-      <header>{alreadySignup ? <H1>Login</H1> : <H1>Sign-up</H1>}</header>
+      <Header>{alreadySignup ? "Login" : "Sign-up"}</Header>
       <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Login/sign-up</h3>
         {/* <Button variant="bottone">Crea torneo</Button> */}

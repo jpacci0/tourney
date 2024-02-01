@@ -3,7 +3,7 @@
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import H1 from "@/components/ui/h1";
+import Header from "@/components/header";
 import {
   Select,
   SelectContent,
@@ -38,9 +38,9 @@ export default function CreaTorneoPage() {
 
   return (
     <main className="mt-20 mx-20 w-full">
-      <header>
-        <H1>Create tournament</H1>
-      </header>
+      <Header>
+        Create tournament
+      </Header>
       <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Create</h3>
         {/* <Button variant="bottone">Crea torneo</Button> */}
