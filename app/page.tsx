@@ -51,7 +51,7 @@ export default async function Home() {
         <Button variant="bottone"><Link href="/crea-torneo">Create tournament</Link></Button>
       </div>
       <Separator className="mt-4" />
-      <section className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-5 w-full mt-14">
+      <section className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full mt-14">
         {tournaments.map((tournament: any) => (
           <CardTorneo key={tournament.id} tournament={tournament} />
         ))}

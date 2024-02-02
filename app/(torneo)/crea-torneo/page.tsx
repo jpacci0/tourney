@@ -23,7 +23,7 @@ export default function CreaTorneoPage() {
   const [quillValue, setQuillValue] = useState("");
 
   const [state, formAction] = useFormState(createTournament, null);
-  console.log(quillValue);
+  // console.log(quillValue);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -173,7 +173,7 @@ export default function CreaTorneoPage() {
           {state?.message && (
             <p className="text-red-300 mt-1 text-sm">{state.message}</p>
           )}
-          <Button className="my-5 w-20" variant="bottone">
+          <Button className="my-5" variant="bottone">
             Create
           </Button>
         </form>

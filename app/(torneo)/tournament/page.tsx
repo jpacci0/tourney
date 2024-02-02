@@ -7,7 +7,8 @@ import { useState, useEffect } from "react";
 import Overview from "@/components/overview";
 import { Suspense } from "react";
 import { fetchTournamentById } from "@/lib/data";
-import { log } from "console";
+import JoinTeam from "@/components/joinTeam";
+import CreateTeam from "@/components/createTeam";
 
 export default function TournamentPage({
   searchParams,
@@ -20,7 +21,6 @@ export default function TournamentPage({
 
   useEffect(() => {
     const fetchOverviewData = async () => {
-
       try {
         const data = await fetchTournamentById(searchParams.id!);
         if (data.error) {
@@ -48,7 +48,10 @@ export default function TournamentPage({
       <Header>Tournament</Header>
       <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Tournament details</h3>
-        <Button variant="bottone">Join</Button>
+        <div className="flex gap-2">
+          <Button variant="bottoneSecondary" onClick={() => handleView("join_team")}>Join team</Button>
+          <Button variant="bottoneSecondary" onClick={() => handleView("create_team")}>Create team</Button>
+        </div>
       </div>
       <Separator className="mt-4" />
       <div className="flex mt-20">
@@ -75,12 +78,16 @@ export default function TournamentPage({
         <Separator orientation="vertical" className="h-100 mx-20" />
         <section className="w-full">
           {activeTab === "overview" && (
-            <Suspense fallback={<p>Loading suspense...</p>}>
+            <Suspense fallback={<p>Loading overview...</p>}>
               <Overview data={overviewData} />
             </Suspense>
           )}
           {activeTab === "score" && <p>score</p>}
           {activeTab === "leaderboard" && <p>leaderboard</p>}
+          {/* <Suspense fallback={<p>Loading teams...</p>}>
+          </Suspense> */}
+            {activeTab === "join_team" && <JoinTeam id={searchParams.id} />}
+          {activeTab === "create_team" && <CreateTeam id={searchParams.id} />}
         </section>
       </div>
     </main>

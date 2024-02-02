@@ -5,6 +5,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import internal from "stream";
 
 function supabaseClient() {
   const cookieStore = cookies();
@@ -184,5 +185,81 @@ export async function createTournament(prevState: any, formData: FormData) {
 
     revalidatePath("/home");
     redirect("/home");
+  }
+}
+
+// Creazione team
+const teamSchema = z.string().min(3);
+export async function createTeam(prevState: any, formData: FormData) {
+  const supabase = supabaseClient();
+  const name = formData.get("team_name") as string;
+  const tournament_id = formData.get("tournament_id");
+  const result = teamSchema.safeParse(name);
+  // console.log(result);
+
+  if (!result.success) {
+    return {
+      success: false,
+      message:
+        "Please enter a valid team name, at least it must contain 3 character(s)",
+    };
+  } else {
+    console.log(tournament_id);
+
+    const { data, error } = await supabase
+      .from("team")
+      .insert([{ name, tournament_id }])
+      .select();
+
+    // if (error) {
+    //   console.log(error);
+    // }
+    // if (data) {
+    //   console.log(data);
+    // }
+    return {
+      success: true,
+      message:
+        "Team created successfully. Now you can join the newly created team by pressing the join team button.",
+    };
+  }
+}
+
+// creazione team user
+export async function createTeamUser(prevState: any, formData: FormData) {
+  const supabase = supabaseClient();
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  const user_id = user?.id;
+  const team_id = Number(formData.get("team_id"));
+  const tournament_id = formData.get("tournament_id") as string;
+  // console.log(user_id);
+  // console.log(Number(team_id));
+  // console.log(tournament_id);
+  if (team_id === 0) {
+    return {
+      success: false,
+      message: "Please select a team",
+    };
+  }
+
+  const { data, error } = await supabase
+    .from("team_user")
+    .insert([{ team_id, user_id, tournament_id }])
+    .select();
+  console.log(error);
+  if (!error) {
+    return {
+      success: true,
+      message: "You have successfully joined the team",
+    };
+  } else {
+    return {
+      success: false,
+      message: "Something went wrong, please try again later",
+    };
   }
 }

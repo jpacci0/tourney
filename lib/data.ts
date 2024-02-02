@@ -39,3 +39,21 @@ export async function fetchTournamentById(id: string) {
     console.log(error);
   }
 }
+
+export async function fetchTeamsById(id: string) {
+  // noStore();
+  const supabase = supabaseClient();  
+
+  try {
+    let { data: teams, error } = await supabase
+    .from('team')
+    .select("name, id")
+    .eq('tournament_id', id);
+    
+    // console.log(teams);
+    
+    return teams;
+  } catch (error) {
+    console.log(error);
+  }
+}
