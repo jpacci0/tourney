@@ -21,13 +21,13 @@ export default async function Sidebar() {
   // };
 
   return (
-    <aside className="w-40 bg-gray-900 h-screen text-gray-200 shrink-0 flex flex-col justify-between">
-      <div className="mt-20 mx-auto">
+    <aside className="w-40 bg-gray-900 text-gray-200 shrink-0 relative">
+      <div className="fixed top-20 left-10">
         <Link href="/" className="mx-auto">
           Home
         </Link>
       </div>
-      <div className="mb-20 mx-auto">
+      <div className="fixed bottom-20 left-10">
         <AuthButton />
       </div>
     </aside>

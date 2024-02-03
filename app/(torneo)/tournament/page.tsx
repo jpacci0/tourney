@@ -43,14 +43,31 @@ export default function TournamentPage({
     setActiveTab(tab);
   }
 
+  function firstLetterUppercase(string: string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <main className="mt-20 mx-20 w-full">
       <Header>Tournament</Header>
       <div className="mt-20 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-gray-200">Tournament details</h3>
+        <h3 className="text-lg font-bold text-gray-200">
+          {firstLetterUppercase(activeTab)}
+        </h3>
+
         <div className="flex gap-2">
-          <Button variant="bottoneSecondary" onClick={() => handleView("join_team")}>Join team</Button>
-          <Button variant="bottoneSecondary" onClick={() => handleView("create_team")}>Create team</Button>
+          <Button
+            variant="bottoneSecondary"
+            onClick={() => handleView("join team")}
+          >
+            Join team
+          </Button>
+          <Button
+            variant="bottoneSecondary"
+            onClick={() => handleView("create team")}
+          >
+            Create team
+          </Button>
         </div>
       </div>
       <Separator className="mt-4" />
@@ -62,12 +79,14 @@ export default function TournamentPage({
           >
             Overview
           </Button>
+
           <Button
             variant={activeTab === "score" ? "bottone" : "default"}
             onClick={() => handleView("score")}
           >
             Score
           </Button>
+
           <Button
             variant={activeTab === "leaderboard" ? "bottone" : "default"}
             onClick={() => handleView("leaderboard")}
@@ -86,8 +105,8 @@ export default function TournamentPage({
           {activeTab === "leaderboard" && <p>leaderboard</p>}
           {/* <Suspense fallback={<p>Loading teams...</p>}>
           </Suspense> */}
-            {activeTab === "join_team" && <JoinTeam id={searchParams.id} />}
-          {activeTab === "create_team" && <CreateTeam id={searchParams.id} />}
+          {activeTab === "join team" && <JoinTeam id={searchParams.id} />}
+          {activeTab === "create team" && <CreateTeam id={searchParams.id} />}
         </section>
       </div>
     </main>

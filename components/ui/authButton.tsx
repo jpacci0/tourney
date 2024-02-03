@@ -34,10 +34,12 @@ export default async function AuthButton() {
   ) : (
     <Button
     variant={"bottoneSecondary"}
+    className="p-0"
     >
       <Link
         href="/login"
-        className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
+        className="p-3"
+        // className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
       >
         Login
       </Link>

@@ -3,10 +3,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Header from "@/components/header";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
 import { updatePassword } from "@/app/login/actions";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { Label } from "@/components/ui/label";
 
 export default function UpdatePasswordPage({
   searchParams,
@@ -45,10 +46,17 @@ export default function UpdatePasswordPage({
         Reset
       </Header>
 
+      <div className="mt-20 flex justify-between items-center">
+        <h3 className="text-lg font-bold text-gray-200">Update password</h3>
+        <div className="flex gap-2">
+          {/* <Button variant="bottoneSecondary" onClick={() => handleView("join team")}>Join team</Button> */}
+        </div>
+      </div>
+      <Separator className="mt-4" />
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-96">
 
-          <Label htmlFor="password" className="text-gray-200 mt-5">
+          <Label htmlFor="password">
             Password:
           </Label>
           <div className="relative">
@@ -63,11 +71,11 @@ export default function UpdatePasswordPage({
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 right-3 transform -translate-y-1/2"
             >
-              {showPassword ? <EyeOff /> : <Eye />}
+              {showPassword ? <EyeOff className="text-white" /> : <Eye className="text-white" />}
             </button>
           </div>
 
-          <Label htmlFor="passwordConfirmation" className="text-gray-200 mt-5">
+          <Label htmlFor="passwordConfirmation">
             Password confirmation:
           </Label>
           <div className="relative">
@@ -82,7 +90,7 @@ export default function UpdatePasswordPage({
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 right-3 transform -translate-y-1/2"
             >
-              {showPassword ? <EyeOff /> : <Eye />}
+              {showPassword ? <EyeOff className="text-white" /> : <Eye className="text-white" />}
             </button>
           </div>
 

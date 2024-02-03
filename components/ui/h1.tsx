@@ -1,3 +1,3 @@
 export default function H1({ children }: { children: React.ReactNode }) {
-  return <h1 className="text-5xl text-gray-200 font-bold">{children}</h1>;
+  return <h1 className="text-5xl py-1 font-bold inline-block text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-red-500">{children}</h1>;
 }

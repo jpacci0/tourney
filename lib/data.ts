@@ -8,6 +8,12 @@ function supabaseClient() {
   return createClient(cookieStore);
 }
 
+export async function getSession() {
+  const supabase = supabaseClient();
+  const { data } = await supabase.auth.getSession();
+  return data;
+}
+
 export async function fetchTournaments() {
   // noStore();
   const supabase = supabaseClient();

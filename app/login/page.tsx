@@ -28,11 +28,11 @@ export default function LoginPage({
       <Separator className="mt-4" />
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-96">
-          <Label htmlFor="email" className="text-gray-200 mt-5">
+          <Label htmlFor="email">
             Email:
           </Label>
           <Input id="email" name="email" type="email" required />
-          <Label htmlFor="password" className="text-gray-200 mt-5">
+          <Label htmlFor="password">
             Password:
           </Label>
           <div className="relative">
@@ -42,7 +42,7 @@ export default function LoginPage({
               onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 right-3 transform -translate-y-1/2"
             >
-              {showPassword ? <EyeOff /> : <Eye />}
+              {showPassword ? <EyeOff className="text-white" /> : <Eye className="text-white"/>}
             </button>
           </div>
           {searchParams?.message && (

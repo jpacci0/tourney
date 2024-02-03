@@ -12,22 +12,32 @@ import {
   SelectGroup,
   SelectLabel,
 } from "@/components/ui/select";
-import { fetchTeamsById } from "@/lib/data";
+import { fetchTeamsById, getSession } from "@/lib/data";
 import { createTeamUser } from "@/lib/actions";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
+import { set } from "zod";
 
 export default function JoinTeam({ id }: { id?: string }) {
   const [teams, setTeams] = useState([]);
   const [loading, setLoading] = useState(true);
   const [state, formAction] = useFormState(createTeamUser, null);
+  const [session, setSession] = useState(false);
+
   const { pending } = useFormStatus();
 
   //   console.log("teams", teams);
 
   useEffect(() => {
     const fetchTeamsData = async () => {
+      setLoading(true);
+      const sessionData = await getSession();
+      if (sessionData.session) {
+        setSession(true);
+      }
+      console.log("sessionData", sessionData.session);
       try {
         const data: any = await fetchTeamsById(id!);
 
@@ -43,7 +53,18 @@ export default function JoinTeam({ id }: { id?: string }) {
   }, [id]);
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="text-gray-500">Loading...</p>;
+  }
+  if (!session) {
+    return (
+      <p className="text-gray-500">
+        You need to be logged in to join a team.
+        <Link href={"/login"} className="underline">
+          To login click here
+        </Link>
+        .
+      </p>
+    );
   }
   return (
     <section>
@@ -67,10 +88,10 @@ export default function JoinTeam({ id }: { id?: string }) {
           </SelectContent>
         </Select>
         {!state?.success && (
-            <p className="text-red-300 mt-1 text-sm">{state?.message}</p>
+          <p className="text-red-300 mt-1 text-sm">{state?.message}</p>
         )}
         {state?.success && (
-            <p className="text-green-300 mt-1 text-sm">{state?.message}</p>
+          <p className="text-green-300 mt-1 text-sm">{state?.message}</p>
         )}
         <Button variant="bottone" disabled={pending} className="my-5">
           Join
