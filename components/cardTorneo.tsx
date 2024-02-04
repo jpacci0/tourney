@@ -30,7 +30,7 @@ type cardTorneoProps = {
 export default function CardTorneo({ tournament }: cardTorneoProps) {
 
   return (
-    <Link href={`/tournament?id=${tournament.idclient}`}>
+    <Link href={`/tournament?id=${tournament.idclient}&tab=overview`}>
       <div className="rounded-lg shadow-xl shadow-orange-500/30 hover:shadow-xl hover:shadow-orange-500/50 text-gray-200 hover:scale-[1.01] mt-10">
         <Image
           src={wz}

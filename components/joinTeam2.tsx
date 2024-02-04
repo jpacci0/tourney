@@ -1,5 +1,3 @@
-"use client";
-
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,57 +12,33 @@ import {
 } from "@/components/ui/select";
 import { fetchTeamsById, getSession } from "@/lib/data";
 import { createTeamUser } from "@/lib/actions";
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 
-export default function JoinTeam({ id }: { id?: string }) {
-  const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default async function JoinTeam2({ id }: { id?: string }) {
   const [state, formAction] = useFormState(createTeamUser, null);
-  const [session, setSession] = useState(false);
 
   const { pending } = useFormStatus();
 
-  //   console.log("teams", teams);
+  // const sessionData = await getSession();
+  const teams: any = await fetchTeamsById(id!);
+  console.log("teams", teams);
+  // console.log("sessionData", sessionData.session);
+  // if (sessionData.session) {
+  //   setSession(true);
+  // }
 
-  useEffect(() => {
-    const fetchTeamsData = async () => {
-      setLoading(true);
-      const sessionData = await getSession();
-      if (sessionData.session) {
-        setSession(true);
-      }
-      console.log("sessionData", sessionData.session);
-      try {
-        const data: any = await fetchTeamsById(id!);
-
-        setTeams(data);
-      } catch (error) {
-        console.error("Errore generico:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeamsData();
-  }, [id]);
-
-  if (loading) {
-    return <p className="text-gray-500">Loading...</p>;
-  }
-  if (!session) {
-    return (
-      <p className="text-gray-500">
-        You need to be logged in to join a team.
-        <Link href={"/login"} className="underline">
-          To login click here
-        </Link>
-        .
-      </p>
-    );
-  }
+  // if (!session) {
+  //   return (
+  //     <p className="text-gray-500">
+  //       You need to be logged in to join a team.
+  //       <Link href={"/login"} className="underline">
+  //         To login click here
+  //       </Link>
+  //       .
+  //     </p>
+  //   );
+  // }
   return (
     <section>
       <form action={formAction}>

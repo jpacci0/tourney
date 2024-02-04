@@ -15,7 +15,7 @@ export async function getSession() {
 }
 
 export async function fetchTournaments() {
-  // noStore();
+  noStore();
   const supabase = supabaseClient();
 
   let { data: tournament, error } = await supabase

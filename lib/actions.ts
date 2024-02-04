@@ -183,8 +183,8 @@ export async function createTournament(prevState: any, formData: FormData) {
     console.log(tournamentError);
     console.log(tournament);
 
-    revalidatePath("/home");
-    redirect("/home");
+    revalidatePath("/");
+    redirect("/");
   }
 }
 

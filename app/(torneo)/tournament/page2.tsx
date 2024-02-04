@@ -1,63 +1,49 @@
-// "use client";
+"use client";
 
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-// import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Overview from "@/components/overview";
 import { Suspense } from "react";
-import { fetchTeamsById, fetchTournamentById } from "@/lib/data";
+import { fetchTournamentById } from "@/lib/data";
 import JoinTeam from "@/components/joinTeam";
 import CreateTeam from "@/components/createTeam";
-import { log } from "console";
-import TournamentSection from "@/components/tournamentSection";
-import TournamentNav from "@/components/tournamentNav";
 
-export default async function TournamentPage({
+export default function TournamentPage({
   searchParams,
 }: {
-  searchParams: { id?: string, tab?: string };
+  searchParams: { id?: string };
 }) {
-  // const [activeTab, setActiveTab] = useState("overview");
-  // const [loading, setLoading] = useState(true);
-  // const [overviewData, setOverviewData] = useState(null);
-  // console.log("searchParams", searchParams);
-  
+  const [activeTab, setActiveTab] = useState("overview");
+  const [loading, setLoading] = useState(true);
+  const [overviewData, setOverviewData] = useState(null);
 
-  const tournament = await fetchTournamentById(searchParams.id!);
-  const teams = await fetchTeamsById(searchParams.id!);
-
-  console.log("-------");
-  
-  console.log("tournament", tournament);
-  console.log("teams", teams);
-  
-
-  // useEffect(() => {
-  //   const fetchOverviewData = async () => {
-  //     try {
-  //       const data = await fetchTournamentById(searchParams.id!);
-  //       if (data.error) {
-  //         console.error("Errore:", data.error);
-  //       } else {
-  //         console.log("dataeffect", data);
-  //         setOverviewData(data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Errore generico:", error);
-  //     } finally {
-  //       // setLoading(false);
-  //       console.log("loading");
+  useEffect(() => {
+    const fetchOverviewData = async () => {
+      try {
+        const data = await fetchTournamentById(searchParams.id!);
+        if (data.error) {
+          console.error("Errore:", data.error);
+        } else {
+          console.log("dataeffect", data);
+          setOverviewData(data);
+        }
+      } catch (error) {
+        console.error("Errore generico:", error);
+      } finally {
+        // setLoading(false);
+        console.log("loading");
         
-  //     }
-  //   };
+      }
+    };
 
-  //   fetchOverviewData();
-  // }, []);
+    fetchOverviewData();
+  }, []);
 
-  // function handleView(tab: string) {
-  //   setActiveTab(tab);
-  // }
+  function handleView(tab: string) {
+    setActiveTab(tab);
+  }
 
   function firstLetterUppercase(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -67,7 +53,7 @@ export default async function TournamentPage({
     <main className="mt-20 mx-20 w-full">
       <Header>Tournament</Header>
       <div className="mt-20 flex justify-between items-center">
-        {/* <h3 className="text-lg font-bold text-gray-200">
+        <h3 className="text-lg font-bold text-gray-200">
           {firstLetterUppercase(activeTab)}
         </h3>
 
@@ -84,12 +70,11 @@ export default async function TournamentPage({
           >
             Create team
           </Button>
-        </div> */}
+        </div>
       </div>
       <Separator className="mt-4" />
       <div className="flex mt-20">
-        <TournamentNav id={searchParams.id} tab={searchParams.tab} />
-        {/* <nav className="flex flex-col gap-y-3">
+        <nav className="flex flex-col gap-y-3">
           <Button
             variant={activeTab === "overview" ? "bottone" : "default"}
             onClick={() => handleView("overview")}
@@ -110,9 +95,21 @@ export default async function TournamentPage({
           >
             Leaderboard
           </Button>
-        </nav> */}
+        </nav>
         <Separator orientation="vertical" className="h-100 mx-20" />
-        <TournamentSection tab={searchParams.tab} />
+        <section className="w-full">
+          {activeTab === "overview" && (
+            <Suspense fallback={<p>Loading overview...</p>}>
+              <Overview data={overviewData} />
+            </Suspense>
+          )}
+          {activeTab === "score" && <p>score</p>}
+          {activeTab === "leaderboard" && <p>leaderboard</p>}
+          <Suspense fallback={<p>Loading teams...</p>}>
+            {activeTab === "join team" && <JoinTeam id={searchParams.id} />}
+          </Suspense>
+          {activeTab === "create team" && <CreateTeam id={searchParams.id} />}
+        </section>
       </div>
     </main>
   );
