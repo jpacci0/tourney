@@ -29,7 +29,7 @@ export async function fetchTournaments() {
 }
 
 export async function fetchTournamentById(id: string) {
-  // noStore();
+  noStore();
   const supabase = supabaseClient();
 
   try {
