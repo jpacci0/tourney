@@ -41,7 +41,7 @@ export default function UpdatePasswordPage({
   //   }
   // };
   return (
-    <main className="mt-20 mx-20 w-full">
+    <main className="mt-10">
       <Header>
         Reset
       </Header>

@@ -19,52 +19,17 @@ import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 
-export default function JoinTeam({ id }: { id?: string }) {
-  const [teams, setTeams] = useState([]);
-  const [loading, setLoading] = useState(true);
+export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
+  const [dataTeams, setDataTeams] = useState([]);
   const [state, formAction] = useFormState(createTeamUser, null);
-  const [session, setSession] = useState(false);
-
   const { pending } = useFormStatus();
 
   //   console.log("teams", teams);
 
   useEffect(() => {
-    const fetchTeamsData = async () => {
-      setLoading(true);
-      const sessionData = await getSession();
-      if (sessionData.session) {
-        setSession(true);
-      }
-      console.log("sessionData", sessionData.session);
-      try {
-        const data: any = await fetchTeamsById(id!);
+    setDataTeams(teams);
+  }, []);
 
-        setTeams(data);
-      } catch (error) {
-        console.error("Errore generico:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchTeamsData();
-  }, [id]);
-
-  if (loading) {
-    return <p className="text-gray-500">Loading...</p>;
-  }
-  if (!session) {
-    return (
-      <p className="text-gray-500">
-        You need to be logged in to join a team.
-        <Link href={"/login"} className="underline">
-          To login click here
-        </Link>
-        .
-      </p>
-    );
-  }
   return (
     <section>
       <form action={formAction}>
@@ -77,7 +42,7 @@ export default function JoinTeam({ id }: { id?: string }) {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Teams</SelectLabel>
-              {teams.map((team: { id: number; name: string }) => (
+              {dataTeams.map((team: { id: number; name: string }) => (
                 <SelectItem key={team.id} value={String(team.id)}>
                   {team.name}
                 </SelectItem>
@@ -99,4 +64,3 @@ export default function JoinTeam({ id }: { id?: string }) {
     </section>
   );
 }
-

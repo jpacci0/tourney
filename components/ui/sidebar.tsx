@@ -21,15 +21,15 @@ export default async function Sidebar() {
   // };
 
   return (
-    <aside className="w-40 bg-gray-900 text-gray-200 shrink-0 relative">
-      <div className="fixed top-20 left-10">
+    <nav className="bg-gray-900 flex justify-between p-2 items-center">
+      <div className="">
         <Link href="/" className="mx-auto">
           Home
         </Link>
       </div>
-      <div className="fixed bottom-20 left-10">
+      <div className="">
         <AuthButton />
       </div>
-    </aside>
+    </nav>
   );
 }

@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import internal from "stream";
+import { log } from "console";
 
 function supabaseClient() {
   const cookieStore = cookies();
@@ -262,4 +263,119 @@ export async function createTeamUser(prevState: any, formData: FormData) {
       message: "Something went wrong, please try again later",
     };
   }
+}
+
+// creazione score team
+// const scoreSchema = z.string().min(3);
+export async function createScore(prevState: any, formData: FormData) {
+  const supabase = supabaseClient();
+
+  function calculateScore(eliminations: number, placement: number) {
+    if (placement <= 0) {
+      return 0;
+    }
+    const placementMultiplier = 2.0; // Puoi regolare questo valore per bilanciare il peso tra posizionamento e eliminazioni. Più alto è il valore, più le eliminazioni contano di meno
+    const placementScore = 100 - placement * 10 * placementMultiplier;
+    const eliminationsScore = eliminations * 10;
+
+    return placementScore + eliminationsScore;
+  }
+
+  const user_id = formData.get("user_id");
+  const tournament_id = formData.get("tournament_id");
+
+  let { data: team_user, error } = await supabase
+    .from("team_user")
+    .select("team_id")
+    .eq("user_id", user_id)
+    .eq("tournament_id", tournament_id)
+    .single();
+
+  const { data: existingData, error: existingError } = await supabase
+    .from("team")
+    .select("score")
+    .eq("id", team_user?.team_id);
+  // Estrai l'array esistente o inizializza un nuovo array se non esiste
+  const existingArray =
+    existingData && existingData.length ? existingData[0].score : [];
+
+  const numRounds = Number(formData.get("rounds"));
+
+  //controlla se l'array esistente è vuoto, se lo è, lo popola
+  if (existingArray.length === 0) {
+    for (let i = 0; i < numRounds; i++) {
+      existingArray.push({ eliminations: 0, placement: 0, total: 0 });
+    }
+  }
+  //bisogna controllare che existingArray sia un array non vuoto perché se è vuoto, se premo submit con i campi vuoti, mi da errore
+
+  // Aggiungi il nuovo oggetto all'array
+  let newArray: {}[] = [];
+  let eliminations = 0,
+    placement = 0,
+    total = 0;
+  let scoreObject = { eliminations, placement, total };
+  for (let i = 0; i < numRounds; i++) {
+    if (
+      Number(formData.get(`placement_${i}`)) > 0 &&
+      Number(formData.get(`eliminations_${i}`)) > 0
+    ) {
+      eliminations = Number(formData.get(`eliminations_${i}`));
+      placement = Number(formData.get(`placement_${i}`));
+      total = calculateScore(eliminations, placement);
+    }
+    if (
+      Number(formData.get(`placement_${i}`)) === 0 &&
+      Number(formData.get(`eliminations_${i}`)) === 0
+    ) {
+      eliminations = existingArray[i].eliminations;
+      placement = existingArray[i].placement;
+      total = existingArray[i].total;
+    }
+    if (
+      Number(formData.get(`placement_${i}`)) > 0 &&
+      Number(formData.get(`eliminations_${i}`)) === 0
+    ) {
+      eliminations = existingArray[i].eliminations;
+      placement = Number(formData.get(`placement_${i}`));
+      total = calculateScore(eliminations, placement);
+    }
+    if (
+      Number(formData.get(`placement_${i}`)) === 0 &&
+      Number(formData.get(`eliminations_${i}`)) > 0
+    ) {
+      eliminations = Number(formData.get(`eliminations_${i}`));
+      placement = existingArray[i].placement;
+      total = calculateScore(eliminations, placement);
+    }
+    scoreObject = { eliminations, placement, total };
+    newArray.push(scoreObject);
+
+    // questo controlla solo se entrambi i campi sono maggiore o uguale a 0
+    // if (Number(formData.get(`placement_${i}`)) > 0) {
+    //   eliminations = Number(formData.get(`eliminations_${i}`));
+    //   placement = Number(formData.get(`placement_${i}`));
+    //   total = calculateScore(eliminations, placement);
+    // } else if (Number(formData.get(`placement_${i}`)) === 0) {
+    //   eliminations = existingArray[i].eliminations;
+    //   placement = existingArray[i].placement;
+    //   total = existingArray[i].total;
+    // }
+    // const newArray = [...existingArray, scoreObject];
+  }
+  // const newNewArray = [...existingArray, newArray];
+  const { data, error: errorUpdate } = await supabase
+    .from("team")
+    .update({ score: newArray })
+    .eq("id", team_user?.team_id)
+    .select();
+
+  if (data) {
+    // console.log(data);
+  }
+  if (errorUpdate) {
+    console.log(errorUpdate);
+  }
+  revalidatePath(`/tournament/id=${tournament_id}&tab=score`);
+  // redirect(`/tournament?id=${tournament_id}&tab=score`);
 }

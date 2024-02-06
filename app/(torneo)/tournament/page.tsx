@@ -17,7 +17,7 @@ export default async function TournamentPage({
   // const teams = await fetchTeamsById(searchParams.id!);
 
   return (
-    <main className="mt-20 mx-20 w-full">
+    <main className="mt-10">
       <Header>Tournament</Header>
       <SubHeader subTitle={searchParams.tab}>
         <div className="flex gap-2">

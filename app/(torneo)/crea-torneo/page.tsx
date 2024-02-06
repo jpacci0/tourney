@@ -1,9 +1,10 @@
 "use client";
 
+import Header from "@/components/header";
+import SubHeader from "@/components/subHeader";
 import { Separator } from "@/components/ui/separator";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import Header from "@/components/header";
 import {
   Select,
   SelectContent,
@@ -37,14 +38,13 @@ export default function CreaTorneoPage() {
   };
 
   return (
-    <main className="mt-20 mx-20 w-full">
+    <main className="mt-10">
       <Header>
         Create tournament
       </Header>
-      <div className="mt-20 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-gray-200">Create</h3>
-        {/* <Button variant="bottone">Crea torneo</Button> */}
-      </div>
+      <SubHeader subTitle="Create">
+      <p></p>
+      </SubHeader>
       <Separator className="mt-4" />
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>

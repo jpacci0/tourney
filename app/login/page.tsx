@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff } from "lucide-react";
 import { Label } from "@/components/ui/label";
+import SubHeader from "@/components/subHeader";
 
 export default function LoginPage({
   searchParams,
@@ -19,12 +20,19 @@ export default function LoginPage({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <main className="mt-20 mx-20 w-full">
+    <main className="mt-10">
       <Header>{alreadySignup ? "Login" : "Sign-up"}</Header>
-      <div className="mt-20 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-gray-200">Login/sign-up</h3>
-        {/* <Button variant="bottone">Crea torneo</Button> */}
-      </div>
+      <SubHeader subTitle="Login/Sign-up">
+        <div className="flex gap-2">
+          <p></p>
+          {/* <LinkButton href={`/tournament?id=${searchParams.id}&tab=join`}>
+            Join team
+          </LinkButton>
+          <LinkButton href={`/tournament?id=${searchParams.id}&tab=create`}>
+            Create team
+          </LinkButton> */}
+        </div>
+      </SubHeader>
       <Separator className="mt-4" />
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-96">

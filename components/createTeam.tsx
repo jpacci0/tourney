@@ -1,4 +1,5 @@
 "use client";
+
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -12,42 +13,42 @@ import { getSession } from "@/lib/data";
 export default function CreateTeam({ id }: { id?: string }) {
   const [session, setSession] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [state, formData] = useFormState(createTeam, null);
+  const [state, formAction] = useFormState(createTeam, null);
   const { pending } = useFormStatus();
 
-  useEffect(() => {
-    const fetchSession = async () => {
-      setLoading(true);
-      const sessionData = await getSession();
-      if (sessionData.session) {
-        setSession(true);
-      }
-      console.log("sessionData", sessionData.session);
-      setLoading(false);
-    };
+  // useEffect(() => {
+  //   const fetchSession = async () => {
+  //     setLoading(true);
+  //     const sessionData = await getSession();
+  //     if (sessionData.session) {
+  //       setSession(true);
+  //     }
+  //     console.log("sessionData", sessionData.session);
+  //     setLoading(false);
+  //   };
 
-    fetchSession();
-  }, [id]);
+  //   fetchSession();
+  // }, [id]);
 
-  if (loading) {
-    return <p className="text-gray-500">Loading...</p>;
-  }
+  // if (loading) {
+  //   return <p className="text-gray-500">Loading...</p>;
+  // }
 
-  if (!session) {
-    return (
-      <p className="text-gray-500">
-        You need to be logged in to create a team.{" "}
-        <Link href={"/login"} className="underline">
-          To login click here
-        </Link>
-        .
-      </p>
-    );
-  }
+  // if (!session) {
+  //   return (
+  //     <p className="text-gray-500">
+  //       You need to be logged in to create a team.{" "}
+  //       <Link href={"/login"} className="underline">
+  //         To login click here
+  //       </Link>
+  //       .
+  //     </p>
+  //   );
+  // }
 
   return (
     <section>
-      <form action={formData}>
+      <form action={formAction}>
         <Input type="hidden" name="tournament_id" value={id} />
         <Label htmlFor="team_name">Team name</Label>
         <Input

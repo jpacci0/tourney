@@ -7,6 +7,8 @@ import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { forgotPassword } from "../login/actions";
+import SubHeader from "@/components/subHeader";
+import { LinkButton } from "@/components/ui/linkButton";
 
 export default function ResetPage({
   searchParams,
@@ -14,9 +16,16 @@ export default function ResetPage({
   searchParams: { message?: string };
 }) {
   return (
-    <main className="mt-20 mx-20 w-full">
+    <main className="mt-10">
       <Header>Reset</Header>
-      <div className="mt-20 flex justify-between items-center">
+      <SubHeader subTitle="Update password">
+        <div className="flex gap-2">
+          <LinkButton href="/login">
+            Back to login
+          </LinkButton>
+        </div>
+      </SubHeader>
+      {/* <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Update password</h3>
         <div className="flex gap-2">
           <Button variant={"bottoneSecondary"} className="p-0">
@@ -28,9 +37,8 @@ export default function ResetPage({
               Back to login
             </Link>
           </Button>
-          {/* <Button variant="bottoneSecondary" onClick={() => handleView("join team")}>Join team</Button> */}
         </div>
-      </div>
+      </div> */}
       <Separator className="mt-4" />
       <section className="flex justify-center mt-20">
         <form className="flex flex-col w-96">

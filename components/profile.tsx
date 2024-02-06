@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import { Separator } from "@/components/ui/separator";
 import { signout } from "@/app/login/actions";
 import { Label } from "./ui/label";
+import SubHeader from "@/components/subHeader";
+import { LinkButton } from "@/components/ui/linkButton";
 
 export default function Profile() {
   const [edit, setEdit] = useState(true);
@@ -16,15 +18,15 @@ export default function Profile() {
   console.log(userData, "userdata");
 
   // verifySession();
-  
+
   const hanleInputChange = (event: any) => {
     const { name, value } = event.target;
     setUserData({ ...userData, [name]: value });
   };
-  
+
   useEffect(() => {
     // console.log("entra");
-    
+
     const fetchData = async () => {
       try {
         const user = await fetchUserById();
@@ -38,29 +40,34 @@ export default function Profile() {
     };
 
     fetchData();
-    
   }, []); // La dipendenza vuota assicura che useEffect venga eseguito solo al montaggio del componente
 
   return (
-    <main className="mt-20 mx-20 w-full">
-      <Header>
-        Profile page
-      </Header>
-      <div className="mt-20 flex justify-between items-center">
+    <main className="mt-10">
+      <Header>Profile page</Header>
+      <SubHeader subTitle="Login/Sign-up">
+        <div className="flex gap-2">
+          <form action={signout}>
+            <Button variant="bottoneSecondary">Logout</Button>
+          </form>
+          {/* <LinkButton href={`/tournament?id=${searchParams.id}&tab=create`}>
+            Create team
+          </LinkButton> */}
+        </div>
+      </SubHeader>
+      {/* <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Login/sign-up</h3>
         <form action={signout}>
           <Button variant="bottoneSecondary">
             Logout
           </Button>
         </form>
-      </div>
+      </div> */}
       <Separator className="mt-4" />
       <section className="flex justify-center mt-20">
         {!loading ? (
           <form className="flex flex-col w-full xl:w-1/2">
-            <Label htmlFor="email">
-              Email:
-            </Label>
+            <Label htmlFor="email">Email:</Label>
             <Input
               id="email"
               name="email"
@@ -69,9 +76,7 @@ export default function Profile() {
               disabled={edit}
             />
 
-            <Label htmlFor="fullname">
-              Full name:
-            </Label>
+            <Label htmlFor="fullname">Full name:</Label>
             <Input
               id="fullname"
               name="full_name"
@@ -80,9 +85,7 @@ export default function Profile() {
               disabled={edit}
             />
 
-            <Label htmlFor="username">
-              Username:
-            </Label>
+            <Label htmlFor="username">Username:</Label>
             <Input
               id="username"
               name="username"
@@ -92,9 +95,7 @@ export default function Profile() {
               disabled={edit}
             />
 
-            <Label htmlFor="nig">
-              Nick in game:
-            </Label>
+            <Label htmlFor="nig">Nick in game:</Label>
             <Input
               id="nig"
               name="nick_in_game"
@@ -103,9 +104,7 @@ export default function Profile() {
               disabled={edit}
             />
 
-            <Label htmlFor="twitch">
-              Twitch link:
-            </Label>
+            <Label htmlFor="twitch">Twitch link:</Label>
             <Input
               id="twitch"
               name="twitch_link"
@@ -114,9 +113,7 @@ export default function Profile() {
               disabled={edit}
             />
 
-            <Label htmlFor="x">
-              X link:
-            </Label>
+            <Label htmlFor="x">X link:</Label>
             <Input
               id="x"
               name="x_link"

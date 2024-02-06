@@ -29,6 +29,8 @@ import { cookies } from "next/headers";
 import { createClient } from "@/utils/supabase/server";
 import Link from "next/link";
 import { fetchTournaments } from "@/lib/data";
+import SubHeader from "@/components/subHeader";
+import { LinkButton2 } from "@/components/ui/linkButton";
 
 export default async function Home() {
   const cookieStore = cookies()
@@ -42,14 +44,24 @@ export default async function Home() {
   
   // console.log(data);
   return (
-    <main className="mt-20 mx-20 w-full">
+    <main className="mt-10">
       <Header>
-        Tornei
+        LIFE
+        <p className="text-lg mt-3">Learn. Improve. Fail. Excel.</p>
+        {/* JWC
+        <p className="text-">Join. Compete. Win.</p> */}
       </Header>
-      <div className="mt-20 flex justify-between items-center">
+      {/* <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">Prossimi tornei</h3>
         <Button variant="bottone"><Link href="/crea-torneo">Create tournament</Link></Button>
-      </div>
+      </div> */}
+      <SubHeader subTitle="Next tournaments">
+        <div className="flex gap-2">
+          <LinkButton2 href="/crea-torneo" className="text-gray-900 bg-orange-500 hover:bg-orange-400">
+            Create tournament
+          </LinkButton2>
+        </div>
+      </SubHeader>
       <Separator className="mt-4" />
       <section className="grid grid-cols-1 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full mt-14">
         {tournaments.map((tournament: any) => (
