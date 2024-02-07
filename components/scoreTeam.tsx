@@ -1,6 +1,8 @@
 "use client";
+
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -11,6 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { createScore } from "@/lib/actions";
+import { set } from "zod";
 
 export default function ScoreTeam({
   id,
@@ -25,6 +28,7 @@ export default function ScoreTeam({
 }) {
   const [state, formAction] = useFormState(createScore, null);
   const { pending } = useFormStatus();
+  const [totalScore, setTotalScore] = useState(0);
 
   const numRounds = tournament?.rounds;
   const arrRounds = Array.from({ length: numRounds }, (value, index) => index);
@@ -45,31 +49,48 @@ export default function ScoreTeam({
     formAction(formDataValues);
   };
 
-  console.log("score", score);
-  if (score.error) {
-    return <p className="text-red-300 mt-1 text-sm">{score?.error}</p>;
+  if (score.error_team_user) {
+    return (
+      <p className="text-red-300 mt-3 text-sm">{score?.error_team_user}</p>
+    );
   }
+  // if (!score.error_score_null) {
+  //   const totalScore = score.reduce((acc: number, s: any) => acc + s.total, 0);
+  //   setTotalScore(totalScore);
+  // }
 
   return (
     <section>
-      <Accordion type="single" collapsible defaultValue="item-1">
+      <Accordion type="single" collapsible>
         <AccordionItem value="item-1">
           <AccordionTrigger className="text-gray-200 underline pt-0">
             Show scores
           </AccordionTrigger>
           <AccordionContent>
+            {score.error_score_null && (
+              <p className="text-red-300 mt-3 text-sm">
+                {score?.error_score_null}
+              </p>
+            )}
             <div className="mt-3">
-              {score.map((s: any, index: number) => (
-                <div key={index} className="text-gray-200 mb-4">
-                  <p className="text-orange-500">Game {index + 1}</p>
-                  <div className="grid grid-cols-3 gap-4">
-                    <p>Eliminations: {s.eliminations}</p>
-                    <p>Placement: {s.placement}</p>
-                    <p>Total: {s.total}</p>
+              {!score.error_score_null &&
+                score.map((s: any, index: number) => (
+                  <div key={index} className="text-gray-200 mb-4">
+                    <p className="text-orange-500">Game {index + 1}</p>
+                    <div className="grid grid-cols-3 gap-4">
+                      <p>Eliminations: {s.eliminations}</p>
+                      <p>Placement: {s.placement}</p>
+                      <p>Total: {s.total}</p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
+            {!score.error_score_null && (
+              <div>
+                <p className="text-orange-500">Total</p>
+                <p className="text-gray-200">{score.reduce((acc: number, s: any) => acc + s.total, 0)} points</p>
+              </div>
+            )}
           </AccordionContent>
         </AccordionItem>
       </Accordion>
@@ -115,12 +136,12 @@ export default function ScoreTeam({
                   </div>
                 </div>
               ))}
-              {/* {!state?.success && (
-          <p className="text-red-300 mt-1 text-sm">{state?.message}</p>
-        )}
-        {state?.success && (
-          <p className="text-green-300 mt-1 text-sm">{state?.message}</p>
-        )} */}
+              {!state?.success && (
+                <p className="text-red-300 mt-3 text-sm">{state?.message}</p>
+              )}
+              {state?.success && (
+                <p className="text-green-300 mt-3 text-sm">{state?.message}</p>
+              )}
               <Button variant="bottone" disabled={pending} className="my-5">
                 Submit
               </Button>

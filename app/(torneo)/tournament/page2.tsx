@@ -50,7 +50,7 @@ export default function TournamentPage({
   }
 
   return (
-    <main className="mt-10">
+    <main>
       <Header>Tournament</Header>
       <div className="mt-20 flex justify-between items-center">
         <h3 className="text-lg font-bold text-gray-200">

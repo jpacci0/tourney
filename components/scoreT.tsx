@@ -7,7 +7,7 @@ export default async function ScoreT({ id }: { id?: string }) {
   const userData = await getUser();
   // console.log("sessionData", userData);
   const scoreData = await fetchScoresById(id!, userData?.id!);
-  // console.log("scoreData", scoreData);
+  console.log("scoreData", scoreData);
   
   //TODO tournamentData mi serve per i rounds. la fetch la faccio anche prima per recuperare i dati del torneo quindi si deve passare come props ed eiminare la fetch qui
   const tournamentData = await fetchTournamentById(id!);

@@ -6,7 +6,7 @@ export default function SubHeader({
   children: React.ReactNode;
 }) {
   return (
-    <div className="mt-20 flex justify-between items-center">
+    <div className="flex justify-between items-center">
       <h3 className="text-lg font-bold text-gray-200">{firstLetterUppercase(subTitle!)}</h3>
       {children}
     </div>

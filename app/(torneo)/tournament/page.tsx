@@ -17,7 +17,7 @@ export default async function TournamentPage({
   // const teams = await fetchTeamsById(searchParams.id!);
 
   return (
-    <main className="mt-10">
+    <main>
       <Header>Tournament</Header>
       <SubHeader subTitle={searchParams.tab}>
         <div className="flex gap-2">
@@ -30,9 +30,9 @@ export default async function TournamentPage({
         </div>
       </SubHeader>
       <Separator className="mt-4" />
-      <div className="flex mt-20">
+      <div className="mt-10 md:mt-20 md:flex">
         <TournamentNav id={searchParams.id} tab={searchParams.tab} />
-        <Separator orientation="vertical" className="h-100 mx-20" />
+        <Separator orientation="vertical" className="h-100 hidden md:block mx-10 lg:mx-20" />
         <TournamentSection id={searchParams.id} tab={searchParams.tab} />
       </div>
     </main>

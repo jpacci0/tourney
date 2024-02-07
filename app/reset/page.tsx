@@ -16,7 +16,7 @@ export default function ResetPage({
   searchParams: { message?: string };
 }) {
   return (
-    <main className="mt-10">
+    <main>
       <Header>Reset</Header>
       <SubHeader subTitle="Update password">
         <div className="flex gap-2">

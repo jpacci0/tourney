@@ -52,10 +52,10 @@ export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
           </SelectContent>
         </Select>
         {!state?.success && (
-          <p className="text-red-300 mt-1 text-sm">{state?.message}</p>
+          <p className="text-red-300 mt-3 text-sm">{state?.message}</p>
         )}
         {state?.success && (
-          <p className="text-green-300 mt-1 text-sm">{state?.message}</p>
+          <p className="text-green-300 mt-3 text-sm">{state?.message}</p>
         )}
         <Button variant="bottone" disabled={pending} className="my-5">
           Join

@@ -5,8 +5,6 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-import internal from "stream";
-import { log } from "console";
 
 function supabaseClient() {
   const cookieStore = cookies();
@@ -23,84 +21,74 @@ export async function verifySession() {
   }
 }
 
-export async function fetchUserById() {
+const profileSchema = z.object({
+  email: z.string().email(),
+  username: z.string().min(3, {
+    message: "Please insert a valid username, at least 3 character(s)",
+  }),
+  full_name: z.string().min(3, {
+    message: "Please insert a valid full name, at least 3 character(s)",
+  }),
+  nick_in_game: z.string().min(3, {
+    message: "Please insert a valid nick in game, at least 3 character(s)",
+  }),
+  twitch_link: z.string().nullable(),
+  x_link: z.string().nullable(),
+});
+export const updateUserById = async (prevState: any, formData: FormData) => {
   const supabase = supabaseClient();
 
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    redirect("/login");
-  }
-  //return user;
-  // console.log(user?.id);
-
-  let { data: profiles, error: profileError } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user?.id)
-    .single();
-
-  if (profileError) {
-    console.error(
-      "Errore durante il recupero dei dati del profilo:",
-      profileError
-    );
-    // Puoi gestire l'errore in modo appropriato
-    return null; // O qualsiasi altro valore di default
-  }
-
-  const combined = { email: user.email, ...profiles };
-
-  return combined;
-}
-
-export const updateUserById = async (formData: FormData) => {
-  const supabase = supabaseClient();
-
-  const {
-    data: { user },
-    error,
-  } = await supabase.auth.getUser();
-
-  if (error || !user) {
-    redirect("/login");
-  }
-  // console.log(formData);
-
-  const dataToUpdate = {
-    id: user?.id,
+  const result = profileSchema.safeParse({
+    email: formData.get("email") as string,
     username: formData.get("username") as string,
     full_name: formData.get("full_name") as string,
     nick_in_game: formData.get("nick_in_game") as string,
     twitch_link: formData.get("twitch_link") as string,
     x_link: formData.get("x_link") as string,
-  };
+  });
 
-  //   console.log(dataToUpdate);
+  if (!result.success) {
+    const zodError = result.error as z.ZodError;
+    const errorMap = zodError.flatten().fieldErrors;
+    return errorMap;
+  } else {
+    const { email, username, full_name, nick_in_game, twitch_link, x_link } =
+      result.data;
+    const updated_at = new Date().toISOString();
+    console.log(formData);
+    
+    const id = formData.get("user_id");
 
-  const { id, username, full_name, nick_in_game, twitch_link, x_link } =
-    dataToUpdate;
-  const updated_at = new Date().toISOString();
-  console.log(updated_at);
-
-  const { data, error: updateError } = await supabase
-    .from("profiles")
-    .update({
-      updated_at,
-      username,
-      full_name,
-      nick_in_game,
-      twitch_link,
-      x_link,
-    })
-    .eq("id", user?.id)
-    .select();
-
-  if (data) console.log(data);
-  if (updateError) console.log(updateError);
+    try {
+      const { data, error: updateError } = await supabase
+        .from("profiles")
+        .update({
+          updated_at,
+          username,
+          full_name,
+          nick_in_game,
+          twitch_link,
+          x_link,
+        })
+        .eq("id", id)
+        .select();
+      if (data) return { success: ["Profile updated successfully"] };
+      if (updateError) {
+        console.log(updateError);
+        return {
+          fail: [
+            "Something went wrong. Please try again or contact support if the problem persists.",
+          ],
+        };
+      }
+    } catch (error) {
+      return {
+        fail: [
+          "Something went wrong. Please try again or contact support if the problem persists.",
+        ],
+      };
+    }
+  }
 };
 
 // Sezione per la gestione dei tornei
@@ -120,8 +108,6 @@ const tournamentSchema = z.object({
 export async function createTournament(prevState: any, formData: FormData) {
   const supabase = supabaseClient();
 
-  console.log(formData);
-
   const result = tournamentSchema.safeParse({
     name: formData.get("name") as string,
     description: formData.get("description") as string,
@@ -138,7 +124,6 @@ export async function createTournament(prevState: any, formData: FormData) {
   if (!result.success) {
     const zodError = result.error as z.ZodError;
     const errorMap = zodError.flatten().fieldErrors;
-    console.log(errorMap);
     return {
       message: "Please check if all fields are filled correctly",
       errors: {
@@ -181,8 +166,8 @@ export async function createTournament(prevState: any, formData: FormData) {
         },
       ])
       .select();
-    console.log(tournamentError);
-    console.log(tournament);
+    // console.log(tournamentError);
+    // console.log(tournament);
 
     revalidatePath("/");
     redirect("/");
@@ -296,19 +281,20 @@ export async function createScore(prevState: any, formData: FormData) {
     .select("score")
     .eq("id", team_user?.team_id);
   // Estrai l'array esistente o inizializza un nuovo array se non esiste
-  const existingArray =
-    existingData && existingData.length ? existingData[0].score : [];
-
+    
   const numRounds = Number(formData.get("rounds"));
-
+  
+  let existingArray =
+    existingData && existingData.length ? existingData[0].score : [];
+  
   //controlla se l'array esistente è vuoto, se lo è, lo popola
-  if (existingArray.length === 0) {
+  if (!existingArray || existingArray.length === 0) {
+    existingArray = [];
     for (let i = 0; i < numRounds; i++) {
       existingArray.push({ eliminations: 0, placement: 0, total: 0 });
     }
   }
-  //bisogna controllare che existingArray sia un array non vuoto perché se è vuoto, se premo submit con i campi vuoti, mi da errore
-
+  
   // Aggiungi il nuovo oggetto all'array
   let newArray: {}[] = [];
   let eliminations = 0,
@@ -364,18 +350,25 @@ export async function createScore(prevState: any, formData: FormData) {
     // const newArray = [...existingArray, scoreObject];
   }
   // const newNewArray = [...existingArray, newArray];
-  const { data, error: errorUpdate } = await supabase
-    .from("team")
-    .update({ score: newArray })
-    .eq("id", team_user?.team_id)
-    .select();
+  try {
+    const { data, error: errorUpdate } = await supabase
+      .from("team")
+      .update({ score: newArray })
+      .eq("id", team_user?.team_id)
+      .select();
 
-  if (data) {
-    // console.log(data);
+    if (data) {
+      revalidatePath(`/tournament/id=${tournament_id}&tab=score`);
+      return { success: true, message: "Score updated successfully." };
+    }
+    if (errorUpdate) {
+      console.log(errorUpdate);
+    }
+  } catch (error) {
+    return {
+      success: false,
+      message: "Something went wrong, please try again later.",
+    };
   }
-  if (errorUpdate) {
-    console.log(errorUpdate);
-  }
-  revalidatePath(`/tournament/id=${tournament_id}&tab=score`);
   // redirect(`/tournament?id=${tournament_id}&tab=score`);
 }

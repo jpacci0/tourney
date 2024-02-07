@@ -1,9 +1,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import AuthButton from "./authButton";
+import Image from "next/image";
+import logo from "@/public/logo.png";
+import AuthButton from "@/components/ui/authButton";
 
-export default async function Sidebar() {
+export default async function Navbar() {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
@@ -21,10 +23,10 @@ export default async function Sidebar() {
   // };
 
   return (
-    <nav className="bg-gray-900 flex justify-between p-2 items-center">
+    <nav className="flex justify-between items-center border-b-2">
       <div className="">
         <Link href="/" className="mx-auto">
-          Home
+          <Image src={logo} width={96} height={96} alt="logo life" />
         </Link>
       </div>
       <div className="">

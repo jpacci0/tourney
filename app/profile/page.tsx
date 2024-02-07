@@ -1,8 +1,8 @@
-import { verifySession } from "@/lib/actions";
+import { fetchUserById } from "@/lib/data";
 import Profile from "@/components/profile";
 
 export default async function ProfilePage() {
-  await verifySession();
+  const user = await fetchUserById();
 
-  return <Profile />;
+  return <Profile user={user} />;
 }

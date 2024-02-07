@@ -38,7 +38,7 @@ export default function CreaTorneoPage() {
   };
 
   return (
-    <main className="mt-10">
+    <main>
       <Header>
         Create tournament
       </Header>
@@ -51,12 +51,12 @@ export default function CreaTorneoPage() {
           <Label htmlFor="name">Tournament name</Label>
           <Input id="name" name="name" type="text" required />
           {state?.errors?.name && (
-            <p className="text-red-300 mt-1 text-sm">{state.errors.name}</p>
+            <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
           <Label htmlFor="description">Description</Label>
           <Textarea id="description" name="description" required />
           {state?.errors?.description && (
-            <p className="text-red-300 mt-1 text-sm">{state.errors.name}</p>
+            <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
           <Label htmlFor="rules">Rules</Label>
           {/* <Textarea id="rules" name="rules" required /> */}
@@ -67,14 +67,14 @@ export default function CreaTorneoPage() {
             onChange={setQuillValue}
           />
           {state?.errors?.rules && (
-            <p className="text-red-300 mt-1 text-sm">{state.errors.rules}</p>
+            <p className="text-red-300 mt-3 text-sm">{state.errors.rules}</p>
           )}
           <div className="grid grid-cols-2 gap-4 mt-5">
             <div>
               <Label htmlFor="datetime">Start date time</Label>
               <Input type="datetime-local" id="datetime" name="start_time" />
               {state?.errors?.start_time && (
-                <p className="text-red-300 mt-1 text-sm">
+                <p className="text-red-300 mt-3 text-sm">
                   {state.errors.start_time}
                 </p>
               )}
@@ -136,7 +136,7 @@ export default function CreaTorneoPage() {
                 required
               />
               {state?.errors?.rounds && (
-                <p className="text-red-300 mt-1 text-sm">
+                <p className="text-red-300 mt-3 text-sm">
                   {state.errors.rounds}
                 </p>
               )}
@@ -152,7 +152,7 @@ export default function CreaTorneoPage() {
                 required
               />
               {state?.errors?.max_players && (
-                <p className="text-red-300 mt-1 text-sm">
+                <p className="text-red-300 mt-3 text-sm">
                   {state.errors.max_players}
                 </p>
               )}
@@ -171,7 +171,7 @@ export default function CreaTorneoPage() {
             </SelectContent>
           </Select>
           {state?.message && (
-            <p className="text-red-300 mt-1 text-sm">{state.message}</p>
+            <p className="text-red-300 mt-3 text-sm">{state.message}</p>
           )}
           <Button className="my-5" variant="bottone">
             Create

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Trispace, Roboto_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/ui/sidebar";
+import Navbar from "@/components/ui/navbar";
 import { Separator } from "@/components/ui/separator";
 
 const inter = Roboto_Mono({ subsets: ["latin"] });
@@ -18,8 +18,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-2 md:mx-4 xl:mx-10 2xl:mx-96 bg-gray-950`}>
-        <Sidebar />
+      <body className={`${inter.className} mx-2 md:mx-4 xl:mx-10 2xl:mx-48 bg-gray-950`}>
+        <Navbar />
         {/* <Separator orientation="vertical" className="" /> */}
         {children}
       </body>
