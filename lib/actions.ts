@@ -56,7 +56,7 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
       result.data;
     const updated_at = new Date().toISOString();
     console.log(formData);
-    
+
     const id = formData.get("user_id");
 
     try {
@@ -232,22 +232,51 @@ export async function createTeamUser(prevState: any, formData: FormData) {
     };
   }
 
-  const { data, error } = await supabase
+  let { data: team_user, error: notAllow } = await supabase
     .from("team_user")
-    .insert([{ team_id, user_id, tournament_id }])
-    .select();
-  console.log(error);
-  if (!error) {
-    return {
-      success: true,
-      message: "You have successfully joined the team",
-    };
-  } else {
+    .select("user_id, tournament_id")
+    .eq("user_id", user_id)
+    .eq("tournament_id", tournament_id)
+    .single();
+
+  if (!notAllow) {
     return {
       success: false,
-      message: "Something went wrong, please try again later",
+      message: "You are already a member of a team in this tournament",
     };
+  } else {
+    const { data, error } = await supabase
+      .from("team_user")
+      .insert([{ team_id, user_id, tournament_id }])
+      .select();
+    if (!error) {
+      return {
+        success: true,
+        message: "You have successfully joined the team",
+      };
+    } else {
+      return {
+        success: false,
+        message: "Something went wrong, please try again later",
+      };
+    }
   }
+
+  // const { data, error } = await supabase
+  //   .from("team_user")
+  //   .insert([{ team_id, user_id, tournament_id }])
+  //   .select();
+  // if (!error) {
+  //   return {
+  //     success: true,
+  //     message: "You have successfully joined the team",
+  //   };
+  // } else {
+  //   return {
+  //     success: false,
+  //     message: "Something went wrong, please try again later",
+  //   };
+  // }
 }
 
 // creazione score team
@@ -281,12 +310,12 @@ export async function createScore(prevState: any, formData: FormData) {
     .select("score")
     .eq("id", team_user?.team_id);
   // Estrai l'array esistente o inizializza un nuovo array se non esiste
-    
+
   const numRounds = Number(formData.get("rounds"));
-  
+
   let existingArray =
     existingData && existingData.length ? existingData[0].score : [];
-  
+
   //controlla se l'array esistente è vuoto, se lo è, lo popola
   if (!existingArray || existingArray.length === 0) {
     existingArray = [];
@@ -294,7 +323,7 @@ export async function createScore(prevState: any, formData: FormData) {
       existingArray.push({ eliminations: 0, placement: 0, total: 0 });
     }
   }
-  
+
   // Aggiungi il nuovo oggetto all'array
   let newArray: {}[] = [];
   let eliminations = 0,

@@ -12,10 +12,8 @@ import {
   SelectGroup,
   SelectLabel,
 } from "@/components/ui/select";
-import { fetchTeamsById, getSession } from "@/lib/data";
 import { createTeamUser } from "@/lib/actions";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 

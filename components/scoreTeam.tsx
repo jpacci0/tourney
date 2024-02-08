@@ -13,7 +13,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { createScore } from "@/lib/actions";
-import { set } from "zod";
+import { Separator } from "@/components/ui/separator";
 
 export default function ScoreTeam({
   id,
@@ -72,23 +72,44 @@ export default function ScoreTeam({
                 {score?.error_score_null}
               </p>
             )}
-            <div className="mt-3">
-              {!score.error_score_null &&
-                score.map((s: any, index: number) => (
-                  <div key={index} className="text-gray-200 mb-4">
-                    <p className="text-orange-500">Game {index + 1}</p>
-                    <div className="grid grid-cols-3 gap-4">
-                      <p>Eliminations: {s.eliminations}</p>
-                      <p>Placement: {s.placement}</p>
-                      <p>Total: {s.total}</p>
+            {!score.error_score_null && (
+              <div className="mt-3 text-gray-200 overflow-x-auto">
+                <div className="grid grid-cols-5 gap-2 mb-4">
+                  <p>Rounds</p>
+                  <p className="sm:hidden">Elimin.</p>
+                  <p className="hidden sm:block">Eliminations</p>
+                  <p className="sm:hidden">Placem.</p>
+                  <p className="hidden sm:block">Placement</p>
+                  <p>Total</p>
+                  <p>Proof</p>
+                </div>
+                {score.map((s: any, index: number) => (
+                  <div
+                    key={index}
+                    className={
+                      index % 2 == 0
+                        ? "text-gray-200 mb-4 bg-primary"
+                        : "text-gray-200 mb-4"
+                    }
+                  >
+                    <div className="grid grid-cols-5 gap-2">
+                      <p className="text-orange-500">Game {index + 1}</p>
+                      <p>{s.eliminations}</p>
+                      <p>{s.placement}</p>
+                      <p>{s.total}</p>
+                      <p>watch</p>
                     </div>
                   </div>
                 ))}
-            </div>
+              </div>
+            )}
             {!score.error_score_null && (
               <div>
-                <p className="text-orange-500">Total</p>
-                <p className="text-gray-200">{score.reduce((acc: number, s: any) => acc + s.total, 0)} points</p>
+                <p className="bg-orange-500 text-dark-950 p-1 rounded font-bold">Total: {score.reduce((acc: number, s: any) => acc + s.total, 0)} points</p>
+                {/* <p className="text-gray-200">
+                  {score.reduce((acc: number, s: any) => acc + s.total, 0)}{" "}
+                  points
+                </p> */}
               </div>
             )}
           </AccordionContent>

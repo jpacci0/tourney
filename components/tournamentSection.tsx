@@ -17,27 +17,27 @@ export default function TournamentSection({
   return (
     <section className="w-full mt-5 md:mt-0">
       {tab === "overview" && (
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<p>Loading overview...</p>}>
           <Overview id={id} />
         </Suspense>
       )}
       {tab === "score" && (
-        <Suspense fallback={<p>Loading Suspense...</p>}>
+        <Suspense fallback={<p>Loading score...</p>}>
           <ScoreT id={id} />
         </Suspense>
       )}
       {tab === "leaderboard" && (
-        <Suspense fallback={<p>Loading Suspense...</p>}>
+        <Suspense fallback={<p>Loading leaderboard...</p>}>
           <LeaderboardT id={id} />
         </Suspense>
       )}
       {tab === "join" && (
-        <Suspense fallback={<p>Loading Suspense...</p>}>
+        <Suspense fallback={<p>Loading join...</p>}>
           <JoinT id={id} />
         </Suspense>
       )}
       {tab === "create" && (
-        <Suspense fallback={<p>Loading Suspense...</p>}>
+        <Suspense fallback={<p>Loading create...</p>}>
           <CreateT id={id} />
         </Suspense>
       )}

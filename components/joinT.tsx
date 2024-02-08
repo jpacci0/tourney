@@ -4,6 +4,7 @@ import JoinTeam from "@/components/joinTeam";
 
 export default async function JoinT({ id }: { id?: string }) {
   const sessionData = await getSession();
+  
   const teams: any = await fetchTeamsById(id!);
 
   if (!sessionData.session) {

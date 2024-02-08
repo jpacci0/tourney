@@ -169,12 +169,46 @@ export async function fetchLeaderboard(id: string) {
   const supabase = supabaseClient();
 
   let { data: leaderboard, error } = await supabase
-    .from("team")
-    .select("name, score")
-    .eq("tournament_id", id)
-    .order("score", { ascending: false });
+    .from("team_user")
+    .select(
+      `
+      user_id,
+      team_id,
+      profiles (full_name),
+      team (name, score)
+    `
+    )
+    .eq("tournament_id", id);
 
-  // console.log(leaderboard);
+  if (error) {
+    console.log(error);
+  }
 
-  return leaderboard;
+  //? gestire l'eccezione nel caso in cui non ci siano dati, quindi team inseriti, partecipanti e score. in teoria fatto. fare ulteriori check.
+
+  // Raggruppa i dati per team
+  const groupedData = leaderboard!.reduce((acc: any, curr: any) => {
+    const { team_id, profiles, team } = curr;
+    if (!acc[team_id]) {
+      acc[team_id] = {
+        team_id,
+        team_name: team.name,
+        profiles: [],
+        score: team.score,
+        total_score: team.score.reduce(
+          (acc: number, s: any) => acc + s.total,
+          0
+        ),
+      };
+    }
+    acc[team_id].profiles.push(profiles);
+    return acc;
+  }, {});
+
+  // Converti i dati raggruppati in un array
+  const groupedArray = Object.values(groupedData) as any[];
+  // Ordina l'array in base al total_score in ordine decrescente
+  groupedArray.sort((a, b) => b.total_score - a.total_score);
+
+  return groupedArray;
 }

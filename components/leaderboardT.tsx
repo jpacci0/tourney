@@ -1,6 +1,7 @@
 import { fetchLeaderboard } from "@/lib/data";
 import Link from "next/link";
 import ScoreTeam from "@/components/scoreTeam";
+import LeaderboardTeam from "@/components/leaderboardTeam";
 
 export default async function ScoreT({ id }: { id?: string }) {
 
@@ -19,5 +20,5 @@ export default async function ScoreT({ id }: { id?: string }) {
 //     );
 //   }
 //   return <ScoreTeam id={id} tournament={tournamentData} user={userData} score={scoreData} />;
-return <><p className="text-indigo-500">leaderboard</p></>
+return <LeaderboardTeam scoreData={scoreData} />
 }
