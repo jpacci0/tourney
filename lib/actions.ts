@@ -175,7 +175,7 @@ export async function createTournament(prevState: any, formData: FormData) {
 }
 
 // Creazione team
-const teamSchema = z.string().min(3);
+const teamSchema = z.string().min(1);
 export async function createTeam(prevState: any, formData: FormData) {
   const supabase = supabaseClient();
   const name = formData.get("team_name") as string;
@@ -187,22 +187,15 @@ export async function createTeam(prevState: any, formData: FormData) {
     return {
       success: false,
       message:
-        "Please enter a valid team name, at least it must contain 3 character(s)",
+        "Please enter a valid team name, at least it must contain 1 character(s)",
     };
   } else {
-    console.log(tournament_id);
 
     const { data, error } = await supabase
       .from("team")
       .insert([{ name, tournament_id }])
       .select();
 
-    // if (error) {
-    //   console.log(error);
-    // }
-    // if (data) {
-    //   console.log(data);
-    // }
     return {
       success: true,
       message:
@@ -222,9 +215,7 @@ export async function createTeamUser(prevState: any, formData: FormData) {
   const user_id = user?.id;
   const team_id = Number(formData.get("team_id"));
   const tournament_id = formData.get("tournament_id") as string;
-  // console.log(user_id);
-  // console.log(Number(team_id));
-  // console.log(tournament_id);
+
   if (team_id === 0) {
     return {
       success: false,
@@ -250,6 +241,7 @@ export async function createTeamUser(prevState: any, formData: FormData) {
       .insert([{ team_id, user_id, tournament_id }])
       .select();
     if (!error) {
+      revalidatePath(`/tournament?id=${tournament_id}&tab=score`);
       return {
         success: true,
         message: "You have successfully joined the team",

@@ -22,10 +22,27 @@ export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
   const [state, formAction] = useFormState(createTeamUser, null);
   const { pending } = useFormStatus();
 
-  //   console.log("teams", teams);
+  // console.log("teams", teams);
+  let numGameMode = teams.game_mode[0].game_mode;
+  let numMaxTeam = 0;
+  switch (numGameMode) {
+    case "squads":
+      numMaxTeam = 4;
+      break;
+    case "trios":
+      numMaxTeam = 3;
+      break;
+    case "duos":
+      numMaxTeam = 2;
+      break;
+    case "solos":
+      numMaxTeam = 1;
+      break;
+  }
+  console.log("teams", numMaxTeam);
 
   useEffect(() => {
-    setDataTeams(teams);
+    setDataTeams(teams.teams);
   }, []);
 
   return (
@@ -40,11 +57,13 @@ export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
           <SelectContent>
             <SelectGroup>
               <SelectLabel>Teams</SelectLabel>
-              {dataTeams.map((team: { id: number; name: string }) => (
-                <SelectItem key={team.id} value={String(team.id)}>
-                  {team.name}
-                </SelectItem>
-              ))}
+              {dataTeams.map(
+                (team: { id: number; name: string; team_user: [] }) => (
+                  <SelectItem key={team.id} value={String(team.id)} disabled={team.team_user.length === numMaxTeam ? true : false}>
+                    {team.name} - {team.team_user.length}/{numMaxTeam}
+                  </SelectItem>
+                )
+              )}
               {/* <SelectItem value="1">Team 1</SelectItem> */}
             </SelectGroup>
           </SelectContent>

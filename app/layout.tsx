@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-2 md:mx-4 xl:mx-10 2xl:mx-48 bg-gray-950`}>
+      <body className={`${inter.className} px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950`}>
         <Navbar />
         {/* <Separator orientation="vertical" className="" /> */}
         {children}

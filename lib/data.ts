@@ -89,28 +89,34 @@ export async function fetchTournamentById(id: string) {
   }
 }
 
-export async function fetchTeamsById(id: string) {
-  // noStore();
+export async function fetchTeamsById(tournament_id: string) {
+  noStore();
   const supabase = supabaseClient();
 
   try {
     let { data: teams, error } = await supabase
       .from("team")
-      .select("name, id")
-      .eq("tournament_id", id);
+      .select(`name, id, team_user(team_id, user_id)`)
+      .eq("tournament_id", tournament_id);
 
-    // console.log(teams);
+    let { data: game_mode, error: game_mode_error } = await supabase
+      .from("tournament")
+      .select("game_mode")
+      .eq("idclient", tournament_id);
 
-    return teams;
+    // let numPlayersInTeam = ;
+
+    // console.log(teams![2].team_user);
+
+    return {teams, game_mode};
   } catch (error) {
     console.log(error);
   }
 }
 
 export async function fetchScoresById(tournament_id: string, user_id: string) {
-  // noStore();
+  noStore();
   const supabase = supabaseClient();
-  // console.log(tournament_id, user_id);
 
   let { data: team_user, error } = await supabase
     .from("team_user")
@@ -211,4 +217,44 @@ export async function fetchLeaderboard(id: string) {
   groupedArray.sort((a, b) => b.total_score - a.total_score);
 
   return groupedArray;
+}
+
+export async function fetchAllowTeams(tournament_id: string) {
+  noStore();
+  const supabase = supabaseClient();
+
+  //! si può pensare nella select di selezionare solo i dati relativi ai partecipanti non *
+  let { data: count, error: e } = await supabase
+    .from("team")
+    .select(`*, tournament(game_mode, max_players)`)
+    .eq("tournament_id", tournament_id);
+
+  // numero di player per team, in base al game mode
+  let teamPlayer = 0;
+  // team già registrati
+  let teamEntered = 0;
+
+  if (count) {
+    teamEntered = count.length;
+  }
+  if (count?.[0]?.tournament?.game_mode === "solos") {
+    teamPlayer = 1;
+  } else if (count?.[0]?.tournament?.game_mode === "duos") {
+    teamPlayer = 2;
+  } else if (count?.[0]?.tournament?.game_mode === "trios") {
+    teamPlayer = 3;
+  } else if (count?.[0]?.tournament?.game_mode === "squads") {
+    teamPlayer = 4;
+  }
+
+  let maxTeams = count?.[0]?.tournament?.max_players / teamPlayer;
+  if (Number.isNaN(maxTeams)) {
+    maxTeams = 1;
+  }
+
+  if (teamEntered >= maxTeams || maxTeams < 1) {
+    return false;
+  } else {
+    return true;
+  }
 }

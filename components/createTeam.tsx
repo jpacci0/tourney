@@ -9,42 +9,30 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { createTeam } from "@/lib/actions";
 import { getSession } from "@/lib/data";
+import { revalidatePath } from "next/cache";
+import { redirect, useRouter } from "next/navigation";
 
 export default function CreateTeam({ id }: { id?: string }) {
-  const [session, setSession] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [state, formAction] = useFormState(createTeam, null);
   const { pending } = useFormStatus();
+  const [timerId, setTimerId] = useState(null);
+  const router = useRouter();
 
-  // useEffect(() => {
-  //   const fetchSession = async () => {
-  //     setLoading(true);
-  //     const sessionData = await getSession();
-  //     if (sessionData.session) {
-  //       setSession(true);
-  //     }
-  //     console.log("sessionData", sessionData.session);
-  //     setLoading(false);
-  //   };
+  useEffect(() => {
+    if (state?.success) {
+      const idTimer: any = setTimeout(() => {
+        router.push(`/tournament?id=${id}&tab=join`);
+      }, 5000);
+      setTimerId(idTimer);
 
-  //   fetchSession();
-  // }, [id]);
-
-  // if (loading) {
-  //   return <p className="text-gray-500">Loading...</p>;
-  // }
-
-  // if (!session) {
-  //   return (
-  //     <p className="text-gray-500">
-  //       You need to be logged in to create a team.{" "}
-  //       <Link href={"/login"} className="underline">
-  //         To login click here
-  //       </Link>
-  //       .
-  //     </p>
-  //   );
-  // }
+      // Clean up the timer when the component unmounts
+      return () => {
+        if (timerId) {
+          clearTimeout(timerId);
+        }
+      };
+    }
+  }, [state?.success]); // Execute the effect only when state.success changes
 
   return (
     <section>
@@ -63,7 +51,11 @@ export default function CreateTeam({ id }: { id?: string }) {
         {state?.success && (
           <p className="text-green-300 mt-3 text-sm">{state?.message}</p>
         )}
-        <Button variant="bottone" disabled={pending} className="my-5">
+        <Button
+          variant="bottone"
+          disabled={state?.success ? true : false}
+          className="my-5"
+        >
           Create
         </Button>
       </form>
