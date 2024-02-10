@@ -21,8 +21,42 @@ export async function verifySession() {
   }
 }
 
+const emailSchema = z.string().email();
+export async function updateEmail(prevState: any, formData: FormData) {
+  const supabase = supabaseClient();
+
+  const result = emailSchema.safeParse(formData.get("email") as string);
+  if (!result.success) {
+    return {
+      success: false,
+      message: "Please insert a valid email",
+    };
+  } else {
+    console.log(result.data);
+
+    const { data, error } = await supabase.auth.updateUser({
+      email: result.data,
+    });
+    if (error) {
+      console.log(error);
+      return {
+        success: false,
+        message: "This email address already exists",
+      };
+    }
+    if (data) {
+      console.log(data);
+    }
+
+    return {
+      success: true,
+      message: "Email updated successfully",
+    };
+  }
+}
+
 const profileSchema = z.object({
-  email: z.string().email(),
+  // email: z.string().email(),
   username: z.string().min(3, {
     message: "Please insert a valid username, at least 3 character(s)",
   }),
@@ -39,7 +73,7 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
   const supabase = supabaseClient();
 
   const result = profileSchema.safeParse({
-    email: formData.get("email") as string,
+    // email: formData.get("email") as string,
     username: formData.get("username") as string,
     full_name: formData.get("full_name") as string,
     nick_in_game: formData.get("nick_in_game") as string,
@@ -52,10 +86,9 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
     const errorMap = zodError.flatten().fieldErrors;
     return errorMap;
   } else {
-    const { email, username, full_name, nick_in_game, twitch_link, x_link } =
+    const { username, full_name, nick_in_game, twitch_link, x_link } =
       result.data;
     const updated_at = new Date().toISOString();
-    console.log(formData);
 
     const id = formData.get("user_id");
 
@@ -74,7 +107,12 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
         .select();
       if (data) return { success: ["Profile updated successfully"] };
       if (updateError) {
-        console.log(updateError);
+        if (updateError.code === "23505") {
+          return {
+            fail: ["Username already taken, please choose another one"],
+          };
+        }
+        // console.log(updateError.code);
         return {
           fail: [
             "Something went wrong. Please try again or contact support if the problem persists.",
@@ -190,7 +228,6 @@ export async function createTeam(prevState: any, formData: FormData) {
         "Please enter a valid team name, at least it must contain 1 character(s)",
     };
   } else {
-
     const { data, error } = await supabase
       .from("team")
       .insert([{ name, tournament_id }])
@@ -392,4 +429,16 @@ export async function createScore(prevState: any, formData: FormData) {
     };
   }
   // redirect(`/tournament?id=${tournament_id}&tab=score`);
+}
+
+export async function fetchRules(tournament_id: string) {
+  const supabase = supabaseClient();
+
+  let { data: rules, error: noRules } = await supabase
+    .from("tournament")
+    .select("rules")
+    .eq("idclient", tournament_id)
+    .single();
+
+  return rules;
 }

@@ -89,42 +89,19 @@ export async function signup(formData: FormData) {
       return redirect(`/login?message=Invalid email and password`);
     }
     if (errori.fieldErrors.email) {
-      console.log(errori.fieldErrors.email);
       return redirect(`/login?message=${errori.fieldErrors.email}`);
     }
     if (errori.fieldErrors.password) {
-      console.log(errori.fieldErrors.password);
       return redirect(`/login?message=${errori.fieldErrors.password}`);
     }
   } else {
     const { email, password } = result.data;
-    console.log(email, password);
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error) {
-      return redirect("/login?message=Email already exists");
+      return redirect("/login?message=This email address already exists");
     }
     return redirect("/profile");
   }
-
-  // const email = formData.get("email") as string;
-  // const password = formData.get("password") as string;
-
-  // const { error } = await supabase.auth.signUp({
-  //   email,
-  //   password,
-  //   options: {
-  //     emailRedirectTo: `http://localhost:3000/profile`,
-  //   },
-  // });
-
-  // if (error) {
-  //   return redirect("/login?message=Email already exists");
-  // }
-
-  // return redirect("/profile");
-
-  // revalidatePath("/", "layout");
-  // redirect("/");
 }
 
 export async function signout() {
@@ -162,18 +139,6 @@ export async function forgotPassword(formData: FormData) {
     );
     return redirect("/reset?message=Email sent");
   }
-  console.log(result);
-
-  // const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-  //   redirectTo: "http://localhost:3000/auth/reset",
-  // });
-
-  // if (error) {
-  //   redirect("/error");
-  // }
-
-  // revalidatePath('/', 'layout')
-  // redirect('/')
 }
 
 const resetPasswordSchema = z
@@ -199,25 +164,19 @@ export async function updatePassword(formData: FormData) {
   const cookieStore = cookies();
   const supabase = createClient(cookieStore);
 
-  // console.log(formData.get("password"));
-
   const result = resetPasswordSchema.safeParse({
     password: formData.get("password") as string,
     confirm: formData.get("passwordConfirmation") as string,
   });
 
   if (!result.success) {
-    console.log(result.error.flatten());
     const errori = result.error.flatten().fieldErrors;
-    console.log(errori.password);
-    console.log(errori.confirm);
     if (errori.password) {
       return redirect(`/reset/update-password?message=${errori.password}`);
     }
     if (errori.confirm) {
       return redirect(`/reset/update-password?message=${errori.confirm}`);
     }
-    // return redirect(`/reset/update-password?message=Invalid email`);
   } else {
     console.log(result.data);
     const { password } = result.data;
@@ -226,19 +185,4 @@ export async function updatePassword(formData: FormData) {
     });
     return redirect("/");
   }
-
-  // const new_password = formData.get("password") as string;
-
-  // const { data, error } = await supabase.auth.updateUser({
-  //   password: new_password,
-  // });
-  // if (data) console.log(data);
-
-  // if (error) {
-  //   console.log(error);
-  //   redirect("/error");
-  // }
-
-  // revalidatePath('/', 'layout')
-  // redirect('/')
 }

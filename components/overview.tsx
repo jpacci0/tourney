@@ -10,7 +10,6 @@ const Prop = ({ children }: { children: React.ReactNode }) => {
 
 export default async function Overview({ id }: { id?: string }) {
   const tournament = await fetchTournamentById(id!);
-  // console.log("tournament", tournament);
 
   return (
     <section className="flex flex-col gap-5">

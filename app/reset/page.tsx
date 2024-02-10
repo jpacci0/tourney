@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import Link from "next/link";
 import { forgotPassword } from "../login/actions";
 import SubHeader from "@/components/subHeader";
 import { LinkButton } from "@/components/ui/linkButton";
