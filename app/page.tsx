@@ -8,7 +8,7 @@ import Home from "@/components/home";
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="my-36 md:my-40">
       <Header>
         LIFE
         <p className="text-lg mt-3">Learn. Improve. Fail. Excel.</p>

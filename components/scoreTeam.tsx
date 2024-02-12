@@ -2,7 +2,7 @@
 
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
-import { useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,8 +12,8 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { createScore } from "@/lib/actions";
 import { Separator } from "@/components/ui/separator";
+import { createScore } from "@/lib/actions";
 
 export default function ScoreTeam({
   id,
@@ -28,7 +28,6 @@ export default function ScoreTeam({
 }) {
   const [state, formAction] = useFormState(createScore, null);
   const { pending } = useFormStatus();
-  const [totalScore, setTotalScore] = useState(0);
 
   const numRounds = tournament?.rounds;
   const arrRounds = Array.from({ length: numRounds }, (value, index) => index);
@@ -37,7 +36,7 @@ export default function ScoreTeam({
     const formDataValues = new FormData();
 
     for (const [key, value] of formData.entries()) {
-      if (key.startsWith("eliminations_") || key.startsWith("placement_")) {
+      if (key.startsWith("eliminations_") || key.startsWith("placement_") || key.startsWith("proof_")) {
         formDataValues.append(key, value as string);
       }
     }
@@ -73,7 +72,7 @@ export default function ScoreTeam({
               </p>
             )}
             {!score.error_score_null && (
-              <div className="mt-3 text-gray-200 overflow-x-auto">
+              <div className="mt-3 text-orange-500 overflow-x-auto">
                 <div className="grid grid-cols-5 gap-2 mb-4">
                   <p>Rounds</p>
                   <p className="sm:hidden">Elimin.</p>
@@ -97,7 +96,8 @@ export default function ScoreTeam({
                       <p>{s.eliminations}</p>
                       <p>{s.placement}</p>
                       <p>{s.total}</p>
-                      <p>watch</p>
+                      {s.proof === "" && <p>N.A.</p>}
+                      {s.proof && <Link href={s.proof}>Watch</Link>}
                     </div>
                   </div>
                 ))}
@@ -128,7 +128,7 @@ export default function ScoreTeam({
               }}
             >
               {arrRounds.map((round, index) => (
-                <div key={round} className="grid grid-cols-2 gap-4">
+                <div key={round} className="grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 gap-4">
                   <div className="mt-3">
                     <Label htmlFor={`eliminations_${round + 1}`}>
                       Eliminations game {round + 1}
@@ -155,6 +155,19 @@ export default function ScoreTeam({
                       // value={score !== null ? score[index].placement : ""}
                     />
                   </div>
+                  <div className="col-span-2 md:col-span-1 md:mt-3">
+                    <Label htmlFor={`proof_${round + 1}`}>
+                      Proof game {round + 1}
+                    </Label>
+                    <Input
+                      type="text"
+                      id={`proof_${round + 1}`}
+                      name={`proof_${round}`}
+                      placeholder="Clip URL"
+                      // value={score !== null ? score[index].placement : ""}
+                    />
+                  </div>
+                  <Separator className="col-span-2 md:col-span-3" />
                 </div>
               ))}
               {!state?.success && (

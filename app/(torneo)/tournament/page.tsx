@@ -12,7 +12,7 @@ export default function TournamentPage({
   searchParams: { id?: string; tab?: string };
 }) {
   return (
-    <main>
+    <main className="my-36 md:my-40">
       <Header>Tournament</Header>
       <SubHeader subTitle={searchParams.tab}>
         <div className="flex gap-2">

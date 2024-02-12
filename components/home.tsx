@@ -1,15 +1,6 @@
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
 import { fetchTournaments } from "@/lib/data";
 import CardTorneo from "@/components/cardTorneo";
-import Header from "@/components/header";
-import SubHeader from "@/components/subHeader";
 import { Separator } from "@/components/ui/separator";
-import { LinkButton2 } from "@/components/ui/linkButton";
 
 export default async function Home() {
   const tournaments: any = await fetchTournaments();
@@ -33,7 +24,7 @@ export default async function Home() {
     <section>
       {inProgress.length > 0 && (
         <>
-          <h3 className="text-lg font-bold text-orange-500 uppercase mt-10">
+          <h3 className="text-lg font-bold text-gray-500 uppercase my-6">
             in progress
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">
@@ -44,7 +35,7 @@ export default async function Home() {
       )}
       {upcoming.length > 0 && (
         <>
-          <h3 className="text-lg font-bold text-orange-500 uppercase mt-10">
+          <h3 className="text-lg font-bold text-gray-500 uppercase my-6">
             upcoming
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">

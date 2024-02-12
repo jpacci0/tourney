@@ -20,7 +20,7 @@ export default function LoginPage({
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <main>
+    <main className="my-36 md:my-40">
       <Header>{alreadySignup ? "Login" : "Sign-up"}</Header>
       <SubHeader subTitle="Login/Sign-up">
         <div className="flex gap-2">

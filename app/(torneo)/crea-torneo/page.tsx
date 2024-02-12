@@ -38,7 +38,7 @@ export default function CreaTorneoPage() {
   };
 
   return (
-    <main>
+    <main className="my-36 md:my-40">
       <Header>
         Create tournament
       </Header>

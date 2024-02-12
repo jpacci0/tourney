@@ -23,7 +23,7 @@ export default function Navbar() {
   // };
 
   return (
-    <nav className="flex justify-between items-center border-b-2 sticky top-0 left-0 right-0 bg-gray-950">
+    <nav className="flex justify-between items-center border-b-2 mx-2 md:mx-4 xl:mx-10 2xl:mx-48 fixed top-0 left-0 right-0 bg-gray-950">
       <div className="">
         <Link href="/" className="mx-auto">
           <Image src={logo} width={96} height={96} alt="logo life" />

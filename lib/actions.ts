@@ -348,7 +348,12 @@ export async function createScore(prevState: any, formData: FormData) {
   if (!existingArray || existingArray.length === 0) {
     existingArray = [];
     for (let i = 0; i < numRounds; i++) {
-      existingArray.push({ eliminations: 0, placement: 0, total: 0 });
+      existingArray.push({
+        eliminations: 0,
+        placement: 0,
+        total: 0,
+        proof: "",
+      });
     }
   }
 
@@ -356,8 +361,9 @@ export async function createScore(prevState: any, formData: FormData) {
   let newArray: {}[] = [];
   let eliminations = 0,
     placement = 0,
-    total = 0;
-  let scoreObject = { eliminations, placement, total };
+    total = 0,
+    proof = "";
+  let scoreObject = { eliminations, placement, total, proof };
   for (let i = 0; i < numRounds; i++) {
     if (
       Number(formData.get(`placement_${i}`)) > 0 &&
@@ -391,7 +397,12 @@ export async function createScore(prevState: any, formData: FormData) {
       placement = existingArray[i].placement;
       total = calculateScore(eliminations, placement);
     }
-    scoreObject = { eliminations, placement, total };
+    if (formData.get(`proof_${i}`) === "") {
+      proof = existingArray[i].proof;
+    } else {
+      proof = formData.get(`proof_${i}`) as string;
+    }
+    scoreObject = { eliminations, placement, total, proof };
     newArray.push(scoreObject);
   }
 

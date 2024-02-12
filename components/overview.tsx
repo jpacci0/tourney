@@ -1,5 +1,4 @@
 import { fetchTeamsById, fetchTournamentById } from "@/lib/data";
-import { log } from "console";
 
 const Prop = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -11,7 +10,6 @@ const Prop = ({ children }: { children: React.ReactNode }) => {
 
 export default async function Overview({ id }: { id?: string }) {
   const tournament = await fetchTournamentById(id!);
-log("tournament", tournament);
   return (
     <section className="flex flex-col gap-5">
       {tournament.status === "done" && (<p className="text-gray-950 bg-destructive w-auto text-center p-2 text-2xl font-bold">FINISHED</p>)}

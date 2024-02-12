@@ -45,7 +45,7 @@ export default function Profile({ user }: { user: any }) {
   };
 
   return (
-    <main>
+    <main className="my-36 md:my-40">
       <Header>Profile page</Header>
       <SubHeader subTitle="Profile">
         <div className="flex gap-2">

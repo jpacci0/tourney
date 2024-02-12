@@ -5,7 +5,12 @@ import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
 import { Separator } from "@/components/ui/separator";
 
-const inter = Roboto_Mono({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
+const roboto = Trispace({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -18,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 relative`}>
+    <html lang="en" className={roboto.className}>
+      <body className={`px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 antialiased`}>
         <Navbar />
         {/* <Separator orientation="vertical" className="" /> */}
         {children}
