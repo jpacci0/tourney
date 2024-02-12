@@ -6,10 +6,9 @@ import {
 } from "@/components/ui/accordion";
 
 export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
-  console.log(scoreData);
   if (scoreData.length === 0) {
     return <p className="text-gray-500">No scores yet.</p>;
-  }
+  }  
 
   return (
     <section>
@@ -23,6 +22,7 @@ export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
           <AccordionItem value="item-1">
             <AccordionTrigger>
               <p>
+                {index + 1}. {" "}
                 {score.team_name} -{" "}
                 <span className="text-orange-500">
                   {score.total_score} points
@@ -33,7 +33,7 @@ export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
               <div className="flex gap-3 my-3">
                 <p className="text-gray-400">Members: </p>
                 {score.profiles.map((profile: any) => (
-                  <div key={profile.full_name}>- {profile.full_name}</div>
+                  <div key={profile.nick_in_game}>- {profile.nick_in_game}</div>
                 ))}
               </div>
               <p className="text-gray-400">Scores:</p>

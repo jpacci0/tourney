@@ -1,10 +1,10 @@
 import Overview from "@/components/overview";
-import CreateTeam from "@/components/createTeam";
 import CreateT from "@/components/createT";
 import JoinT from "@/components/joinT";
 import ScoreT from "@/components/scoreT";
 import LeaderboardT from "@/components/leaderboardT";
 import RulesT from "@/components/rulesT";
+import RostersT from "@/components/rostersT";
 import { Suspense } from "react";
 
 export default function TournamentSection({
@@ -44,7 +44,7 @@ export default function TournamentSection({
       )}
       {tab === "rosters" && (
         <Suspense fallback={<p className="text-gray-200">Loading rosters...</p>}>
-          <CreateT id={id} />
+          <RostersT id={id} />
         </Suspense>
       )}
       {tab === "rules" && (

@@ -46,7 +46,7 @@ export default function CreaTorneoPage() {
       <p></p>
       </SubHeader>
       <Separator className="mt-4" />
-      <section className="flex justify-center mt-20">
+      <section className="flex justify-center mt-10 md:mt-20">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>
           <Label htmlFor="name">Tournament name</Label>
           <Input id="name" name="name" type="text" required />

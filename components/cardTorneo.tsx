@@ -32,7 +32,7 @@ type cardTorneoProps = {
 export default function CardTorneo({ tournament }: cardTorneoProps) {
   return (
     <Link href={`/tournament?id=${tournament.idclient}&tab=overview`}>
-      <div className="rounded-lg shadow-xl hover:shadow-xl hover:shadow-orange-500/50 text-gray-200 hover:scale-[1.01] mt-10 h-96 bg-[url('../public/30.png')] bg-cover px-4 py-5">
+      <div className="rounded-md shadow-xl hover:shadow-xl hover:shadow-cyan-500/10 text-gray-200 h-72 bg-primary px-4 py-8">
         {/* <Image
           src={wz}
           width={1000}
@@ -40,51 +40,49 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
           alt="wz"
           className="rounded-lg"
         /> */}
-        <h2 className="w-full text-xl py-4 text-orange-500 font-bold">
+        <h2 className="w-full text-xl text-orange-500 font-bold mb-3">
           {tournament.name}
         </h2>
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          <p>Datetime</p>
-          <div className="flex gap-2 col-span-2">
-          <Clock9 />
-             {tournament.start_time.replace("T", " ")}
-          </div>
+
+        <div className="flex gap-2 col-span-2">
+          <Clock9 className="text-cyan-500" />
+          {tournament.start_time.replace("T", " ")}
         </div>
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          <p>Users</p>
-          <div className="flex gap-2 col-span-2">
-          <UsersRound />
-            <p>15/{tournament.max_players}</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          <p>Map</p>
-          <div className="flex gap-2 col-span-2">
-          <Pin />
-          <p>{tournament.map}</p>
-          </div>
-        </div>
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          <p>Platform</p>
-          <div className="flex gap-2 col-span-2">
-          <Gamepad2/>
+        <div className="flex gap-2 col-span-2 mt-3">
+          <Gamepad2 className="text-cyan-500" />
           <p>{tournament.platform}</p>
-          </div>
         </div>
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          <p>Game mode</p>
-          <div className="flex gap-2 col-span-2">
-          <Tally3 />
+
+        <div className="grid grid-cols-3 gap-3 mt-4 text-center">
+          <div>
+            <p className="text-cyan-500">Map</p>
+            <p>{tournament.map}</p>
+          </div>
+          <div>
+            <p className="text-cyan-500">Game mode</p>
             <p>{tournament.game_mode}</p>
           </div>
-        </div>
-        <div className="grid grid-cols-3 gap-3 mt-3">
-          <p>Rounds</p>
-          <div className="flex gap-2 col-span-2">
-          <RotateCcw />
+          <div>
+            <p className="text-cyan-500">Rounds</p>
             <p>{tournament.rounds}</p>
           </div>
         </div>
+        <div className="grid grid-cols-3 gap-3 mt-4 text-center">
+          <div>
+            <p className="text-cyan-500">Map</p>
+            <p>{tournament.map}</p>
+          </div>
+          <div>
+            <p className="text-cyan-500">Game mode</p>
+            <p>{tournament.game_mode}</p>
+          </div>
+          <div>
+            <p className="text-cyan-500">Rounds</p>
+            <p>{tournament.rounds}</p>
+          </div>
+        </div>
+  
+
         {/* <div className="flex mt-5">
           <p>Datetime</p>
           <div className="flex ms-3 gap-3 text-gray-200">

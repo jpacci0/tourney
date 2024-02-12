@@ -204,8 +204,6 @@ export async function createTournament(prevState: any, formData: FormData) {
         },
       ])
       .select();
-    // console.log(tournamentError);
-    // console.log(tournament);
 
     revalidatePath("/");
     redirect("/");
@@ -219,7 +217,6 @@ export async function createTeam(prevState: any, formData: FormData) {
   const name = formData.get("team_name") as string;
   const tournament_id = formData.get("tournament_id");
   const result = teamSchema.safeParse(name);
-  // console.log(result);
 
   if (!result.success) {
     return {
@@ -232,6 +229,8 @@ export async function createTeam(prevState: any, formData: FormData) {
       .from("team")
       .insert([{ name, tournament_id }])
       .select();
+
+    // revalidatePath(`/tournament?id=${tournament_id}&tab=rosters`);
 
     return {
       success: true,
@@ -394,20 +393,8 @@ export async function createScore(prevState: any, formData: FormData) {
     }
     scoreObject = { eliminations, placement, total };
     newArray.push(scoreObject);
-
-    // questo controlla solo se entrambi i campi sono maggiore o uguale a 0
-    // if (Number(formData.get(`placement_${i}`)) > 0) {
-    //   eliminations = Number(formData.get(`eliminations_${i}`));
-    //   placement = Number(formData.get(`placement_${i}`));
-    //   total = calculateScore(eliminations, placement);
-    // } else if (Number(formData.get(`placement_${i}`)) === 0) {
-    //   eliminations = existingArray[i].eliminations;
-    //   placement = existingArray[i].placement;
-    //   total = existingArray[i].total;
-    // }
-    // const newArray = [...existingArray, scoreObject];
   }
-  // const newNewArray = [...existingArray, newArray];
+
   try {
     const { data, error: errorUpdate } = await supabase
       .from("team")

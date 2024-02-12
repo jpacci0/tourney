@@ -34,8 +34,6 @@ export async function fetchUserById() {
   if (error || !user) {
     redirect("/login");
   }
-  //return user;
-  // console.log(user?.id);
 
   let { data: profiles, error: profileError } = await supabase
     .from("profiles")
@@ -58,15 +56,12 @@ export async function fetchUserById() {
 }
 
 export async function fetchTournaments() {
-  noStore();
+  // noStore();
   const supabase = supabaseClient();
 
   let { data: tournament, error } = await supabase
     .from("tournament")
     .select("*");
-
-  //   if (tournament) console.log(tournament);
-  //   if (error) console.log(error);
 
   return tournament;
 }
@@ -81,7 +76,6 @@ export async function fetchTournamentById(id: string) {
       .select("*")
       .eq("idclient", id)
       .single();
-    // console.log(tournament);
 
     return tournament;
   } catch (error) {
@@ -104,11 +98,7 @@ export async function fetchTeamsById(tournament_id: string) {
       .select("game_mode")
       .eq("idclient", tournament_id);
 
-    // let numPlayersInTeam = ;
-
-    // console.log(teams![2].team_user);
-
-    return {teams, game_mode};
+    return { teams, game_mode };
   } catch (error) {
     console.log(error);
   }
@@ -146,25 +136,6 @@ export async function fetchScoresById(tournament_id: string, user_id: string) {
       const scoreArray = scores!.score;
       return scoreArray;
     }
-    // console.log("scores", scores.score);
-
-    // Verifica che scores contenga dati
-    // if (scores && scores.length > 0) {
-    //   // Estrai l'array di score dall'oggetto
-
-    //   // Verifica che scoreArray sia un array valido
-    //   if (Array.isArray(scoreArray)) {
-    //     // Ora puoi iterare su scoreArray per recuperare i valori di ciascun oggetto
-    //     scoreArray.forEach((scoreObject) => {
-    //       // Recupera le proprietà dell'oggetto JSON e fai ciò che desideri con esse
-    //       // const elimination = scoreObject.elimination;
-    //       // const placement = scoreObject.placement;
-    //       // console.log(scoreObject.eliminations, scoreObject.placement, scoreObject.total);
-
-    //       // Fai qualcosa con elimination e placement...
-    //     });
-    //   }
-    // }
   } catch (error) {
     console.log(error);
   }
@@ -180,7 +151,7 @@ export async function fetchLeaderboard(id: string) {
       `
       user_id,
       team_id,
-      profiles (full_name),
+      profiles (username, nick_in_game),
       team (name, score)
     `
     )
@@ -200,11 +171,10 @@ export async function fetchLeaderboard(id: string) {
         team_id,
         team_name: team.name,
         profiles: [],
-        score: team.score,
-        total_score: team.score.reduce(
-          (acc: number, s: any) => acc + s.total,
-          0
-        ),
+        score: (!team.score ? [] : team.score),
+        total_score: (!team.score 
+          ? 0  // Se team.score è null o undefined, impostiamo total_score su 0
+          : team.score.reduce((acc: number, s: any) => acc + s.total, 0)),
       };
     }
     acc[team_id].profiles.push(profiles);
@@ -257,4 +227,46 @@ export async function fetchAllowTeams(tournament_id: string) {
   } else {
     return true;
   }
+}
+
+export async function fetchRosters(id: string) {
+  // noStore();
+  const supabase = supabaseClient();
+
+  let { data: rosters, error } = await supabase
+    .from("team_user")
+    .select(
+      `
+      user_id,
+      team_id,
+      profiles (username, nick_in_game),
+      team (name)
+    `
+    )
+    .eq("tournament_id", id);
+
+  if (error) {
+    console.log(error);
+  }
+
+  //? gestire l'eccezione nel caso in cui non ci siano dati, quindi team inseriti, partecipanti e score. in teoria fatto. fare ulteriori check.
+
+  // Raggruppa i dati per team
+  const groupedData = rosters!.reduce((acc: any, curr: any) => {
+    const { team_id, profiles, team } = curr;
+    if (!acc[team_id]) {
+      acc[team_id] = {
+        team_id,
+        team_name: team.name,
+        profiles: [],
+      };
+    }
+    acc[team_id].profiles.push(profiles);
+    return acc;
+  }, {});
+
+  // Converti i dati raggruppati in un array
+  const groupedArray = Object.values(groupedData) as any[];
+
+  return groupedArray;
 }

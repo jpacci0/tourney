@@ -39,7 +39,6 @@ export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
       numMaxTeam = 1;
       break;
   }
-  console.log("teams", numMaxTeam);
 
   useEffect(() => {
     setDataTeams(teams.teams);

@@ -8,7 +8,7 @@ export default function TournamentNav({
   tab?: string;
 }) {
   return (
-    <nav className="grid grid-rows-3 grid-cols-2 md:grid-rows-5 md:grid-cols-1 gap-y-4 gap-x-2">
+    <nav className="grid grid-rows-3 grid-cols-2 md:grid-rows-5 md:grid-cols-1 gap-y-4 gap-x-2 md:h-max">
       <LinkButton2
         href={`/tournament?id=${id}&tab=overview`}
         className={
