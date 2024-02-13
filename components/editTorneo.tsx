@@ -87,7 +87,7 @@ export default function EditTorneo({
           {state?.errors?.description && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
-          <Label htmlFor="rules">Rules</Label>
+          <Label>Rules</Label>
           {/* <Textarea id="rules" name="rules" required /> */}
           <ReactQuill
             theme="snow"
@@ -117,7 +117,7 @@ export default function EditTorneo({
             <div>
               <Label htmlFor="platform">Platform</Label>
               <Select name="platform" defaultValue={(tData as any).platform}>
-                <SelectTrigger>
+                <SelectTrigger id="platform">
                   <SelectValue placeholder={(tData as any).platform} />
                 </SelectTrigger>
                 <SelectContent>
@@ -134,7 +134,7 @@ export default function EditTorneo({
             <div>
               <Label htmlFor="map">Map</Label>
               <Select name="map" defaultValue={(tData as any).map}>
-                <SelectTrigger>
+                <SelectTrigger id="map">
                   <SelectValue placeholder={(tData as any).map} />
                 </SelectTrigger>
                 <SelectContent>
@@ -146,7 +146,7 @@ export default function EditTorneo({
             <div>
               <Label htmlFor="game_mode">Game mode</Label>
               <Select name="game_mode" defaultValue={(tData as any).game_mode}>
-                <SelectTrigger>
+                <SelectTrigger id="game_mode">
                   <SelectValue placeholder={(tData as any).game_mode} />
                 </SelectTrigger>
                 <SelectContent>
@@ -200,7 +200,7 @@ export default function EditTorneo({
 
           <Label htmlFor="status">Status</Label>
           <Select name="status" defaultValue={(tData as any).status}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger id="status">
               <SelectValue placeholder={(tData as any).status} />
             </SelectTrigger>
             <SelectContent>

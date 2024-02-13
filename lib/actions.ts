@@ -54,13 +54,13 @@ const profileSchema = z.object({
   // email: z.string().email(),
   username: z.string().min(3, {
     message: "Please insert a valid username, at least 3 character(s)",
-  }),
+  }).max(50),
   full_name: z.string().min(3, {
     message: "Please insert a valid full name, at least 3 character(s)",
-  }),
+  }).max(50),
   nick_in_game: z.string().min(3, {
     message: "Please insert a valid nick in game, at least 3 character(s)",
-  }),
+  }).max(50),
   country: z.string().nullable(),
   twitch_link: z.string().nullable(),
   x_link: z.string().nullable(),
@@ -152,7 +152,7 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
 // Sezione per la gestione dei tornei
 const statusEnum = z.enum(["upcoming", "in_progress", "done"]);
 const tournamentSchema = z.object({
-  name: z.string().min(3),
+  name: z.string().min(3).max(100),
   description: z.string().min(3),
   rules: z.string().min(3),
   platform: z.string(),

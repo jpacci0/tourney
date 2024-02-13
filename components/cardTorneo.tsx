@@ -1,7 +1,3 @@
-import Image from "next/image";
-import wz from "../public/warzone.jpg";
-import wz3 from "../public/30.png";
-import wz5 from "../public/50.png";
 import {
   Clock9,
   Pin,
@@ -11,6 +7,13 @@ import {
   RotateCcw,
 } from "lucide-react";
 import Link from "next/link";
+import { Black_Ops_One } from "next/font/google";
+
+const BlackOpsOne = Black_Ops_One({
+  weight: '400',
+  subsets: ['latin'],
+  display: 'swap',
+})
 
 type cardTorneoProps = {
   tournament: {
@@ -40,7 +43,7 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
           alt="wz"
           className="rounded-lg"
         /> */}
-        <h2 className="w-full text-xl text-orange-500 font-bold mb-3">
+        <h2 className={`w-full mb-5 text-xl text-orange-500 font-bold, ${BlackOpsOne.className}`}>
           {tournament.name}
         </h2>
 

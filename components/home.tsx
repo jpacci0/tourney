@@ -30,7 +30,7 @@ export default async function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">
             {inProgress}
           </div>
-          <Separator className="my-4" />
+          {/* <Separator className="my-4" /> */}
         </>
       )}
       {upcoming.length > 0 && (
@@ -44,14 +44,17 @@ export default async function Home() {
           {/* <Separator className="my-4" /> */}
         </>
       )}
-      {/* {done.length > 0 && (
-          <>
-            <h3 className="text-lg font-bold text-gray-200">done</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full mt-14">
-              {done}
-            </div>
-          </>
-        )} */}
+      {done.length > 0 && (
+        <>
+          <h3 className="text-lg font-bold text-gray-500 uppercase my-6">
+            done
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">
+            {done}
+          </div>
+          {/* <Separator className="my-4" /> */}
+        </>
+      )}
     </section>
   );
 }

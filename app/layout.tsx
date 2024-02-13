@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Trispace, Roboto_Mono } from "next/font/google";
+import { Inter, Trispace, Roboto_Mono, Orbitron } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
 import { Separator } from "@/components/ui/separator";
 
-const inter = Inter({subsets: ["latin"]});
-const roboto = Trispace({
+// const inter = Inter({subsets: ["latin"]});
+const robotoMono = Roboto_Mono({
   weight: '400',
   subsets: ['latin'],
   display: 'swap',
@@ -23,7 +23,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={roboto.className}>
+    <html lang="en" className={robotoMono.className}>
       <body className={`px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 antialiased`}>
         <Navbar />
         {/* <Separator orientation="vertical" className="" /> */}

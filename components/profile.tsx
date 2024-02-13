@@ -68,7 +68,7 @@ export default function Profile({ user }: { user: any }) {
 
   return (
     <main className="my-36 md:my-40">
-      <Header>Profile page</Header>
+      <Header>Profile</Header>
       <SubHeader subTitle="Profile">
         <div className="flex gap-2">
           <form action={signout}>
@@ -88,12 +88,16 @@ export default function Profile({ user }: { user: any }) {
       {!loading ? (
         <section className="flex flex-col items-center justify-center md:mt-20 mt-10">
           <form action={formActionEmail} className="w-full lg:w-1/2 mb-3">
-            <Label htmlFor="email">Email:</Label>
+            <p className="text-gray-200 mb-5">
+              Please enter a valid username and ign to ensure you join
+              tournaments correctly
+            </p>
+            <Label htmlFor="email">Email</Label>
             <Input
               id="email"
               name="email"
               type="email"
-              value={(userData as any).email}
+              value={(userData as any).email || ""}
               onChange={hanleInputChange}
               disabled={editEmail}
             />
@@ -105,8 +109,12 @@ export default function Profile({ user }: { user: any }) {
             {!stateEmail?.success && (
               <p className="text-red-300 mt-3 text-sm">{stateEmail?.message}</p>
             )}
-            <div className="flex space-x-5"> 
-              <Button variant="bottone" type="button" onClick={() => setEditEmail(!editEmail)}>
+            <div className="flex space-x-5">
+              <Button
+                variant="bottone"
+                type="button"
+                onClick={() => setEditEmail(!editEmail)}
+              >
                 Edit email
               </Button>
               <Button variant="bottone" disabled={editEmail}>
@@ -116,12 +124,12 @@ export default function Profile({ user }: { user: any }) {
           </form>
           <form onSubmit={handleSubmit} className="space-y-3 w-full lg:w-1/2">
             <div>
-              <Label htmlFor="fullname">Full name:</Label>
+              <Label htmlFor="fullname">Full name</Label>
               <Input
                 id="fullname"
                 name="full_name"
                 type="text"
-                value={(userData as any).full_name}
+                value={(userData as any).full_name || ""}
                 onChange={hanleInputChange}
                 disabled={edit}
               />
@@ -131,12 +139,12 @@ export default function Profile({ user }: { user: any }) {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="username">Username:</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
                   id="username"
                   name="username"
                   type="text"
-                  value={(userData as any).username}
+                  value={(userData as any).username || ""}
                   onChange={hanleInputChange}
                   disabled={edit}
                 />
@@ -145,12 +153,12 @@ export default function Profile({ user }: { user: any }) {
                 )}
               </div>
               <div>
-                <Label htmlFor="nig">Nick in game:</Label>
+                <Label htmlFor="ign">In game name</Label>
                 <Input
-                  id="nig"
+                  id="ign"
                   name="nick_in_game"
                   type="text"
-                  value={(userData as any).nick_in_game}
+                  value={(userData as any).nick_in_game || ""}
                   onChange={hanleInputChange}
                   disabled={edit}
                 />
@@ -163,8 +171,12 @@ export default function Profile({ user }: { user: any }) {
             </div>
             <div>
               <Label htmlFor="country">Country</Label>
-              <Select name="country" defaultValue={(userData as any).country} disabled={edit}>
-                <SelectTrigger>
+              <Select
+                name="country"
+                defaultValue={(userData as any).country}
+                disabled={edit}
+              >
+                <SelectTrigger id="country">
                   <SelectValue placeholder={(userData as any).country} />
                 </SelectTrigger>
                 <SelectContent>
@@ -178,75 +190,77 @@ export default function Profile({ user }: { user: any }) {
             </div>
             <Accordion type="single" collapsible className="text-gray-200">
               <AccordionItem value="item-1">
-                <AccordionTrigger className="text-orange-500">Social media links</AccordionTrigger>
+                <AccordionTrigger className="text-orange-500">
+                  Social media links
+                </AccordionTrigger>
                 <AccordionContent>
                   <div>
-                    <Label htmlFor="x">X link:</Label>
+                    <Label htmlFor="x">X link</Label>
                     <Input
                       id="x"
                       name="x_link"
                       type="text"
-                      value={(userData as any).x_link}
+                      value={(userData as any).x_link || ""}
                       onChange={hanleInputChange}
                       placeholder="e.g. https://www.twitter.com/life"
                       disabled={edit}
                     />
                   </div>
                   <div className="mt-4">
-                    <Label htmlFor="twitch">Twitch link:</Label>
+                    <Label htmlFor="twitch">Twitch link</Label>
                     <Input
                       id="twitch"
                       name="twitch_link"
                       type="text"
-                      value={(userData as any).twitch_link}
+                      value={(userData as any).twitch_link || ""}
                       onChange={hanleInputChange}
                       placeholder="e.g. https://www.twitch.tv/life"
                       disabled={edit}
                     />
                   </div>
                   <div className="mt-4">
-                    <Label htmlFor="facebook">Facebook link:</Label>
+                    <Label htmlFor="facebook">Facebook link</Label>
                     <Input
                       id="facebook"
                       name="facebook_link"
                       type="text"
-                      value={(userData as any).facebook_link}
+                      value={(userData as any).facebook_link || ""}
                       onChange={hanleInputChange}
                       placeholder="e.g. https://www.facebook.com/life"
                       disabled={edit}
                     />
                   </div>
                   <div className="mt-4">
-                    <Label htmlFor="instagram">Instagram link:</Label>
+                    <Label htmlFor="instagram">Instagram link</Label>
                     <Input
                       id="instagram"
                       name="instagram_link"
                       type="text"
-                      value={(userData as any).instagram_link}
+                      value={(userData as any).instagram_link || ""}
                       onChange={hanleInputChange}
                       placeholder="e.g. https://www.instagram.com/life"
                       disabled={edit}
                     />
                   </div>
                   <div className="mt-4">
-                    <Label htmlFor="youtube">Youtube link:</Label>
+                    <Label htmlFor="youtube">Youtube link</Label>
                     <Input
                       id="youtube"
                       name="youtube_link"
                       type="text"
-                      value={(userData as any).youtube_link}
+                      value={(userData as any).youtube_link || ""}
                       onChange={hanleInputChange}
                       placeholder="e.g. https://www.youtube.com/life"
                       disabled={edit}
                     />
                   </div>
                   <div className="mt-4">
-                    <Label htmlFor="kick">Kick link:</Label>
+                    <Label htmlFor="kick">Kick link</Label>
                     <Input
                       id="kick"
                       name="kick_link"
                       type="text"
-                      value={(userData as any).kick_link}
+                      value={(userData as any).kick_link || ""}
                       onChange={hanleInputChange}
                       placeholder="e.g. https://www.kick.com/life"
                       disabled={edit}

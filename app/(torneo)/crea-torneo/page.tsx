@@ -39,16 +39,16 @@ export default function CreaTorneoPage() {
 
   return (
     <main className="my-36 md:my-40">
-      <Header>
-        Create tournament
-      </Header>
+      <Header>Create tournament</Header>
       <SubHeader subTitle="Create">
-      <p></p>
+        <p></p>
       </SubHeader>
       <Separator className="mt-4" />
       <section className="flex justify-center mt-10 md:mt-20">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>
-          <Label className="mt-0" htmlFor="name">Tournament name</Label>
+          <Label className="mt-0" htmlFor="name">
+            Tournament name
+          </Label>
           <Input id="name" name="name" type="text" required />
           {state?.errors?.name && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
@@ -58,7 +58,7 @@ export default function CreaTorneoPage() {
           {state?.errors?.description && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
-          <Label htmlFor="rules">Rules</Label>
+          <Label>Rules</Label>
           {/* <Textarea id="rules" name="rules" required /> */}
           <ReactQuill
             theme="snow"
@@ -82,7 +82,7 @@ export default function CreaTorneoPage() {
             <div>
               <Label htmlFor="platform">Platform</Label>
               <Select name="platform" defaultValue="crossplay">
-                <SelectTrigger>
+                <SelectTrigger id="platform">
                   <SelectValue placeholder="Crossplay" />
                 </SelectTrigger>
                 <SelectContent>
@@ -99,7 +99,7 @@ export default function CreaTorneoPage() {
             <div>
               <Label htmlFor="map">Map</Label>
               <Select name="map" defaultValue="warzone">
-                <SelectTrigger>
+                <SelectTrigger id="map">
                   <SelectValue placeholder="Warzone" />
                 </SelectTrigger>
                 <SelectContent>
@@ -111,7 +111,7 @@ export default function CreaTorneoPage() {
             <div>
               <Label htmlFor="game_mode">Game mode</Label>
               <Select name="game_mode" defaultValue="trios">
-                <SelectTrigger>
+                <SelectTrigger id="game_mode">
                   <SelectValue placeholder="Trios" />
                 </SelectTrigger>
                 <SelectContent>
@@ -161,7 +161,7 @@ export default function CreaTorneoPage() {
 
           <Label htmlFor="status">Status</Label>
           <Select name="status" defaultValue="upcoming">
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger id="status">
               <SelectValue placeholder="Upcoming" />
             </SelectTrigger>
             <SelectContent>
