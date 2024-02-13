@@ -32,8 +32,6 @@ export async function updateEmail(prevState: any, formData: FormData) {
       message: "Please insert a valid email",
     };
   } else {
-    console.log(result.data);
-
     const { data, error } = await supabase.auth.updateUser({
       email: result.data,
     });
@@ -43,9 +41,6 @@ export async function updateEmail(prevState: any, formData: FormData) {
         success: false,
         message: "This email address already exists",
       };
-    }
-    if (data) {
-      console.log(data);
     }
 
     return {
@@ -66,8 +61,13 @@ const profileSchema = z.object({
   nick_in_game: z.string().min(3, {
     message: "Please insert a valid nick in game, at least 3 character(s)",
   }),
+  country: z.string().nullable(),
   twitch_link: z.string().nullable(),
   x_link: z.string().nullable(),
+  facebook_link: z.string().nullable(),
+  instagram_link: z.string().nullable(),
+  youtube_link: z.string().nullable(),
+  kick_link: z.string().nullable(),
 });
 export const updateUserById = async (prevState: any, formData: FormData) => {
   const supabase = supabaseClient();
@@ -77,8 +77,13 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
     username: formData.get("username") as string,
     full_name: formData.get("full_name") as string,
     nick_in_game: formData.get("nick_in_game") as string,
+    country: formData.get("country") as string,
     twitch_link: formData.get("twitch_link") as string,
     x_link: formData.get("x_link") as string,
+    facebook_link: formData.get("facebook_link") as string,
+    instagram_link: formData.get("instagram_link") as string,
+    youtube_link: formData.get("youtube_link") as string,
+    kick_link: formData.get("kick_link") as string,
   });
 
   if (!result.success) {
@@ -86,8 +91,18 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
     const errorMap = zodError.flatten().fieldErrors;
     return errorMap;
   } else {
-    const { username, full_name, nick_in_game, twitch_link, x_link } =
-      result.data;
+    const {
+      username,
+      full_name,
+      nick_in_game,
+      country,
+      twitch_link,
+      x_link,
+      facebook_link,
+      instagram_link,
+      youtube_link,
+      kick_link,
+    } = result.data;
     const updated_at = new Date().toISOString();
 
     const id = formData.get("user_id");
@@ -100,8 +115,13 @@ export const updateUserById = async (prevState: any, formData: FormData) => {
           username,
           full_name,
           nick_in_game,
+          country,
           twitch_link,
           x_link,
+          facebook_link,
+          instagram_link,
+          youtube_link,
+          kick_link,
         })
         .eq("id", id)
         .select();
@@ -205,8 +225,104 @@ export async function createTournament(prevState: any, formData: FormData) {
       ])
       .select();
 
+    if (tournamentError) {
+      if (tournamentError.code === "23502") {
+        return {
+          message: ["You must be logged in to create a tournament"],
+        };
+      }
+      // console.log(updateError.code);
+      return {
+        message: [
+          "Something went wrong. Please try again or contact support if the problem persists.",
+        ],
+      };
+    }
+
     revalidatePath("/");
     redirect("/");
+  }
+}
+
+export async function updateTournament(prevState: any, formData: FormData) {
+  const supabase = supabaseClient();
+
+  const result = tournamentSchema.safeParse({
+    name: formData.get("name") as string,
+    description: formData.get("description") as string,
+    rules: formData.get("rules") as string,
+    platform: formData.get("platform") as string,
+    start_time: formData.get("start_time") as string,
+    map: formData.get("map") as string,
+    max_players: formData.get("max_players") as unknown as number,
+    status: formData.get("status") as string,
+    rounds: formData.get("rounds") as unknown as number,
+    game_mode: formData.get("game_mode") as string,
+  });
+
+  if (!result.success) {
+    const zodError = result.error as z.ZodError;
+    const errorMap = zodError.flatten().fieldErrors;
+    return {
+      message: "Please check if all fields are filled correctly",
+      errors: {
+        name: errorMap["name"],
+        description: errorMap["description"],
+        rules: errorMap["rules"],
+        start_time: errorMap["start_time"],
+        max_players: errorMap["max_players"],
+        rounds: errorMap["rounds"],
+      },
+    };
+  } else {
+    const {
+      name,
+      description,
+      rules,
+      platform,
+      start_time,
+      map,
+      max_players,
+      status,
+      rounds,
+      game_mode,
+    } = result.data;
+
+    const { data: tournament, error: tournamentError } = await supabase
+      .from("tournament")
+      .update([
+        {
+          name,
+          description,
+          rules,
+          platform,
+          start_time,
+          map,
+          max_players,
+          status,
+          rounds,
+          game_mode,
+        },
+      ])
+      .eq("idclient", formData.get("idclient") as string)
+      .select();
+
+    if (tournamentError) {
+      if (tournamentError.code === "23502") {
+        return {
+          message: ["You must be logged in to create a tournament"],
+        };
+      }
+      // console.log(updateError.code);
+      return {
+        message: [
+          "Something went wrong. Please try again or contact support if the problem persists.",
+        ],
+      };
+    }
+
+    revalidatePath(`tournament?id=${formData.get("idclient")}&tab=overview`);
+    redirect(`tournament?id=${formData.get("idclient")}&tab=overview`);
   }
 }
 

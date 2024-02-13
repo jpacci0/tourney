@@ -36,7 +36,11 @@ export default function ScoreTeam({
     const formDataValues = new FormData();
 
     for (const [key, value] of formData.entries()) {
-      if (key.startsWith("eliminations_") || key.startsWith("placement_") || key.startsWith("proof_")) {
+      if (
+        key.startsWith("eliminations_") ||
+        key.startsWith("placement_") ||
+        key.startsWith("proof_")
+      ) {
         formDataValues.append(key, value as string);
       }
     }
@@ -83,14 +87,7 @@ export default function ScoreTeam({
                   <p>Proof</p>
                 </div>
                 {score.map((s: any, index: number) => (
-                  <div
-                    key={index}
-                    className={
-                      index % 2 == 0
-                        ? "text-gray-200 mb-4 bg-primary"
-                        : "text-gray-200 mb-4"
-                    }
-                  >
+                  <div key={index} className="text-gray-200 mb-4 bg-primary">
                     <div className="grid grid-cols-5 gap-2">
                       <p className="text-orange-500">Game {index + 1}</p>
                       <p>{s.eliminations}</p>
@@ -105,7 +102,11 @@ export default function ScoreTeam({
             )}
             {!score.error_score_null && (
               <div>
-                <p className="bg-orange-500 text-dark-950 p-1 rounded font-bold">Total: {score.reduce((acc: number, s: any) => acc + s.total, 0)} points</p>
+                <p className="bg-orange-500 text-dark-950 p-1 rounded font-bold">
+                  Total:{" "}
+                  {score.reduce((acc: number, s: any) => acc + s.total, 0)}{" "}
+                  points
+                </p>
                 {/* <p className="text-gray-200">
                   {score.reduce((acc: number, s: any) => acc + s.total, 0)}{" "}
                   points
@@ -128,7 +129,10 @@ export default function ScoreTeam({
               }}
             >
               {arrRounds.map((round, index) => (
-                <div key={round} className="grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 gap-4">
+                <div
+                  key={round}
+                  className="grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 gap-4"
+                >
                   <div className="mt-3">
                     <Label htmlFor={`eliminations_${round + 1}`}>
                       Eliminations game {round + 1}

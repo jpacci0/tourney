@@ -16,7 +16,7 @@ export default async function ScoreT({ id }: { id?: string }) {
     return (
       <p className="text-gray-500">
         You must be a tournament participant to enter the score.{" "}
-        <Link href={"/login"} className="underline">
+        <Link href="/login" className="underline">
           To login click here
         </Link>
         .

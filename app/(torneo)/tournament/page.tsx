@@ -4,7 +4,6 @@ import Header from "@/components/header";
 import SubHeader from "@/components/subHeader";
 import TournamentSection from "@/components/tournamentSection";
 import TournamentNav from "@/components/tournamentNav";
-import { fetchTeamsById, fetchTournamentById } from "@/lib/data";
 
 export default function TournamentPage({
   searchParams,

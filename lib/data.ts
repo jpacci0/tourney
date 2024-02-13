@@ -22,6 +22,20 @@ export async function getUser() {
   } = await supabase.auth.getUser();
   return user;
 }
+export async function getUserLevel() {
+  const supabase = supabaseClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  let { data: profile, error } = await supabase
+    .from("profiles")
+    .select("id, level")
+    .eq("id", user?.id)
+    .single();
+
+  return profile;
+}
 
 export async function fetchUserById() {
   const supabase = supabaseClient();
@@ -67,13 +81,30 @@ export async function fetchTournaments() {
 }
 
 export async function fetchTournamentById(id: string) {
-  noStore();
+  // noStore();
   const supabase = supabaseClient();
 
   try {
     let { data: tournament, error } = await supabase
       .from("tournament")
       .select("*")
+      .eq("idclient", id)
+      .single();
+
+    return tournament;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function fetchTournamentUserById(id: string) {
+  // noStore();
+  const supabase = supabaseClient();
+
+  try {
+    let { data: tournament, error } = await supabase
+      .from("tournament")
+      .select(`*, profiles (username, level)`)
       .eq("idclient", id)
       .single();
 
@@ -171,10 +202,10 @@ export async function fetchLeaderboard(id: string) {
         team_id,
         team_name: team.name,
         profiles: [],
-        score: (!team.score ? [] : team.score),
-        total_score: (!team.score 
-          ? 0  // Se team.score è null o undefined, impostiamo total_score su 0
-          : team.score.reduce((acc: number, s: any) => acc + s.total, 0)),
+        score: !team.score ? [] : team.score,
+        total_score: !team.score
+          ? 0 // Se team.score è null o undefined, impostiamo total_score su 0
+          : team.score.reduce((acc: number, s: any) => acc + s.total, 0),
       };
     }
     acc[team_id].profiles.push(profiles);

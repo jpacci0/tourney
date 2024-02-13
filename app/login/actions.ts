@@ -32,7 +32,6 @@ export async function login(formData: FormData) {
     }
   } else {
     const { email, password } = result.data;
-    console.log(email, password);
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
       password,
@@ -42,15 +41,6 @@ export async function login(formData: FormData) {
     }
     return redirect("/");
   }
-
-  // const { error } = await supabase.auth.signInWithPassword(data);
-
-  // if (error) {
-  //   redirect("/error");
-  // }
-
-  // revalidatePath("/", "layout");
-  // redirect("/");
 }
 
 const signupSchema = z.object({

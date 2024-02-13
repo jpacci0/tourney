@@ -18,12 +18,22 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow2.css";
 import { useState } from "react";
 import { useFormState } from "react-dom";
-import { createTournament } from "@/lib/actions";
+import { updateTournament } from "@/lib/actions";
 
-export default function CreaTorneoPage() {
-  const [quillValue, setQuillValue] = useState("");
+export default function EditTorneo({
+  tournamentData,
+}: {
+  tournamentData: any;
+}) {
+  const [tData, setTData] = useState(tournamentData);
+  const [quillValue, setQuillValue] = useState(tData.rules);
+  const [state, formAction] = useFormState(updateTournament, null);
 
-  const [state, formAction] = useFormState(createTournament, null);
+  const hanleInputChange = (event: any) => {
+    const { name, value } = event.target;
+    setTData({ ...tData, [name]: value });
+  };
+
   // console.log(quillValue);
 
   const handleSubmit = (event: any) => {
@@ -39,22 +49,41 @@ export default function CreaTorneoPage() {
 
   return (
     <main className="my-36 md:my-40">
-      <Header>
-        Create tournament
-      </Header>
-      <SubHeader subTitle="Create">
-      <p></p>
+      <Header>Edit tournament</Header>
+      <SubHeader subTitle="Edit">
+        <p></p>
       </SubHeader>
       <Separator className="mt-4" />
       <section className="flex justify-center mt-10 md:mt-20">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>
-          <Label className="mt-0" htmlFor="name">Tournament name</Label>
-          <Input id="name" name="name" type="text" required />
+          <Input
+            type="hidden"
+            name="idclient"
+            id="idclient"
+            value={(tData as any).idclient}
+          />
+          <Label className="mt-0" htmlFor="name">
+            Tournament name
+          </Label>
+          <Input
+            id="name"
+            name="name"
+            type="text"
+            required
+            value={(tData as any).name}
+            onChange={hanleInputChange}
+          />
           {state?.errors?.name && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
           <Label htmlFor="description">Description</Label>
-          <Textarea id="description" name="description" required />
+          <Textarea
+            id="description"
+            name="description"
+            required
+            value={(tData as any).description}
+            onChange={hanleInputChange}
+          />
           {state?.errors?.description && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
@@ -72,7 +101,13 @@ export default function CreaTorneoPage() {
           <div className="grid grid-cols-2 gap-4 mt-5">
             <div>
               <Label htmlFor="datetime">Start date time</Label>
-              <Input type="datetime-local" id="datetime" name="start_time" />
+              <Input
+                type="datetime-local"
+                id="datetime"
+                name="start_time"
+                value={(tData as any).start_time}
+                onChange={hanleInputChange}
+              />
               {state?.errors?.start_time && (
                 <p className="text-red-300 mt-3 text-sm">
                   {state.errors.start_time}
@@ -81,9 +116,9 @@ export default function CreaTorneoPage() {
             </div>
             <div>
               <Label htmlFor="platform">Platform</Label>
-              <Select name="platform" defaultValue="crossplay">
+              <Select name="platform" defaultValue={(tData as any).platform}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Crossplay" />
+                  <SelectValue placeholder={(tData as any).platform} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="crossplay">Crossplay</SelectItem>
@@ -98,9 +133,9 @@ export default function CreaTorneoPage() {
           <div className="grid grid-cols-2 gap-4 mt-5">
             <div>
               <Label htmlFor="map">Map</Label>
-              <Select name="map" defaultValue="warzone">
+              <Select name="map" defaultValue={(tData as any).map}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Warzone" />
+                  <SelectValue placeholder={(tData as any).map} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="warzone">Warzone</SelectItem>
@@ -110,9 +145,9 @@ export default function CreaTorneoPage() {
             </div>
             <div>
               <Label htmlFor="game_mode">Game mode</Label>
-              <Select name="game_mode" defaultValue="trios">
+              <Select name="game_mode" defaultValue={(tData as any).game_mode}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Trios" />
+                  <SelectValue placeholder={(tData as any).game_mode} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="solos">Solos</SelectItem>
@@ -133,6 +168,8 @@ export default function CreaTorneoPage() {
                 name="rounds"
                 min="1"
                 max="10"
+                value={(tData as any).rounds}
+                onChange={hanleInputChange}
                 required
               />
               {state?.errors?.rounds && (
@@ -149,6 +186,8 @@ export default function CreaTorneoPage() {
                 name="max_players"
                 min="1"
                 max="200"
+                value={(tData as any).max_players}
+                onChange={hanleInputChange}
                 required
               />
               {state?.errors?.max_players && (
@@ -160,9 +199,9 @@ export default function CreaTorneoPage() {
           </div>
 
           <Label htmlFor="status">Status</Label>
-          <Select name="status" defaultValue="upcoming">
+          <Select name="status" defaultValue={(tData as any).status}>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="Upcoming" />
+              <SelectValue placeholder={(tData as any).status} />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="upcoming">Upcoming</SelectItem>

@@ -1,4 +1,5 @@
-import { fetchTeamsById, fetchTournamentById } from "@/lib/data";
+import { fetchTournamentUserById, getUserLevel } from "@/lib/data";
+import { LinkButton } from "@/components/ui/linkButton";
 
 const Prop = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -9,13 +10,32 @@ const Prop = ({ children }: { children: React.ReactNode }) => {
 };
 
 export default async function Overview({ id }: { id?: string }) {
-  const tournament = await fetchTournamentById(id!);
+  const tournament = await fetchTournamentUserById(id!);
+  const user = await getUserLevel();
+
+  // if (user?.id === tournament?.created_by) {
+  //   console.log("tu hai creato il torneo");
+  // } else {
+  //   console.log("tu non hai creato il torneo");
+  // }
+
   return (
     <section className="flex flex-col gap-5">
-      {tournament.status === "done" && (<p className="text-gray-950 bg-destructive w-auto text-center p-2 text-2xl font-bold">FINISHED</p>)}
+      {tournament.status === "done" && (
+        <p className="text-gray-950 bg-destructive w-auto text-center p-2 text-2xl font-bold">
+          FINISHED
+        </p>
+      )}
+      {("admin" === user?.level || user?.id === tournament?.created_by) && (
+        <LinkButton href={`/edit-torneo?id=${id}`}>Edit tournament</LinkButton>
+      )}
       <Prop>
         <p>Tournament ID</p>
         <p className="text-gray-400">{tournament.idclient}</p>
+      </Prop>
+      <Prop>
+        <p>Created by</p>
+        <p className="text-gray-400">{tournament.profiles.username}</p>
       </Prop>
       <Prop>
         <p>Title</p>

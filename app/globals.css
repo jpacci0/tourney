@@ -92,3 +92,21 @@ input[type="datetime-local"]::-webkit-calendar-picker-indicator {
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
   padding: 8px;
 }
+
+::-webkit-scrollbar {
+  width: 3px; /* Larghezza della barra di scorrimento */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #f97316; /* Colore del cursore di scorrimento */
+  border-radius: 5px; /* Angoli arrotondati del cursore di scorrimento */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #030712; /* Colore dello sfondo della barra di scorrimento */
+}
+body {
+    scrollbar-width: thin;
+    overflow-y: scroll;
+    scrollbar-color: #f97316 #030712;
+}

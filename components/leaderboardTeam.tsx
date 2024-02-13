@@ -8,7 +8,7 @@ import {
 export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
   if (scoreData.length === 0) {
     return <p className="text-gray-500">No scores yet.</p>;
-  }  
+  }
 
   return (
     <section>
@@ -22,8 +22,7 @@ export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
           <AccordionItem value="item-1">
             <AccordionTrigger>
               <p>
-                {index + 1}. {" "}
-                {score.team_name} -{" "}
+                {index + 1}. {score.team_name} -{" "}
                 <span className="text-orange-500">
                   {score.total_score} points
                 </span>
@@ -48,14 +47,7 @@ export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
                   <p>Proof</p>
                 </div>
                 {score.score.map((s: any, index: number) => (
-                  <div
-                    key={index}
-                    className={
-                      index % 2 == 0
-                        ? "text-gray-200 mb-4 bg-primary"
-                        : "text-gray-200 mb-4"
-                    }
-                  >
+                  <div key={index} className="text-gray-200 mb-4 bg-primary">
                     <div className="grid grid-cols-5 gap-2">
                       <p className="text-orange-500">Game {index + 1}</p>
                       <p>{s.eliminations}</p>
