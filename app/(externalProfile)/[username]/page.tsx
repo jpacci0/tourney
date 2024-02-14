@@ -10,7 +10,7 @@ export default function UserPage({ params }: { params: { username: string } }) {
   const router = useRouter();
 
   return (
-    <main className="my-36 md:my-40">
+    <main>
       <Header>{params.username}</Header>
       <SubHeader subTitle={`${params.username}'s profile`}>
         <div className="flex gap-2">

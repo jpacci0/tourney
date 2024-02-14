@@ -38,13 +38,13 @@ export default function CreaTorneoPage() {
   };
 
   return (
-    <main className="my-36 md:my-40">
+    <main>
       <Header>Create tournament</Header>
       <SubHeader subTitle="Create">
         <p></p>
       </SubHeader>
       <Separator className="mt-4" />
-      <section className="flex justify-center mt-10 md:mt-20">
+      <section className="flex justify-center mt-10">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>
           <Label className="mt-0" htmlFor="name">
             Tournament name

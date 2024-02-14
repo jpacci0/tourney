@@ -12,13 +12,24 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow2.css";
 import { useState } from "react";
 import { useFormState } from "react-dom";
-import { updateTournament } from "@/lib/actions";
+import { updateTournament, deleteTournament } from "@/lib/actions";
 
 export default function EditTorneo({
   tournamentData,
@@ -28,6 +39,10 @@ export default function EditTorneo({
   const [tData, setTData] = useState(tournamentData);
   const [quillValue, setQuillValue] = useState(tData.rules);
   const [state, formAction] = useFormState(updateTournament, null);
+  const deleteTournamentWithId = deleteTournament.bind(
+    null,
+    (tData as any).idclient
+  );
 
   const hanleInputChange = (event: any) => {
     const { name, value } = event.target;
@@ -48,13 +63,35 @@ export default function EditTorneo({
   };
 
   return (
-    <main className="my-36 md:my-40">
+    <main className="mt-auto">
       <Header>Edit tournament</Header>
       <SubHeader subTitle="Edit">
-        <p></p>
+        <AlertDialog>
+          <AlertDialogTrigger className="bg-red-500 hover:bg-red-600 rounded-md text-sm font-bold py-2 px-4">
+            Delete
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+              <AlertDialogDescription>
+                This action cannot be undone. This will permanently delete this tournament and all data related to it.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              {/* <AlertDialogAction>   */}
+              <form action={deleteTournamentWithId}>
+                <Button variant="default" className="w-full" type="submit">
+                  Continue
+                </Button>
+              </form>
+              {/* </AlertDialogAction> */}
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </SubHeader>
       <Separator className="mt-4" />
-      <section className="flex justify-center mt-10 md:mt-20">
+      <section className="flex justify-center mt-10">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>
           <Input
             type="hidden"
@@ -213,7 +250,7 @@ export default function EditTorneo({
             <p className="text-red-300 mt-3 text-sm">{state.message}</p>
           )}
           <Button className="my-5" variant="bottone">
-            Create
+            Edit
           </Button>
         </form>
       </section>

@@ -24,10 +24,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={robotoMono.className}>
-      <body className={`px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 antialiased`}>
+      <body className={`px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 antialiased flex flex-col h-screen`}>
         <Navbar />
-        {/* <Separator orientation="vertical" className="" /> */}
-        {children}
+        <div className="flex-1">
+          {children}
+        </div>
         <Footer />
       </body>
     </html>

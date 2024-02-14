@@ -22,7 +22,7 @@ export default async function Overview({ id }: { id?: string }) {
   return (
     <section className="flex flex-col gap-5">
       {tournament.status === "done" && (
-        <p className="text-gray-950 bg-destructive w-auto text-center p-2 text-2xl font-bold">
+        <p className="text-gray-950 bg-destructive w-auto text-center rounded-md p-2 text-xl font-bold">
           FINISHED
         </p>
       )}

@@ -17,9 +17,20 @@ import {
 } from "@/components/ui/accordion";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import SubHeader from "@/components/subHeader";
 import Header from "@/components/header";
-import { updateUserById, updateEmail } from "@/lib/actions";
+import { updateUserById, updateEmail, deleteUser } from "@/lib/actions";
 import { signout } from "@/app/login/actions";
 import { useState, useEffect } from "react";
 import { useFormState } from "react-dom";
@@ -33,6 +44,7 @@ export default function Profile({ user }: { user: any }) {
   const [userData, setUserData] = useState(null || {});
   const [state, formAction] = useFormState(updateUserById, null);
   const [stateEmail, formActionEmail] = useFormState(updateEmail, null);
+  const deleteUserWithId = deleteUser.bind(null, (userData as any).id);
 
   useEffect(() => {
     fetch("https://restcountries.com/v3.1/all?fields=name")
@@ -67,7 +79,7 @@ export default function Profile({ user }: { user: any }) {
   };
 
   return (
-    <main className="my-36 md:my-40">
+    <main className="mt-auto">
       <Header>Profile</Header>
       <SubHeader subTitle="Profile">
         <div className="flex gap-2">
@@ -76,17 +88,33 @@ export default function Profile({ user }: { user: any }) {
               <Button variant="bottoneSecondary">Logout</Button>
             </div>
           </form>
-          {/* //TODO implementare la cancellazione dell'account */}
-          {/* <form action={deleteAccount}>
-            <div className="flex gap-2">
-              <Button variant="destructive">Delete</Button>
-            </div>
-          </form> */}
+          <AlertDialog>
+            <AlertDialogTrigger className="bg-red-500 hover:bg-red-600 rounded-md text-sm font-bold px-4 py-2">
+              Delete
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  your account and remove your data from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                {/* <AlertDialogAction>   */}
+                <form action={deleteUserWithId}>
+                  <Button variant="default" className="w-full" type="submit">Continue</Button>
+                </form>
+                {/* </AlertDialogAction> */}
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </SubHeader>
       <Separator className="mt-4" />
       {!loading ? (
-        <section className="flex flex-col items-center justify-center md:mt-20 mt-10">
+        <section className="flex flex-col items-center justify-center mt-10">
           <form action={formActionEmail} className="w-full lg:w-1/2 mb-3">
             <p className="text-gray-200 mb-5">
               Please enter a valid username and ign to ensure you join
@@ -173,11 +201,11 @@ export default function Profile({ user }: { user: any }) {
               <Label htmlFor="country">Country</Label>
               <Select
                 name="country"
-                defaultValue={(userData as any).country}
+                defaultValue={(userData as any).country || "Italy"}
                 disabled={edit}
               >
                 <SelectTrigger id="country">
-                  <SelectValue placeholder={(userData as any).country} />
+                  <SelectValue placeholder={(userData as any).country || "Italy"} />
                 </SelectTrigger>
                 <SelectContent>
                   {countryNames.map((country) => (

@@ -6,13 +6,10 @@ import { Button } from "@/components/ui/button";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { createTeam } from "@/lib/actions";
-import { getSession } from "@/lib/data";
-import { revalidatePath } from "next/cache";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-export default function CreateTeam({ id }: { id?: string }) {
+export default function CreateTeam({ id, userid }: { id?: string, userid?: string}) {
   const [state, formAction] = useFormState(createTeam, null);
   const { pending } = useFormStatus();
   const [timerId, setTimerId] = useState(null);
@@ -22,7 +19,7 @@ export default function CreateTeam({ id }: { id?: string }) {
     if (state?.success) {
       const idTimer: any = setTimeout(() => {
         router.push(`/tournament?id=${id}&tab=join`);
-      }, 5000);
+      }, 4000);
       setTimerId(idTimer);
 
       // Clean up the timer when the component unmounts
@@ -34,9 +31,18 @@ export default function CreateTeam({ id }: { id?: string }) {
     }
   }, [state?.success]); // Execute the effect only when state.success changes
 
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    formData.append("user_id", userid!);
+
+    formAction(formData);
+  };
+
   return (
     <section>
-      <form action={formAction}>
+      <form onSubmit={handleSubmit}>
         <Input type="hidden" name="tournament_id" value={id} />
         <Label htmlFor="team_name">Team name</Label>
         <Input

@@ -38,6 +38,7 @@ export async function getUserLevel() {
 }
 
 export async function fetchUserById() {
+  noStore();
   const supabase = supabaseClient();
 
   const {
@@ -72,6 +73,11 @@ export async function fetchUserById() {
 export async function fetchTournaments() {
   // noStore();
   const supabase = supabaseClient();
+  // let { data: u, error: e } = await supabase.auth.admin.listUsers();
+
+  // console.log(e);
+  // console.log(u);
+  
 
   let { data: tournament, error } = await supabase
     .from("tournament")

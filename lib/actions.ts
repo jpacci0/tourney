@@ -1,6 +1,7 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { delUser } from "@/utils/supabase/del";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
@@ -36,7 +37,6 @@ export async function updateEmail(prevState: any, formData: FormData) {
       email: result.data,
     });
     if (error) {
-      console.log(error);
       return {
         success: false,
         message: "This email address already exists",
@@ -48,6 +48,27 @@ export async function updateEmail(prevState: any, formData: FormData) {
       message: "Email updated successfully",
     };
   }
+}
+
+// delete user
+export async function deleteUser(id: string) {
+  await delUser(id);
+  revalidatePath("/profile");
+  redirect("/");
+}
+
+// delete tournament
+export async function deleteTournament(tournament_id: string) {
+  const supabase = supabaseClient();
+
+  const { error } = await supabase
+  .from('tournament')
+  .delete()
+  .eq('idclient', tournament_id);
+          console.log(error);
+          
+  revalidatePath("/");
+  redirect("/");
 }
 
 const profileSchema = z.object({
@@ -332,6 +353,7 @@ export async function createTeam(prevState: any, formData: FormData) {
   const supabase = supabaseClient();
   const name = formData.get("team_name") as string;
   const tournament_id = formData.get("tournament_id");
+  const created_by = formData.get("user_id");
   const result = teamSchema.safeParse(name);
 
   if (!result.success) {
@@ -343,7 +365,7 @@ export async function createTeam(prevState: any, formData: FormData) {
   } else {
     const { data, error } = await supabase
       .from("team")
-      .insert([{ name, tournament_id }])
+      .insert([{ name, tournament_id, created_by }])
       .select();
 
     // revalidatePath(`/tournament?id=${tournament_id}&tab=rosters`);

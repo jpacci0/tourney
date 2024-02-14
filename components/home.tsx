@@ -19,7 +19,7 @@ export default async function Home() {
     .map((tournament: any) => (
       <CardTorneo key={tournament.id} tournament={tournament} />
     ));
-
+    
   return (
     <section>
       {inProgress.length > 0 && (

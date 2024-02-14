@@ -11,7 +11,7 @@ export default function TournamentPage({
   searchParams: { id?: string; tab?: string };
 }) {
   return (
-    <main className="my-36 md:my-40">
+    <main>
       <Header>Tournament</Header>
       <SubHeader subTitle={searchParams.tab}>
         <div className="flex gap-2">
@@ -24,7 +24,7 @@ export default function TournamentPage({
         </div>
       </SubHeader>
       <Separator className="mt-4" />
-      <div className="mt-10 md:mt-20 md:flex">
+      <div className="mt-10 md:flex">
         <TournamentNav id={searchParams.id} tab={searchParams.tab} />
         <Separator
           orientation="vertical"

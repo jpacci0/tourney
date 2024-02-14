@@ -24,5 +24,6 @@ export default async function CreateT({ id }: { id?: string }) {
       </p>
     );
   }
-  return <CreateTeam id={id} />;
+
+  return <CreateTeam id={id} userid={sessionData.session.user.id} />;
 }

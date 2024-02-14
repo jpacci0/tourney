@@ -13,8 +13,8 @@ export default function TournamentNav({
         href={`/tournament?id=${id}&tab=overview`}
         className={
           tab === "overview"
-            ? "text-gray-900 bg-orange-500 hover:bg-orange-400 col-span-2 md:col-auto"
-            : "col-span-2 md:col-auto"
+            ? "text-gray-900 bg-orange-500 hover:bg-orange-400"
+            : ""
         }
       >
         Overview
@@ -58,6 +58,16 @@ export default function TournamentNav({
         }
       >
         Rosters
+      </LinkButton2>
+      <LinkButton2
+        href={`/tournament?id=${id}&tab=myteam`}
+        className={
+          tab === "myteam"
+            ? "text-gray-900 bg-orange-500 hover:bg-orange-400"
+            : ""
+        }
+      >
+        My team
       </LinkButton2>
     </nav>
   );

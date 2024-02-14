@@ -47,7 +47,7 @@ export default function RostersTeam({ rostersData }: { rostersData: any }) {
         {rostersData.map((roster: any, index: number) => (
           <div key={index} className="mb-8">
             <p className="text-lg font-bold text-orange-500">{index+1}. {roster.team_name}</p>
-            <div className="text-gray-200">
+            <div className="text-gray-200 flex flex-col">
               {roster.profiles.map((profile: any) => (
                 <Link href={`/${profile.username}`} key={profile.username}>{profile.nick_in_game}</Link>
               ))}

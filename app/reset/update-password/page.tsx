@@ -41,7 +41,7 @@ export default function UpdatePasswordPage({
   //   }
   // };
   return (
-    <main className="my-36 md:my-40">
+    <main>
       <Header>
         Reset
       </Header>
