@@ -1,22 +1,11 @@
-import { fetchTeamsById, getSession } from "@/lib/data";
-import Link from "next/link";
+import { fetchMyteams } from "@/lib/data";
 import MyteamTeam from "@/components/myteamTeam";
 
 export default async function MyteamT({ id }: { id?: string }) {
-  const sessionData = await getSession();
-  
-//   const teams: any = await fetchTeamsById(id!);
-
-  if (!sessionData.session) {
-    return (
-      <p className="text-gray-500">
-        You need to be logged in to join a team.
-        <Link href={"/login"} className="underline">
-          To login click here
-        </Link>
-        .
-      </p>
-    );
+  //!portare la fetch user dentro la funzione sotto. se ritorna errore la funzione sotto vuol dire che non c'è nessuno associato al torneo o ad un team
+  const teammate: any = await fetchMyteams(id!);
+  if (teammate.message) {
+    return <p className="text-gray-500">{teammate.message}</p>;
   }
-  return <MyteamTeam />;
+  return <MyteamTeam teammate={teammate} />;
 }

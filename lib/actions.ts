@@ -62,26 +62,35 @@ export async function deleteTournament(tournament_id: string) {
   const supabase = supabaseClient();
 
   const { error } = await supabase
-  .from('tournament')
-  .delete()
-  .eq('idclient', tournament_id);
-          console.log(error);
-          
+    .from("tournament")
+    .delete()
+    .eq("idclient", tournament_id);
+  console.log(error);
+
   revalidatePath("/");
   redirect("/");
 }
 
 const profileSchema = z.object({
   // email: z.string().email(),
-  username: z.string().min(3, {
-    message: "Please insert a valid username, at least 3 character(s)",
-  }).max(50),
-  full_name: z.string().min(3, {
-    message: "Please insert a valid full name, at least 3 character(s)",
-  }).max(50),
-  nick_in_game: z.string().min(3, {
-    message: "Please insert a valid nick in game, at least 3 character(s)",
-  }).max(50),
+  username: z
+    .string()
+    .min(3, {
+      message: "Please insert a valid username, at least 3 character(s)",
+    })
+    .max(50),
+  full_name: z
+    .string()
+    .min(3, {
+      message: "Please insert a valid full name, at least 3 character(s)",
+    })
+    .max(50),
+  nick_in_game: z
+    .string()
+    .min(3, {
+      message: "Please insert a valid nick in game, at least 3 character(s)",
+    })
+    .max(50),
   country: z.string().nullable(),
   twitch_link: z.string().nullable(),
   x_link: z.string().nullable(),
@@ -577,4 +586,51 @@ export async function fetchRules(tournament_id: string) {
     .single();
 
   return rules;
+}
+
+//fa uscire il player dal team
+export async function deleteTeamUser({
+  teamid,
+  userid,
+  tournamentid,
+}: {
+  teamid: number;
+  userid: string;
+  tournamentid: string;
+}) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+
+  const { error } = await supabase
+    .from("team_user")
+    .delete()
+    .eq("team_id", teamid)
+    .eq("user_id", userid)
+    .eq("tournament_id", tournamentid);
+
+  revalidatePath(`/tournament?id=${tournamentid}&tab=myteam`);
+
+  console.log(error);
+}
+
+//cancela il team
+export async function deleteTeam({
+  teamid,
+  userid,
+  tournamentid,
+}: {
+  teamid: number;
+  userid: string;
+  tournamentid: string;
+}) {
+  const cookieStore = cookies();
+  const supabase = createClient(cookieStore);
+  const { error } = await supabase
+    .from("team")
+    .delete()
+    .eq("id", teamid)
+    .eq("created_by", userid)
+    .eq("tournament_id", tournamentid);
+
+  revalidatePath(`/tournament?id=${tournamentid}&tab=myteam`);
 }

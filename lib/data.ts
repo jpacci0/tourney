@@ -77,7 +77,6 @@ export async function fetchTournaments() {
 
   // console.log(e);
   // console.log(u);
-  
 
   let { data: tournament, error } = await supabase
     .from("tournament")
@@ -306,4 +305,74 @@ export async function fetchRosters(id: string) {
   const groupedArray = Object.values(groupedData) as any[];
 
   return groupedArray;
+}
+
+export async function fetchMyteams(tournament_id: string) {
+  // noStore();
+  const supabase = supabaseClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  const user_id: string | undefined = user?.id;
+  if (!user_id) {
+    return { message: "Please log in to view your team." };
+  }
+
+  //query per trovare il team id dell'utente loggato
+  let { data: team_id, error: teamiderror } = await supabase
+    .from("team_user")
+    .select("team_id")
+    .eq("tournament_id", tournament_id)
+    .eq("user_id", user_id)
+    .single();
+
+  //query per capire se l'utente loggato è il creatore di un team del torneo e del team in cui fa parte. se è il creatore di un altro team ma senza farne parte non ritorna il risultato
+  let { data: creator, error: creatorerror } = await supabase
+    .from("team")
+    .select("name, id")
+    .eq("tournament_id", tournament_id)
+    .eq("created_by", user_id)
+    .eq("id", team_id?.team_id)
+    .single();
+
+  //query per trovare i membri del team, se non restituisce nulla vuol dire che l'utente non è in nessun team
+  let { data: members, error: membererror } = await supabase
+    .from("team_user")
+    .select(
+      `
+      profiles (username, nick_in_game, id),
+      team (name)
+      `
+    )
+    .eq("team_id", team_id?.team_id);
+
+  if (!members) {
+    return { message: "You are not part of any team." };
+  }
+
+  function creaOggettoTeam(members: any, userid: string) {
+    const team = { nome: members[0].team.name, id: team_id?.team_id };
+    const teamMembers = members.map((obj: any) => {
+      return {
+        username: obj.profiles.username,
+        nick_in_game: obj.profiles.nick_in_game,
+        utenteloggato: obj.profiles.id === userid,
+      };
+    });
+    return {
+      team,
+      teammembers: teamMembers,
+      useridLogged: userid,
+      tournament_id,
+      creator: creator ? true : false,
+    };
+  }
+  const nuovoOggettoTeam = creaOggettoTeam(members, user_id);
+
+  // if (membererror) {
+  //   console.log(membererror);
+  // }
+
+  return nuovoOggettoTeam;
 }
