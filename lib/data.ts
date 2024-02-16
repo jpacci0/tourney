@@ -69,6 +69,33 @@ export async function fetchUserById() {
 
   return combined;
 }
+export async function fetchUserByUsername(username: string) {
+  noStore();
+  const supabase = supabaseClient();
+
+  let { data: userProfile, error: profileError } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("username", username)
+    .single();
+    console.log(userProfile);
+    
+
+  if (profileError || !userProfile) {
+    return null;
+  }
+
+  // if (profileError) {
+  //   console.error(
+  //     "Errore durante il recupero dei dati del profilo:",
+  //     profileError
+  //   );
+  //   // Puoi gestire l'errore in modo appropriato
+  //   return null; // O qualsiasi altro valore di default
+  // }
+
+  return userProfile;
+}
 
 export async function fetchTournaments() {
   // noStore();

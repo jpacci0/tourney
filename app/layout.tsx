@@ -1,13 +1,12 @@
 import type { Metadata } from "next";
-import { Inter, Trispace, Roboto_Mono, Orbitron } from "next/font/google";
+import { Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
-import { Separator } from "@/components/ui/separator";
 
 // const inter = Inter({subsets: ["latin"]});
 const robotoMono = Roboto_Mono({
-  weight: '400',
+  // weight: '400',
   subsets: ['latin'],
   display: 'swap',
 })
