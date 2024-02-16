@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Roboto_Mono } from "next/font/google";
-import "./globals.css";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
+import "./globals.css";
+import "react-quill/dist/quill.snow2.css";
 
 // const inter = Inter({subsets: ["latin"]});
 const robotoMono = Roboto_Mono({
