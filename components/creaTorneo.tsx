@@ -12,47 +12,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-// import ReactQuill from "react-quill";
+import ReactQuill from "react-quill";
 import dynamic from 'next/dynamic';
 import "react-quill/dist/quill.snow.css";
 // import "./quill.css";
+// import Snow from 'quill/themes/snow';
 import { useState } from "react";
 import { useFormState } from "react-dom";
-import { updateTournament, deleteTournament } from "@/lib/actions";
+import { createTournament } from "@/lib/actions";
 
-const ReactQuill = dynamic(import('react-quill'), {ssr: false});
+// const ReactQuill = dynamic(import('react-quill'), {ssr: false});
 
-export default function EditTorneo({
-  tournamentData,
-}: {
-  tournamentData: any;
-}) {
-  const [tData, setTData] = useState(tournamentData);
-  const [quillValue, setQuillValue] = useState(tData.rules);
-  const [state, formAction] = useFormState(updateTournament, null);
-  const deleteTournamentWithId = deleteTournament.bind(
-    null,
-    (tData as any).idclient
-  );
+export default function CreaTorneo() {
+  const [quillValue, setQuillValue] = useState("");
 
-  const hanleInputChange = (event: any) => {
-    const { name, value } = event.target;
-    setTData({ ...tData, [name]: value });
-  };
-
+  const [state, formAction] = useFormState(createTournament, null);
   // console.log(quillValue);
 
   const handleSubmit = (event: any) => {
@@ -67,64 +43,23 @@ export default function EditTorneo({
   };
 
   return (
-    <main className="mt-auto">
-      <Header>Edit tournament</Header>
-      <SubHeader subTitle="Edit">
-        <AlertDialog>
-          <AlertDialogTrigger className="bg-red-500 hover:bg-red-600 rounded-md text-sm font-bold py-2 px-4">
-            Delete
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete this tournament and all data related to it.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              {/* <AlertDialogAction>   */}
-              <form action={deleteTournamentWithId}>
-                <Button variant="default" className="w-full" type="submit">
-                  Continue
-                </Button>
-              </form>
-              {/* </AlertDialogAction> */}
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
+    <main>
+      <Header>Create tournament</Header>
+      <SubHeader subTitle="Create">
+        <p></p>
       </SubHeader>
       <Separator className="mt-4" />
       <section className="flex justify-center mt-10">
         <form className="flex flex-col w-full xl:w-1/2" onSubmit={handleSubmit}>
-          <Input
-            type="hidden"
-            name="idclient"
-            id="idclient"
-            value={(tData as any).idclient}
-          />
           <Label className="mt-0" htmlFor="name">
             Tournament name
           </Label>
-          <Input
-            id="name"
-            name="name"
-            type="text"
-            required
-            value={(tData as any).name}
-            onChange={hanleInputChange}
-          />
+          <Input id="name" name="name" type="text" required />
           {state?.errors?.name && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
           <Label htmlFor="description">Description</Label>
-          <Textarea
-            id="description"
-            name="description"
-            required
-            value={(tData as any).description}
-            onChange={hanleInputChange}
-          />
+          <Textarea id="description" name="description" required />
           {state?.errors?.description && (
             <p className="text-red-300 mt-3 text-sm">{state.errors.name}</p>
           )}
@@ -142,13 +77,7 @@ export default function EditTorneo({
           <div className="grid grid-cols-2 gap-4 mt-5">
             <div>
               <Label htmlFor="datetime">Start date time</Label>
-              <Input
-                type="datetime-local"
-                id="datetime"
-                name="start_time"
-                value={(tData as any).start_time}
-                onChange={hanleInputChange}
-              />
+              <Input type="datetime-local" id="datetime" name="start_time" />
               {state?.errors?.start_time && (
                 <p className="text-red-300 mt-3 text-sm">
                   {state.errors.start_time}
@@ -157,9 +86,9 @@ export default function EditTorneo({
             </div>
             <div>
               <Label htmlFor="platform">Platform</Label>
-              <Select name="platform" defaultValue={(tData as any).platform}>
+              <Select name="platform" defaultValue="crossplay">
                 <SelectTrigger id="platform">
-                  <SelectValue placeholder={(tData as any).platform} />
+                  <SelectValue placeholder="Crossplay" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="crossplay">Crossplay</SelectItem>
@@ -174,9 +103,9 @@ export default function EditTorneo({
           <div className="grid grid-cols-2 gap-4 mt-5">
             <div>
               <Label htmlFor="map">Map</Label>
-              <Select name="map" defaultValue={(tData as any).map}>
+              <Select name="map" defaultValue="warzone">
                 <SelectTrigger id="map">
-                  <SelectValue placeholder={(tData as any).map} />
+                  <SelectValue placeholder="Warzone" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="warzone">Warzone</SelectItem>
@@ -186,9 +115,9 @@ export default function EditTorneo({
             </div>
             <div>
               <Label htmlFor="game_mode">Game mode</Label>
-              <Select name="game_mode" defaultValue={(tData as any).game_mode}>
+              <Select name="game_mode" defaultValue="trios">
                 <SelectTrigger id="game_mode">
-                  <SelectValue placeholder={(tData as any).game_mode} />
+                  <SelectValue placeholder="Trios" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="solos">Solos</SelectItem>
@@ -209,8 +138,6 @@ export default function EditTorneo({
                 name="rounds"
                 min="1"
                 max="10"
-                value={(tData as any).rounds}
-                onChange={hanleInputChange}
                 required
               />
               {state?.errors?.rounds && (
@@ -227,8 +154,6 @@ export default function EditTorneo({
                 name="max_players"
                 min="1"
                 max="200"
-                value={(tData as any).max_players}
-                onChange={hanleInputChange}
                 required
               />
               {state?.errors?.max_players && (
@@ -240,9 +165,9 @@ export default function EditTorneo({
           </div>
 
           <Label htmlFor="status">Status</Label>
-          <Select name="status" defaultValue={(tData as any).status}>
+          <Select name="status" defaultValue="upcoming">
             <SelectTrigger id="status">
-              <SelectValue placeholder={(tData as any).status} />
+              <SelectValue placeholder="Upcoming" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="upcoming">Upcoming</SelectItem>
@@ -254,7 +179,7 @@ export default function EditTorneo({
             <p className="text-red-300 mt-3 text-sm">{state.message}</p>
           )}
           <Button className="my-5" variant="bottone">
-            Edit
+            Create
           </Button>
         </form>
       </section>
