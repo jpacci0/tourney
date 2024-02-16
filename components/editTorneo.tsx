@@ -27,6 +27,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+// import "./quill.css";
 import { useState } from "react";
 import { useFormState } from "react-dom";
 import { updateTournament, deleteTournament } from "@/lib/actions";
@@ -127,7 +128,7 @@ export default function EditTorneo({
           <Label>Rules</Label>
           {/* <Textarea id="rules" name="rules" required /> */}
           <ReactQuill
-            theme="snow"
+            // theme="snow"
             className="text-gray-200 pb-[42px]"
             value={quillValue}
             onChange={setQuillValue}
