@@ -6,7 +6,9 @@ import LeaderboardT from "@/components/leaderboardT";
 import RulesT from "@/components/rulesT";
 import RostersT from "@/components/rostersT";
 import MyteamT from "@/components/myteamT";
+import { SkeletonOverview, SkeletonScore } from "@/components/skeletons";
 import { Suspense } from "react";
+
 
 export default function TournamentSection({
   id,
@@ -19,12 +21,12 @@ export default function TournamentSection({
   return (
     <section className="w-full mt-5 md:mt-0">
       {tab === "overview" && (
-        <Suspense fallback={<p className="text-gray-200">Loading overview...</p>}>
+        <Suspense fallback={<SkeletonOverview />}>
           <Overview id={id} />
         </Suspense>
       )}
       {tab === "score" && (
-        <Suspense fallback={<p className="text-gray-200">Loading score...</p>}>
+        <Suspense fallback={<SkeletonScore />}>
           <ScoreT id={id} />
         </Suspense>
       )}
