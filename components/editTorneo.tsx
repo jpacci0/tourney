@@ -25,15 +25,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-// import ReactQuill from "react-quill";
-import dynamic from 'next/dynamic';
+import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-// import "./quill.css";
 import { useState } from "react";
 import { useFormState } from "react-dom";
 import { updateTournament, deleteTournament } from "@/lib/actions";
-
-const ReactQuill = dynamic(import('react-quill'), {ssr: false});
 
 export default function EditTorneo({
   tournamentData,

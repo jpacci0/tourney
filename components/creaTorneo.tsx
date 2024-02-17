@@ -15,15 +15,10 @@ import {
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import ReactQuill from "react-quill";
-import dynamic from 'next/dynamic';
 import "react-quill/dist/quill.snow.css";
-// import "./quill.css";
-// import Snow from 'quill/themes/snow';
 import { useState } from "react";
 import { useFormState } from "react-dom";
 import { createTournament } from "@/lib/actions";
-
-// const ReactQuill = dynamic(import('react-quill'), {ssr: false});
 
 export default function CreaTorneo() {
   const [quillValue, setQuillValue] = useState("");

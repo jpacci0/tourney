@@ -23,7 +23,7 @@ export default function SupportPage() {
         >
           Link:{" "}
           <span className="text-orange-500">
-            https://discord.com/users/149826779287126018
+            Link discord
           </span>
         </Link>
         <p className="text-gray-200 mt-4">
