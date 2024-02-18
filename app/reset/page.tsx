@@ -24,22 +24,8 @@ export default function ResetPage({
           </LinkButton>
         </div>
       </SubHeader>
-      {/* <div className="mt-20 flex justify-between items-center">
-        <h3 className="text-lg font-bold text-gray-200">Update password</h3>
-        <div className="flex gap-2">
-          <Button variant={"bottoneSecondary"} className="p-0">
-            <Link
-              href="/login"
-              className="p-3"
-              // className="py-2 px-3 flex rounded-md no-underline bg-btn-background hover:bg-btn-background-hover"
-            >
-              Back to login
-            </Link>
-          </Button>
-        </div>
-      </div> */}
       <Separator className="mt-4" />
-      <section className="flex justify-center mt-20">
+      <section className="flex justify-center mt-10">
         <form className="flex flex-col w-96">
           <Label htmlFor="email">Email:</Label>
           <Input id="email" name="email" type="email" required />

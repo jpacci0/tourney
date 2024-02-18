@@ -53,7 +53,7 @@ export default function UpdatePasswordPage({
         </div>
       </div>
       <Separator className="mt-4" />
-      <section className="flex justify-center mt-20">
+      <section className="flex justify-center mt-10">
         <form className="flex flex-col w-96">
 
           <Label htmlFor="password">
