@@ -86,10 +86,10 @@ export default function CreaTorneo() {
                   <SelectValue placeholder="Crossplay" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="crossplay">Crossplay</SelectItem>
-                  <SelectItem value="playstation">Playstation</SelectItem>
-                  <SelectItem value="xbox">Xbox</SelectItem>
-                  <SelectItem value="pc">Pc</SelectItem>
+                  <SelectItem value="Crossplay">Crossplay</SelectItem>
+                  <SelectItem value="Playstation">Playstation</SelectItem>
+                  <SelectItem value="Xbox">Xbox</SelectItem>
+                  <SelectItem value="Pc">Pc</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -98,27 +98,29 @@ export default function CreaTorneo() {
           <div className="grid grid-cols-2 gap-4 mt-5">
             <div>
               <Label htmlFor="map">Map</Label>
-              <Select name="map" defaultValue="warzone">
+              <Select name="map" defaultValue="Urzikstan">
                 <SelectTrigger id="map">
-                  <SelectValue placeholder="Warzone" />
+                  <SelectValue placeholder="Urzikstan" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="warzone">Warzone</SelectItem>
-                  <SelectItem value="vondel">Vondel</SelectItem>
+                  <SelectItem value="Urzikstan">Urzikstan</SelectItem>
+                  <SelectItem value="Vondel">Vondel</SelectItem>
+                  <SelectItem value="Fortune’s Keep">Fortune’s Keep</SelectItem>
+                  <SelectItem value="Ashika Island">Ashika Island</SelectItem>
                 </SelectContent>
               </Select>
             </div>
             <div>
               <Label htmlFor="game_mode">Game mode</Label>
-              <Select name="game_mode" defaultValue="trios">
+              <Select name="game_mode" defaultValue="Trios">
                 <SelectTrigger id="game_mode">
                   <SelectValue placeholder="Trios" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="solos">Solos</SelectItem>
-                  <SelectItem value="duos">Duos</SelectItem>
-                  <SelectItem value="trios">Trios</SelectItem>
-                  <SelectItem value="squads">Squads</SelectItem>
+                  <SelectItem value="Solos">Solos</SelectItem>
+                  <SelectItem value="Duos">Duos</SelectItem>
+                  <SelectItem value="Trios">Trios</SelectItem>
+                  <SelectItem value="Squads">Squads</SelectItem>
                 </SelectContent>
               </Select>
             </div>

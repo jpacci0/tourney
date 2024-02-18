@@ -74,7 +74,8 @@ export default function EditTorneo({
             <AlertDialogHeader>
               <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
               <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete this tournament and all data related to it.
+                This action cannot be undone. This will permanently delete this
+                tournament and all data related to it.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
@@ -158,10 +159,10 @@ export default function EditTorneo({
                   <SelectValue placeholder={(tData as any).platform} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="crossplay">Crossplay</SelectItem>
-                  <SelectItem value="playstation">Playstation</SelectItem>
-                  <SelectItem value="xbox">Xbox</SelectItem>
-                  <SelectItem value="pc">Pc</SelectItem>
+                  <SelectItem value="Crossplay">Crossplay</SelectItem>
+                  <SelectItem value="Playstation">Playstation</SelectItem>
+                  <SelectItem value="Xbox">Xbox</SelectItem>
+                  <SelectItem value="Pc">Pc</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -175,8 +176,10 @@ export default function EditTorneo({
                   <SelectValue placeholder={(tData as any).map} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="warzone">Warzone</SelectItem>
-                  <SelectItem value="vondel">Vondel</SelectItem>
+                  <SelectItem value="Urzikstan">Urzikstan</SelectItem>
+                  <SelectItem value="Vondel">Vondel</SelectItem>
+                  <SelectItem value="Fortune’s Keep">Fortune’s Keep</SelectItem>
+                  <SelectItem value="Ashika Island">Ashika Island</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -187,10 +190,10 @@ export default function EditTorneo({
                   <SelectValue placeholder={(tData as any).game_mode} />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="solos">Solos</SelectItem>
-                  <SelectItem value="duos">Duos</SelectItem>
-                  <SelectItem value="trios">Trios</SelectItem>
-                  <SelectItem value="squads">Squads</SelectItem>
+                  <SelectItem value="Solos">Solos</SelectItem>
+                  <SelectItem value="Duos">Duos</SelectItem>
+                  <SelectItem value="Trios">Trios</SelectItem>
+                  <SelectItem value="Squads">Squads</SelectItem>
                 </SelectContent>
               </Select>
             </div>

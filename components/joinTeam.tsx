@@ -26,16 +26,16 @@ export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
   let numGameMode = teams.game_mode[0].game_mode;
   let numMaxTeam = 0;
   switch (numGameMode) {
-    case "squads":
+    case "Squads":
       numMaxTeam = 4;
       break;
-    case "trios":
+    case "Trios":
       numMaxTeam = 3;
       break;
-    case "duos":
+    case "Duos":
       numMaxTeam = 2;
       break;
-    case "solos":
+    case "Solos":
       numMaxTeam = 1;
       break;
   }

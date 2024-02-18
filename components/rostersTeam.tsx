@@ -43,7 +43,7 @@ export default function RostersTeam({ rostersData }: { rostersData: any }) {
 
   return (
     <section>
-      <div className="grid text-center grid-cols-1 md:text-left md:grid-cols-2 xl:grid-cols-3 ">
+      <div className="grid gap-2 text-center grid-cols-1 md:text-left md:grid-cols-2 xl:grid-cols-3 ">
         {rostersData.map((roster: any, index: number) => (
           <div key={index} className="mb-8">
             <p className="text-lg font-bold text-orange-500">{index+1}. {roster.team_name}</p>

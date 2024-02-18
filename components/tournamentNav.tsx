@@ -60,9 +60,9 @@ export default function TournamentNav({
         Rosters
       </LinkButton2>
       <LinkButton2
-        href={`/tournament?id=${id}&tab=myteam`}
+        href={`/tournament?id=${id}&tab=my-team`}
         className={
-          tab === "myteam"
+          tab === "my-team"
             ? "text-gray-900 bg-orange-500 hover:bg-orange-400"
             : ""
         }

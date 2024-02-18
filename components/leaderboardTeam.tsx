@@ -4,6 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import Link from "next/link";
 
 export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
   if (scoreData.length === 0) {
@@ -53,7 +54,8 @@ export default function LeaderboardTeam({ scoreData }: { scoreData: any }) {
                       <p>{s.eliminations}</p>
                       <p>{s.placement}</p>
                       <p>{s.total}</p>
-                      <p>watch</p>
+                      {s.proof === "" && <p>N.A.</p>}
+                      {s.proof && <Link href={s.proof}>Watch</Link>}
                     </div>
                   </div>
                 ))}

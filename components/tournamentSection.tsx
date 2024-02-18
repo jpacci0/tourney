@@ -6,8 +6,8 @@ import LeaderboardT from "@/components/leaderboardT";
 import RulesT from "@/components/rulesT";
 import RostersT from "@/components/rostersT";
 import MyteamT from "@/components/myteamT";
-import { SkeletonOverview, SkeletonScore } from "@/components/skeletons";
 import { Suspense } from "react";
+import { LoadingSpinner } from "./loadingSpinner";
 
 
 export default function TournamentSection({
@@ -21,42 +21,42 @@ export default function TournamentSection({
   return (
     <section className="w-full mt-5 md:mt-0">
       {tab === "overview" && (
-        <Suspense fallback={<SkeletonOverview />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <Overview id={id} />
         </Suspense>
       )}
       {tab === "score" && (
-        <Suspense fallback={<SkeletonScore />}>
+        <Suspense fallback={<LoadingSpinner />}>
           <ScoreT id={id} />
         </Suspense>
       )}
       {tab === "leaderboard" && (
-        <Suspense fallback={<p className="text-gray-200">Loading leaderboard...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <LeaderboardT id={id} />
         </Suspense>
       )}
       {tab === "join" && (
-        <Suspense fallback={<p className="text-gray-200">Loading join...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <JoinT id={id} />
         </Suspense>
       )}
       {tab === "create" && (
-        <Suspense fallback={<p className="text-gray-200">Loading create...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <CreateT id={id} />
         </Suspense>
       )}
       {tab === "rosters" && (
-        <Suspense fallback={<p className="text-gray-200">Loading rosters...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <RostersT id={id} />
         </Suspense>
       )}
       {tab === "rules" && (
-        <Suspense fallback={<p className="text-gray-200">Loading rules...</p>}>
+        <Suspense fallback={<LoadingSpinner />}>
           <RulesT id={id} />
         </Suspense>
       )}
-      {tab === "myteam" && (
-        <Suspense fallback={<p className="text-gray-200">Loading my team...</p>}>
+      {tab === "my-team" && (
+        <Suspense fallback={<LoadingSpinner />}>
           <MyteamT id={id} />
         </Suspense>
       )}

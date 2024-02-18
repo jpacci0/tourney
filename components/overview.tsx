@@ -1,4 +1,4 @@
-import { fetchTournamentUserById, getUserLevel } from "@/lib/data";
+import { fetchTournamentUserById, getUserLevel, fetchNumberTeams } from "@/lib/data";
 import { LinkButton } from "@/components/ui/linkButton";
 import { notFound } from "next/navigation";
 
@@ -13,10 +13,22 @@ const Prop = ({ children }: { children: React.ReactNode }) => {
 export default async function Overview({ id }: { id?: string }) {
   const tournament = await fetchTournamentUserById(id!);
   const user = await getUserLevel();
+  const numberTeams = await fetchNumberTeams(id!);
 
   if (!tournament) {
     return notFound();
   } 
+
+  let numberGameMode = 0;
+  if (tournament.game_mode === "Squads") {
+    numberGameMode = 4;
+  } else if (tournament.game_mode === "Trios") {
+    numberGameMode = 3;
+  } else if (tournament.game_mode === "Duos") {
+    numberGameMode = 2;
+  } else if (tournament.game_mode === "Solos") {
+    numberGameMode = 1;
+  }
 
   return (
     <section className="flex flex-col gap-5">
@@ -30,43 +42,43 @@ export default async function Overview({ id }: { id?: string }) {
       )}
       <Prop>
         <p>Tournament ID</p>
-        <p className="text-gray-400">{tournament.idclient}</p>
+        <p className="text-gray-200">{tournament.idclient}</p>
       </Prop>
       <Prop>
         <p>Created by</p>
-        <p className="text-gray-400">{tournament.profiles.username}</p>
+        <p className="text-gray-200">{tournament.profiles.username}</p>
       </Prop>
       <Prop>
         <p>Title</p>
-        <p className="text-gray-400">{tournament.name}</p>
+        <p className="text-gray-200">{tournament.name}</p>
       </Prop>
       <Prop>
         <p>Description</p>
-        <p className="text-gray-400">{tournament.description}</p>
+        <p className="text-gray-200">{tournament.description}</p>
       </Prop>
       <Prop>
         <p>Start time</p>
-        <p className="text-gray-400">{tournament.start_time}</p>
+        <p className="text-gray-200">{tournament.start_time}</p>
       </Prop>
       <Prop>
         <p>Rounds</p>
-        <p className="text-gray-400">{tournament.rounds}</p>
+        <p className="text-gray-200">{tournament.rounds}</p>
       </Prop>
       <Prop>
-        <p>Players #</p>
-        <p className="text-gray-400">15/{tournament.max_players}</p>
+        <p>Teams #</p>
+        <p className="text-gray-200">{numberTeams}/{tournament.max_players / numberGameMode}</p>
       </Prop>
       <Prop>
         <p>Map</p>
-        <p className="text-gray-400">{tournament.map}</p>
+        <p className="text-gray-200">{tournament.map}</p>
       </Prop>
       <Prop>
         <p>Platform</p>
-        <p className="text-gray-400">{tournament.platform}</p>
+        <p className="text-gray-200">{tournament.platform}</p>
       </Prop>
       <Prop>
         <p>Game mode</p>
-        <p className="text-gray-400">{tournament.game_mode}</p>
+        <p className="text-gray-200">{tournament.game_mode}</p>
       </Prop>
     </section>
   );

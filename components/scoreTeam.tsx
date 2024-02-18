@@ -54,7 +54,7 @@ export default function ScoreTeam({
 
   if (score.error_team_user) {
     return (
-      <p className="text-red-300 mt-3 text-sm">{score?.error_team_user}</p>
+      <p className="text-gray-500 mt-3">{score?.error_team_user}</p>
     );
   }
   // if (!score.error_score_null) {
@@ -71,7 +71,7 @@ export default function ScoreTeam({
           </AccordionTrigger>
           <AccordionContent>
             {score.error_score_null && (
-              <p className="text-red-300 mt-3 text-sm">
+              <p className="text-gray-500 mt-3 text-sm">
                 {score?.error_score_null}
               </p>
             )}
