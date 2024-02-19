@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from '@vercel/analytics/react';
 import { Roboto_Mono } from "next/font/google";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
@@ -28,6 +29,8 @@ export default function RootLayout({
         <Navbar />
         <div className="flex-1">
           {children}
+          <SpeedInsights />
+          <Analytics />
         </div>
         <Footer />
       </body>
