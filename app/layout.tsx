@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Roboto_Mono } from "next/font/google";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
