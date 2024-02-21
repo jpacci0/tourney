@@ -9,8 +9,6 @@ export async function POST(request: NextRequest) {
     let tournamentId = data.tournamentId;
     let teamId = data.teamId;
 
-    const domain = window.location.origin;
-
     const session = await stripe.checkout.sessions.create({
         customer_email: userEmail,
         line_items: [
@@ -24,8 +22,8 @@ export async function POST(request: NextRequest) {
             teamId: teamId,
         },
         mode: 'payment',
-        success_url: `${domain}/success/?id=${tournamentId}`,
-        cancel_url: `${domain}/canceled`,
+        success_url: `${process.env.PROD_SITE_URL}/success/?id=${tournamentId}`,
+        cancel_url: `${process.env.PROD_SITE_URL}/canceled`,
         // success_url: `${process.env.DEV_SITE_URL}/success/?id=${tournamentId}`,
         // cancel_url: `${process.env.DEV_SITE_URL}/canceled`,
     });
