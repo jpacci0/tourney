@@ -109,7 +109,7 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
         <div className="mt-20 w-full">
           {!teammate.paid ? (
             <Button
-              className="bg-green-500 text-gray-950 hover:bg-green-600 font-bold w-full md:w-1/3 text-md"
+              className="bg-green-500 text-gray-950 hover:bg-green-600 font-bold w-full md:w-1/4 text-md"
               onClick={handlePayment}
             >
               Buy team slot {price}€
