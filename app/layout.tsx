@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 import { Roboto_Mono } from "next/font/google";
 import Navbar from "@/components/ui/navbar";
 import Footer from "@/components/ui/footer";
@@ -9,9 +9,9 @@ import "./globals.css";
 // const inter = Inter({subsets: ["latin"]});
 const robotoMono = Roboto_Mono({
   // weight: '400',
-  subsets: ['latin'],
-  display: 'swap',
-})
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -25,7 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={robotoMono.className}>
-      <body className={`px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 antialiased flex flex-col h-screen`}>
+      <body
+        className={`px-2 md:px-4 xl:px-10 2xl:px-48 bg-gray-950 antialiased flex flex-col h-screen`}
+      >
         <Navbar />
         <div className="flex-1">
           {children}

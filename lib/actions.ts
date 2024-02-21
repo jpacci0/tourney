@@ -634,3 +634,16 @@ export async function deleteTeam({
 
   revalidatePath(`/tournament?id=${tournamentid}&tab=myteam`);
 }
+
+export async function setPaid(teamId: string, tournamentId: string) {
+  const supabase = supabaseClient();
+  const { data, error } = await supabase
+    .from("team")
+    .update({ paid: true })
+    .eq("id", Number(teamId))
+    .eq("tournament_id", tournamentId)
+    .select();
+  if (error) {
+    console.log(error);
+  }
+}

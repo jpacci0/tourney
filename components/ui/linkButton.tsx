@@ -11,7 +11,7 @@ export function LinkButton({
   return (
     <Link
       href={href}
-      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 bg-gray-200 hover:bg-gray-100 font-bold px-4 py-2"
+      className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 text-gray-900 bg-gray-300 hover:bg-gray-100 font-bold px-4 py-2"
     >
       {children}
     </Link>

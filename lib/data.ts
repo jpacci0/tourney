@@ -355,12 +355,12 @@ export async function fetchMyteams(tournament_id: string) {
   //query per capire se l'utente loggato è il creatore di un team del torneo e del team in cui fa parte. se è il creatore di un altro team ma senza farne parte non ritorna il risultato
   let { data: creator, error: creatorerror } = await supabase
     .from("team")
-    .select("name, id")
+    .select("name, id, paid")
     .eq("tournament_id", tournament_id)
     .eq("created_by", user_id)
     .eq("id", team_id?.team_id)
     .single();
-
+    
   //query per trovare i membri del team, se non restituisce nulla vuol dire che l'utente non è in nessun team
   let { data: members, error: membererror } = await supabase
     .from("team_user")
@@ -390,14 +390,12 @@ export async function fetchMyteams(tournament_id: string) {
       teammembers: teamMembers,
       useridLogged: userid,
       tournament_id,
+      creatorEmail: user?.email,
+      paid: creator ? creator.paid : false,
       creator: creator ? true : false,
     };
   }
   const nuovoOggettoTeam = creaOggettoTeam(members, user_id);
-
-  // if (membererror) {
-  //   console.log(membererror);
-  // }
 
   return nuovoOggettoTeam;
 }
