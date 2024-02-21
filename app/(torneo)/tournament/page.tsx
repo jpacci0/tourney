@@ -4,12 +4,16 @@ import Header from "@/components/header";
 import SubHeader from "@/components/subHeader";
 import TournamentSection from "@/components/tournamentSection";
 import TournamentNav from "@/components/tournamentNav";
+import { notFound } from 'next/navigation';
 
 export default function TournamentPage({
   searchParams,
 }: {
   searchParams: { id?: string; tab?: string };
 }) {
+  if (!searchParams.id || !searchParams.tab) {
+    return notFound();
+  }
   return (
     <main>
       <Header>Tournament</Header>

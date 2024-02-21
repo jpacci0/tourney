@@ -14,6 +14,7 @@ export default function SubHeader({
 }
 
 function formatSubtitle(string: string) {
+  if (!string) return;
   if (string.length === 0) return string;
   string = string.replace(/-/g, ' ');
   return string.charAt(0).toUpperCase() + string.slice(1);
