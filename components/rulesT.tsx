@@ -1,4 +1,4 @@
-import { fetchRules } from "@/lib/actions";
+import { fetchRules } from "@/lib/data";
 import RulesTeam from "@/components/rulesTeam";
 
 export default async function RulesT({ id }: { id?: string}) {

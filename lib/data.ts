@@ -110,6 +110,19 @@ export async function fetchTournaments() {
   return tournament;
 }
 
+export async function fetchRules(tournament_id: string) {
+  noStore();
+  const supabase = supabaseClient();
+
+  let { data: rules, error: noRules } = await supabase
+    .from("tournament")
+    .select("rules")
+    .eq("idclient", tournament_id)
+    .single();
+
+  return rules;
+}
+
 export async function fetchTournamentById(id: string) {
   // noStore();
   const supabase = supabaseClient();

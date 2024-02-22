@@ -1,5 +1,5 @@
 "use client";
 export default function RulesTeam({ rules }: { rules?: any}) {
 
-  return <p className="text-gray-200" dangerouslySetInnerHTML={{ __html: rules }}></p>;
+  return <div className="text-gray-200" id="formatRules" dangerouslySetInnerHTML={{ __html: rules }}></div>;
 }

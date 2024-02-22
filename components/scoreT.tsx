@@ -3,14 +3,11 @@ import Link from "next/link";
 import ScoreTeam from "@/components/scoreTeam";
 
 export default async function ScoreT({ id }: { id?: string }) {
-  // const sessionData = await getSession();
   const userData = await getUser();
-  // console.log("sessionData", userData);
   const scoreData = await fetchScoresById(id!, userData?.id!);
   
   //TODO tournamentData mi serve per i rounds. la fetch la faccio anche prima per recuperare i dati del torneo quindi si deve passare come props ed eiminare la fetch qui
   const tournamentData = await fetchTournamentById(id!);
-// console.log("tournamentData", tournamentData);
 
   if (!userData) {
     return (

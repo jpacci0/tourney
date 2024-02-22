@@ -1,6 +1,10 @@
-import { fetchTournamentUserById, getUserLevel, fetchNumberTeams } from "@/lib/data";
+import {
+  fetchTournamentUserById,
+  getUserLevel,
+  fetchNumberTeams,
+} from "@/lib/data";
 import { LinkButton } from "@/components/ui/linkButton";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 const Prop = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -17,7 +21,10 @@ export default async function Overview({ id }: { id?: string }) {
 
   if (!tournament) {
     return notFound();
-  } 
+  }
+  if (tournament.status === "done") {
+    redirect(`/fine-torneo?id=${id}`);
+  }
 
   let numberGameMode = 0;
   if (tournament.game_mode === "Squads") {
@@ -37,9 +44,12 @@ export default async function Overview({ id }: { id?: string }) {
           FINISHED
         </p>
       )}
-      {("admin" === user?.level || user?.id === tournament?.created_by) && (
-        <LinkButton href={`/edit-torneo?id=${id}`}>Edit tournament</LinkButton>
-      )}
+      {("admin" === user?.level || user?.id === tournament?.created_by) &&
+        tournament?.status !== "done" && (
+          <LinkButton href={`/edit-torneo?id=${id}`}>
+            Edit tournament
+          </LinkButton>
+        )}
       <Prop>
         <p>Tournament ID</p>
         <p className="text-gray-200">{tournament.idclient}</p>
@@ -66,7 +76,9 @@ export default async function Overview({ id }: { id?: string }) {
       </Prop>
       <Prop>
         <p>Teams #</p>
-        <p className="text-gray-200">{numberTeams}/{tournament.max_players / numberGameMode}</p>
+        <p className="text-gray-200">
+          {numberTeams}/{tournament.max_players / numberGameMode}
+        </p>
       </Prop>
       <Prop>
         <p>Map</p>

@@ -53,9 +53,7 @@ export default function ScoreTeam({
   };
 
   if (score.error_team_user) {
-    return (
-      <p className="text-gray-500 mt-3">{score?.error_team_user}</p>
-    );
+    return <p className="text-gray-500 mt-3">{score?.error_team_user}</p>;
   }
   // if (!score.error_score_null) {
   //   const totalScore = score.reduce((acc: number, s: any) => acc + s.total, 0);
@@ -116,77 +114,81 @@ export default function ScoreTeam({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      <Accordion type="single" collapsible>
-        <AccordionItem value="item-2">
-          <AccordionTrigger className="text-gray-200 underline">
-            Enter score
-          </AccordionTrigger>
-          <AccordionContent>
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSubmit(new FormData(e.target as HTMLFormElement));
-              }}
-            >
-              {arrRounds.map((round, index) => (
-                <div
-                  key={round}
-                  className="grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 gap-4"
-                >
-                  <div className="mt-3">
-                    <Label htmlFor={`eliminations_${round + 1}`}>
-                      Eliminations game {round + 1}
-                    </Label>
-                    <Input
-                      type="number"
-                      min="0"
-                      step="1"
-                      id={`eliminations_${round + 1}`}
-                      name={`eliminations_${round}`}
-                      // value={score !== null ? score[index].eliminations : ""}
-                    />
+      {tournament.status !== "done" && (
+        <Accordion type="single" collapsible>
+          <AccordionItem value="item-2">
+            <AccordionTrigger className="text-gray-200 underline">
+              Enter score
+            </AccordionTrigger>
+            <AccordionContent>
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSubmit(new FormData(e.target as HTMLFormElement));
+                }}
+              >
+                {arrRounds.map((round, index) => (
+                  <div
+                    key={round}
+                    className="grid grid-cols-2 grid-rows-2 md:grid-cols-3 md:grid-rows-1 gap-4"
+                  >
+                    <div className="mt-3">
+                      <Label htmlFor={`eliminations_${round + 1}`}>
+                        Eliminations game {round + 1}
+                      </Label>
+                      <Input
+                        type="number"
+                        min="0"
+                        step="1"
+                        id={`eliminations_${round + 1}`}
+                        name={`eliminations_${round}`}
+                        // value={score !== null ? score[index].eliminations : ""}
+                      />
+                    </div>
+                    <div className="mt-3">
+                      <Label htmlFor={`placement_${round + 1}`}>
+                        Placement game {round + 1}
+                      </Label>
+                      <Input
+                        type="number"
+                        min="0"
+                        step="1"
+                        id={`placement_${round + 1}`}
+                        name={`placement_${round}`}
+                        // value={score !== null ? score[index].placement : ""}
+                      />
+                    </div>
+                    <div className="col-span-2 md:col-span-1 md:mt-3">
+                      <Label htmlFor={`proof_${round + 1}`}>
+                        Proof game {round + 1}
+                      </Label>
+                      <Input
+                        type="text"
+                        id={`proof_${round + 1}`}
+                        name={`proof_${round}`}
+                        placeholder="Clip URL"
+                        // value={score !== null ? score[index].placement : ""}
+                      />
+                    </div>
+                    <Separator className="col-span-2 md:col-span-3" />
                   </div>
-                  <div className="mt-3">
-                    <Label htmlFor={`placement_${round + 1}`}>
-                      Placement game {round + 1}
-                    </Label>
-                    <Input
-                      type="number"
-                      min="0"
-                      step="1"
-                      id={`placement_${round + 1}`}
-                      name={`placement_${round}`}
-                      // value={score !== null ? score[index].placement : ""}
-                    />
-                  </div>
-                  <div className="col-span-2 md:col-span-1 md:mt-3">
-                    <Label htmlFor={`proof_${round + 1}`}>
-                      Proof game {round + 1}
-                    </Label>
-                    <Input
-                      type="text"
-                      id={`proof_${round + 1}`}
-                      name={`proof_${round}`}
-                      placeholder="Clip URL"
-                      // value={score !== null ? score[index].placement : ""}
-                    />
-                  </div>
-                  <Separator className="col-span-2 md:col-span-3" />
-                </div>
-              ))}
-              {!state?.success && (
-                <p className="text-red-300 mt-3 text-sm">{state?.message}</p>
-              )}
-              {state?.success && (
-                <p className="text-green-300 mt-3 text-sm">{state?.message}</p>
-              )}
-              <Button variant="bottone" disabled={pending} className="my-5">
-                Submit
-              </Button>
-            </form>
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+                ))}
+                {!state?.success && (
+                  <p className="text-red-300 mt-3 text-sm">{state?.message}</p>
+                )}
+                {state?.success && (
+                  <p className="text-green-300 mt-3 text-sm">
+                    {state?.message}
+                  </p>
+                )}
+                <Button variant="bottone" disabled={pending} className="my-5">
+                  Submit
+                </Button>
+              </form>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
     </section>
   );
 }

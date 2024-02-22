@@ -169,7 +169,7 @@ export default function CreaTorneo() {
             <SelectContent>
               <SelectItem value="upcoming">Upcoming</SelectItem>
               <SelectItem value="in_progress">In progress</SelectItem>
-              <SelectItem value="done">Done</SelectItem>
+              {/* <SelectItem value="done">Done</SelectItem> */}
             </SelectContent>
           </Select>
           {state?.message && (

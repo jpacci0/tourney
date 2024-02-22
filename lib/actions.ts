@@ -576,18 +576,6 @@ export async function createScore(prevState: any, formData: FormData) {
   // redirect(`/tournament?id=${tournament_id}&tab=score`);
 }
 
-export async function fetchRules(tournament_id: string) {
-  const supabase = supabaseClient();
-
-  let { data: rules, error: noRules } = await supabase
-    .from("tournament")
-    .select("rules")
-    .eq("idclient", tournament_id)
-    .single();
-
-  return rules;
-}
-
 //fa uscire il player dal team
 export async function deleteTeamUser({
   teamid,
