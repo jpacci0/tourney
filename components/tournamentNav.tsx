@@ -72,3 +72,46 @@ export default function TournamentNav({
     </nav>
   );
 }
+
+export function EndTournamentNav({
+  id,
+  tab,
+}: {
+  id?: string;
+  tab?: string;
+}) {
+  return (
+    <nav className="grid grid-rows-3 grid-cols-2 md:grid-rows-5 md:grid-cols-1 gap-y-4 gap-x-2 md:h-max">
+      <LinkButton2
+        href={`/fine-torneo?id=${id}&tab=overview`}
+        className={
+          tab === "overview"
+            ? "text-gray-900 bg-orange-500 hover:bg-orange-400"
+            : ""
+        }
+      >
+        Overview
+      </LinkButton2>
+      <LinkButton2
+        href={`/fine-torneo?id=${id}&tab=leaderboard`}
+        className={
+          tab === "leaderboard"
+            ? "text-gray-900 bg-orange-500 hover:bg-orange-400"
+            : ""
+        }
+      >
+        Leaderboard
+      </LinkButton2>
+      <LinkButton2
+        href={`/fine-torneo?id=${id}&tab=rosters`}
+        className={
+          tab === "rosters"
+            ? "text-gray-900 bg-orange-500 hover:bg-orange-400"
+            : ""
+        }
+      >
+        Rosters
+      </LinkButton2>
+    </nav>
+  );
+}

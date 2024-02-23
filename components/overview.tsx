@@ -23,7 +23,7 @@ export default async function Overview({ id }: { id?: string }) {
     return notFound();
   }
   if (tournament.status === "done") {
-    redirect(`/fine-torneo?id=${id}`);
+    redirect(`/fine-torneo?id=${id}&tab=leaderboard`);
   }
 
   let numberGameMode = 0;

@@ -36,7 +36,7 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
   return (
     <>
       {tournament.status === "done" ? (
-        <Link href={`/fine-torneo?id=${tournament.idclient}`}>
+        <Link href={`/fine-torneo?id=${tournament.idclient}&tab=leaderboard`}>
           <div className="rounded-md shadow-xl hover:shadow-xl hover:shadow-orange-500/10 text-gray-200 h-72 bg-primary px-4 py-8">
             {/* <Image
           src={wz}

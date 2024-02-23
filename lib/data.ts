@@ -373,7 +373,7 @@ export async function fetchMyteams(tournament_id: string) {
     .eq("created_by", user_id)
     .eq("id", team_id?.team_id)
     .single();
-    
+
   //query per trovare i membri del team, se non restituisce nulla vuol dire che l'utente non è in nessun team
   let { data: members, error: membererror } = await supabase
     .from("team_user")
@@ -457,4 +457,59 @@ export async function fetchNumberTeams(tournament_id: string) {
   // } else {
   //   return true;
   // }
+}
+
+export async function saveTourney(idtorneo: string) {
+  const supabase = supabaseClient();
+  const numberTeams = await fetchNumberTeams(idtorneo!);
+  let tournament = await fetchTournamentById(idtorneo!);
+  const leaderboard = await fetchLeaderboard(idtorneo!);
+
+  let rosters = leaderboard.map((obj: any) => {
+    return {
+      teamName: obj.team_name,
+      profiles: obj.profiles,
+    };
+  });
+  tournament.numberTeams = numberTeams;
+
+  let { data: tournament_details, error } = await supabase
+    .from("tournament_details")
+    .select("*")
+    .eq("id_client_tourney", idtorneo);
+
+  if (!tournament_details || tournament_details.length === 0) {
+    const { data: insertData, error: insertError } = await supabase
+      .from("tournament_details")
+      .insert([
+        {
+          tournament_data: tournament,
+          id_client_tourney: idtorneo,
+          leaderboard_data: leaderboard,
+          rosters_data: rosters,
+        },
+      ])
+      .select();
+  } else {
+    const { data: updateData, error: updateError } = await supabase
+      .from("tournament_details")
+      .update({
+        tournament_data: tournament,
+        leaderboard_data: leaderboard,
+        rosters_data: rosters,
+      })
+      .eq("id_client_tourney", idtorneo)
+      .select();
+  }
+}
+
+export async function fetchTournamentDetails(idtorneo: string) {
+  const supabase = supabaseClient();
+  let { data: tournament, error } = await supabase
+    .from("tournament_details")
+    .select("*")
+    .eq("id_client_tourney", idtorneo)
+    .single();
+  
+  return tournament;
 }

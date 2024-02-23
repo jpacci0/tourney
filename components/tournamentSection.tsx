@@ -6,6 +6,7 @@ import LeaderboardT from "@/components/leaderboardT";
 import RulesT from "@/components/rulesT";
 import RostersT from "@/components/rostersT";
 import MyteamT from "@/components/myteamT";
+import {EndOverview, EndLeaderboard, EndRosters} from "@/components/endTournament";
 import { Suspense } from "react";
 import { LoadingSpinner } from "./loadingSpinner";
 
@@ -58,6 +59,34 @@ export default function TournamentSection({
       {tab === "my-team" && (
         <Suspense fallback={<LoadingSpinner />}>
           <MyteamT id={id} />
+        </Suspense>
+      )}
+    </section>
+  );
+}
+
+export function EndTournamentSection({
+  id,
+  tab,
+}: {
+  id?: string;
+  tab?: string;
+}) {
+  return (
+    <section className="w-full mt-5 md:mt-0">
+      {tab === "overview" && (
+        <Suspense fallback={<LoadingSpinner />}>
+          <EndOverview idtorneo={id} />
+        </Suspense>
+      )}
+      {tab === "rosters" && (
+        <Suspense fallback={<LoadingSpinner />}>
+          <EndRosters idtorneo={id} />
+        </Suspense>
+      )}
+      {tab === "leaderboard" && (
+        <Suspense fallback={<LoadingSpinner />}>
+          <EndLeaderboard idtorneo={id} />
         </Suspense>
       )}
     </section>
