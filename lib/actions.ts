@@ -192,6 +192,7 @@ const tournamentSchema = z.object({
   status: statusEnum,
   rounds: z.coerce.number().min(1),
   game_mode: z.string(),
+  registration_price: z.coerce.number(),
 });
 export async function createTournament(prevState: any, formData: FormData) {
   const supabase = supabaseClient();
@@ -207,6 +208,7 @@ export async function createTournament(prevState: any, formData: FormData) {
     status: formData.get("status") as string,
     rounds: formData.get("rounds") as unknown as number,
     game_mode: formData.get("game_mode") as string,
+    registration_price: formData.get("registration_price") as unknown as number,
   });
 
   if (!result.success) {
@@ -221,6 +223,7 @@ export async function createTournament(prevState: any, formData: FormData) {
         start_time: errorMap["start_time"],
         max_players: errorMap["max_players"],
         rounds: errorMap["rounds"],
+        registration_price: errorMap["registration_price"],
       },
     };
   } else {
@@ -235,6 +238,7 @@ export async function createTournament(prevState: any, formData: FormData) {
       status,
       rounds,
       game_mode,
+      registration_price,
     } = result.data;
 
     const { data: tournament, error: tournamentError } = await supabase
@@ -251,6 +255,7 @@ export async function createTournament(prevState: any, formData: FormData) {
           status,
           rounds,
           game_mode,
+          registration_price
         },
       ])
       .select();
@@ -261,10 +266,9 @@ export async function createTournament(prevState: any, formData: FormData) {
           message: ["You must be logged in to create a tournament"],
         };
       }
-      // console.log(updateError.code);
       return {
         message: [
-          "Something went wrong. Please try again or contact support if the problem persists.",
+          "Something went wrong. Please try again or contact support if the problem persists",
         ],
       };
     }
@@ -288,6 +292,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
     status: formData.get("status") as string,
     rounds: formData.get("rounds") as unknown as number,
     game_mode: formData.get("game_mode") as string,
+    registration_price: formData.get("registration_price") as unknown as number,
   });
 
   if (!result.success) {
@@ -302,6 +307,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
         start_time: errorMap["start_time"],
         max_players: errorMap["max_players"],
         rounds: errorMap["rounds"],
+        registration_price: errorMap["registration_price"],
       },
     };
   } else {
@@ -316,6 +322,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
       status,
       rounds,
       game_mode,
+      registration_price,
     } = result.data;
 
     const { data: tournament, error: tournamentError } = await supabase
@@ -332,6 +339,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
           status,
           rounds,
           game_mode,
+          registration_price,
         },
       ])
       .eq("idclient", formData.get("idclient") as string)
@@ -382,7 +390,7 @@ export async function createTeam(prevState: any, formData: FormData) {
     return {
       success: true,
       message:
-        "Team created successfully. Now you can join the newly created team by pressing the join team button.",
+        "Team created successfully. Now you can join the newly created team by pressing the join team button",
     };
   }
 }

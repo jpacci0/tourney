@@ -4,18 +4,24 @@ import { NextResponse, NextRequest } from 'next/server';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 export async function POST(request: NextRequest) {
     let data = await request.json();
-    let priceId = data.priceId;
+    let price = data.price;
     let userEmail = data.userEmail;
     let tournamentId = data.tournamentId;
     let teamId = data.teamId;
 
     const session = await stripe.checkout.sessions.create({
         customer_email: userEmail,
-        line_items: [
-            {
-                price: priceId,
-                quantity: 1,
+      line_items: [
+        {
+          price_data: {
+            currency: 'eur',
+            product_data: {
+              name: "Buy team registration",
             },
+            unit_amount: price*100,
+          },
+          quantity: 1,
+        },
         ],
         metadata: {
             tournamentId: tournamentId,

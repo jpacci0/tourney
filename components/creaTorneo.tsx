@@ -24,7 +24,6 @@ export default function CreaTorneo() {
   const [quillValue, setQuillValue] = useState("");
 
   const [state, formAction] = useFormState(createTournament, null);
-  // console.log(quillValue);
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
@@ -161,7 +160,28 @@ export default function CreaTorneo() {
             </div>
           </div>
 
-          <Label htmlFor="status">Status</Label>
+          <div className="grid grid-cols-2 gap-4 mt-5">
+            <div>
+              <Label htmlFor="registration_price">Price per team €</Label>
+              <Input
+                id="registration_price"
+                type="number"
+                name="registration_price"
+                defaultValue={0}
+                placeholder="0.00"
+                min="0"
+                max="100"
+                step="0.01"
+                required
+              />
+              {state?.errors?.registration_price && (
+                <p className="text-red-300 mt-3 text-sm">
+                  {state.errors.registration_price}
+                </p>
+              )}
+            </div>
+            <div>
+            <Label htmlFor="status">Status</Label>
           <Select name="status" defaultValue="upcoming">
             <SelectTrigger id="status">
               <SelectValue placeholder="Upcoming" />
@@ -172,6 +192,8 @@ export default function CreaTorneo() {
               {/* <SelectItem value="done">Done</SelectItem> */}
             </SelectContent>
           </Select>
+            </div>
+          </div>
           {state?.message && (
             <p className="text-red-300 mt-3 text-sm">{state.message}</p>
           )}

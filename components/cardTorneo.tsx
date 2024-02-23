@@ -1,11 +1,4 @@
-import {
-  Clock9,
-  Pin,
-  UsersRound,
-  Gamepad2,
-  Tally3,
-  RotateCcw,
-} from "lucide-react";
+import { Clock9, Gamepad2, Euro } from "lucide-react";
 import Link from "next/link";
 import { Black_Ops_One } from "next/font/google";
 
@@ -30,6 +23,7 @@ type cardTorneoProps = {
     game_mode: string;
     status: string;
     idclient: string;
+    registration_price: number;
   };
 };
 export default function CardTorneo({ tournament }: cardTorneoProps) {
@@ -37,7 +31,7 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
     <>
       {tournament.status === "done" ? (
         <Link href={`/fine-torneo?id=${tournament.idclient}&tab=leaderboard`}>
-          <div className="rounded-md shadow-xl hover:shadow-xl hover:shadow-orange-500/10 text-gray-200 h-72 bg-primary px-4 py-8">
+          <div className="rounded-md shadow-xl hover:shadow-xl hover:shadow-orange-500/10 text-gray-200 h-[324px] bg-primary px-4 py-8">
             {/* <Image
           src={wz}
           width={1000}
@@ -71,13 +65,29 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
               <div>
                 <p className="text-gray-500">Rounds</p>
                 <p>{tournament.rounds}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <div>
+                <p className="text-gray-500">Price per team</p>
+                {tournament.registration_price === 0 ? (
+                  <div className="flex gap-1">
+                    <Euro className="text-green-500" />
+                    <p>Free entry</p>
+                  </div>
+                ) : (
+                  <div className="flex gap-1">
+                    <Euro className="text-green-500" />
+                    <p>{tournament.registration_price}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>
         </Link>
       ) : (
         <Link href={`/tournament?id=${tournament.idclient}&tab=overview`}>
-          <div className="rounded-md shadow-xl hover:shadow-xl hover:shadow-orange-500/10 text-gray-200 h-72 bg-primary px-4 py-8">
+          <div className="rounded-md shadow-xl hover:shadow-xl hover:shadow-orange-500/10 text-gray-200 h-[324px] bg-primary px-4 py-8">
             {/* <Image
           src={wz}
           width={1000}
@@ -111,6 +121,22 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
               <div>
                 <p className="text-gray-500">Rounds</p>
                 <p>{tournament.rounds}</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-3 mt-4">
+              <div>
+                <p className="text-gray-500">Price per team</p>
+                {tournament.registration_price === 0 ? (
+                  <div className="flex gap-1">
+                    <Euro className="text-green-500" />
+                    <p>Free entry</p>
+                  </div>
+                ) : (
+                  <div className="flex gap-1">
+                    <Euro className="text-green-500" />
+                    <p>{tournament.registration_price}</p>
+                  </div>
+                )}
               </div>
             </div>
           </div>

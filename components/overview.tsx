@@ -77,7 +77,11 @@ export default async function Overview({ id }: { id?: string }) {
       </Prop>
       <Prop>
         <p>Start time</p>
-        <p className="text-gray-200">{tournament.start_time}</p>
+        <p className="text-gray-200">{tournament.start_time.replace("T", " ")}</p>
+      </Prop>
+      <Prop>
+        <p>Registration team price</p>
+        <p className="text-gray-200">{tournament.registration_price} €</p>
       </Prop>
       <Prop>
         <p>Rounds</p>
@@ -86,7 +90,7 @@ export default async function Overview({ id }: { id?: string }) {
       <Prop>
         <p>Teams #</p>
         <p className="text-gray-200">
-          {numberTeams}/{tournament.max_players / numberGameMode}
+        {numberTeams}/{Math.trunc(tournament.max_players / numberGameMode)}
         </p>
       </Prop>
       <Prop>

@@ -60,7 +60,11 @@ export async function EndOverview({ idtorneo }: { idtorneo?: string }) {
       </Prop>
       <Prop>
         <p>Start time</p>
-        <p className="text-gray-200">{tournament.start_time}</p>
+        <p className="text-gray-200">{tournament.start_time.replace("T", " ")}</p>
+      </Prop>
+      <Prop>
+        <p>Registration team price</p>
+        <p className="text-gray-200">{tournament.registration_price} €</p>
       </Prop>
       <Prop>
         <p>Rounds</p>
@@ -69,7 +73,7 @@ export async function EndOverview({ idtorneo }: { idtorneo?: string }) {
       <Prop>
         <p>Teams #</p>
         <p className="text-gray-200">
-          {tournament.numberTeams}/{tournament.max_players / numberGameMode}
+          {tournament.numberTeams}/{Math.floor(tournament.max_players / numberGameMode)}
         </p>
       </Prop>
       <Prop>

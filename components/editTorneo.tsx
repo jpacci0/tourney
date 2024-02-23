@@ -250,6 +250,28 @@ export default function EditTorneo({
               )}
             </div>
           </div>
+          <div className="grid grid-cols-2 gap-4 mt-5">
+            <div>
+              <Label htmlFor="registration_price">Price per team €</Label>
+              <Input
+                id="registration_price"
+                type="number"
+                name="registration_price"
+                value={(tData as any).registration_price}
+                onChange={hanleInputChange}
+                // placeholder="0.00"
+                min="0"
+                max="100"
+                step="0.01"
+                required
+              />
+              {state?.errors?.registration_price && (
+                <p className="text-red-300 mt-3 text-sm">
+                  {state.errors.registration_price}
+                </p>
+              )}
+            </div>
+          </div>
           <p className="text-gray-500 mt-5">
             Before setting the status to done please save the data by pressing
             the button &quot;Submit&quot; below.
@@ -279,10 +301,14 @@ export default function EditTorneo({
             <p className="text-red-300 mt-3 text-sm">{state.message}</p>
           )}
           {msgSavingTourney.messageFalse && (
-            <p className="text-red-300 mt-3 text-sm">{msgSavingTourney.messageFalse}</p>
+            <p className="text-red-300 mt-3 text-sm">
+              {msgSavingTourney.messageFalse}
+            </p>
           )}
           {msgSavingTourney.messageTrue && (
-            <p className="text-green-300 mt-3 text-sm">{msgSavingTourney.messageTrue}</p>
+            <p className="text-green-300 mt-3 text-sm">
+              {msgSavingTourney.messageTrue}
+            </p>
           )}
           <Button className="my-5" variant="bottone">
             Edit

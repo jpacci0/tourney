@@ -389,6 +389,14 @@ export async function fetchMyteams(tournament_id: string) {
     return { message: "You are not part of any team." };
   }
 
+  
+  let { data: tournamentPrice, error: errorPrice } = await supabase
+  .from('tournament')
+  .select('registration_price')
+  .eq('idclient', tournament_id)
+  .single();
+
+
   function creaOggettoTeam(members: any, userid: string) {
     const team = { nome: members[0].team.name, id: team_id?.team_id };
     const teamMembers = members.map((obj: any) => {
@@ -406,6 +414,7 @@ export async function fetchMyteams(tournament_id: string) {
       creatorEmail: user?.email,
       paid: creator ? creator.paid : false,
       creator: creator ? true : false,
+      price: tournamentPrice?.registration_price
     };
   }
   const nuovoOggettoTeam = creaOggettoTeam(members, user_id);

@@ -5,10 +5,6 @@ import { deleteTeamUser, deleteTeam } from "@/lib/actions";
 import { useEffect, useState } from "react";
 
 export default function MyteamTeam({ teammate }: { teammate: any }) {
-  const [price, setPrice] = useState(0);
-  const [priceId, setPriceId] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [loading, setLoading] = useState(false);
   const leaveTeam = deleteTeamUser.bind(null, {
     teamid: teammate.team.id,
     userid: teammate.useridLogged,
@@ -20,29 +16,29 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
     tournamentid: teammate.tournament_id,
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await fetchGetProducts();
-      setUserEmail(teammate.creatorEmail || "");
-      setLoading(true);
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     await fetchGetProducts();
+  //     setUserEmail(teammate.creatorEmail || "");
+  //     setLoading(true);
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  const fetchGetProducts = async () => {
-    const res = await fetch("/api/stripe/getProducts");
-    const data = await res.json();
-    setPrice(data[0].unit_amount / 100);
-    setPriceId(data[0].id);
+  // const fetchGetProducts = async () => {
+  //   const res = await fetch("/api/stripe/getProducts");
+  //   const data = await res.json();
+  //   setPrice(data[0].unit_amount / 100);
+  //   setPriceId(data[0].id);
 
-    // console.log(
-    //   (data[0].unit_amount / 100).toLocaleString("it-IT", {
-    //     style: "currency",
-    //     currency: "EUR",
-    //   })
-    // );
-  };
+  //   // console.log(
+  //   //   (data[0].unit_amount / 100).toLocaleString("it-IT", {
+  //   //     style: "currency",
+  //   //     currency: "EUR",
+  //   //   })
+  //   // );
+  // };
 
   const handlePayment = async (e: any) => {
     e.preventDefault();
@@ -50,8 +46,8 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        priceId: priceId,
-        userEmail: userEmail,
+        price: teammate.price,
+        userEmail: teammate.creatorEmail,
         tournamentId: teammate.tournament_id,
         teamId: teammate.team.id,
       }),
@@ -105,14 +101,14 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
           )}
         </div>
       ))}
-      {teammate.creator && loading ? (
+      {teammate.creator  ? (
         <div className="mt-20 w-full">
           {!teammate.paid ? (
             <Button
-              className="bg-green-500 text-gray-950 hover:bg-green-600 font-bold w-full md:w-1/4 text-md"
+              className="bg-green-500 text-gray-950 hover:bg-green-600 font-bold w-full md:w-1/3 text-md"
               onClick={handlePayment}
             >
-              Buy team slot {price}€
+              Buy team slot {teammate.price}€
             </Button>
           ) : (
             <p className="text-gray-500">
