@@ -3,8 +3,9 @@ import {
   getUserLevel,
   fetchNumberTeams,
 } from "@/lib/data";
-import { LinkButton } from "@/components/ui/linkButton";
 import { notFound, redirect } from "next/navigation";
+import Link from "next/link";
+import { LinkButton } from "@/components/ui/linkButton";
 
 const Prop = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -50,6 +51,14 @@ export default async function Overview({ id }: { id?: string }) {
             Edit tournament
           </LinkButton>
         )}
+      <p className="text-gray-500">
+        To show the leaderboard to those who are not participating in the tournament
+        please share this {" "}
+        <Link className="text-gray-200 underline" href={`/fine-torneo?id=${id}&tab=leaderboard`}>
+          link
+        </Link>
+        .
+      </p>
       <Prop>
         <p>Tournament ID</p>
         <p className="text-gray-200">{tournament.idclient}</p>

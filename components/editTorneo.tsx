@@ -32,12 +32,18 @@ import { useFormState } from "react-dom";
 import { updateTournament, deleteTournament } from "@/lib/actions";
 import { saveTourney } from "@/lib/data";
 
+type MsgType = {
+  messageFalse?: string;
+  messageTrue?: string;
+};
+
 export default function EditTorneo({
   tournamentData,
 }: {
   tournamentData: any;
 }) {
   const [tData, setTData] = useState(tournamentData);
+  const [msgSavingTourney, setMsgSavingTourney] = useState<MsgType>({});
   const [quillValue, setQuillValue] = useState(tData.rules);
   const [state, formAction] = useFormState(updateTournament, null);
   const deleteTournamentWithId = deleteTournament.bind(
@@ -50,8 +56,6 @@ export default function EditTorneo({
     setTData({ ...tData, [name]: value });
   };
 
-  // console.log(quillValue);
-
   const handleSubmit = (event: any) => {
     event.preventDefault();
 
@@ -63,10 +67,13 @@ export default function EditTorneo({
     formAction(formData);
   };
 
-  const handleSaveTourney = (event: any) => {
+  const handleSaveTourney = async (event: any) => {
     event.preventDefault();
-    saveTourney((tData as any).idclient);
-  }
+    const result: MsgType = await saveTourney((tData as any).idclient);
+    if (result) {
+      setMsgSavingTourney(result);
+    }
+  };
 
   return (
     <main className="mt-auto">
@@ -243,11 +250,16 @@ export default function EditTorneo({
               )}
             </div>
           </div>
-          <p className="text-gray-500">Before setting the status to done please save the data by pressing the button below.</p>
+          <p className="text-gray-500 mt-5">
+            Before setting the status to done please save the data by pressing
+            the button &quot;Submit&quot; below.
+          </p>
           <div className="grid grid-cols-2 gap-x-2">
             <div className="w-full flex flex-col">
-              <Label htmlFor="save">Save data</Label>
-              <Button id="save" type="button" onClick={handleSaveTourney}>Submit</Button>
+              <Label htmlFor="save">Screenshot data</Label>
+              <Button id="save" type="button" onClick={handleSaveTourney}>
+                Submit
+              </Button>
             </div>
             <div className="flex flex-col">
               <Label htmlFor="status">Status</Label>
@@ -265,6 +277,12 @@ export default function EditTorneo({
           </div>
           {state?.message && (
             <p className="text-red-300 mt-3 text-sm">{state.message}</p>
+          )}
+          {msgSavingTourney.messageFalse && (
+            <p className="text-red-300 mt-3 text-sm">{msgSavingTourney.messageFalse}</p>
+          )}
+          {msgSavingTourney.messageTrue && (
+            <p className="text-green-300 mt-3 text-sm">{msgSavingTourney.messageTrue}</p>
           )}
           <Button className="my-5" variant="bottone">
             Edit

@@ -562,7 +562,7 @@ export async function createScore(prevState: any, formData: FormData) {
 
     if (data) {
       revalidatePath(`/tournament/id=${tournament_id}&tab=score`);
-      return { success: true, message: "Score updated successfully." };
+      return { success: true, message: "Score updated successfully" };
     }
     if (errorUpdate) {
       console.log(errorUpdate);
@@ -570,7 +570,7 @@ export async function createScore(prevState: any, formData: FormData) {
   } catch (error) {
     return {
       success: false,
-      message: "Something went wrong, please try again later.",
+      message: "Something went wrong, please try again later",
     };
   }
   // redirect(`/tournament?id=${tournament_id}&tab=score`);

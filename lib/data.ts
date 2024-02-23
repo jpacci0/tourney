@@ -459,7 +459,11 @@ export async function fetchNumberTeams(tournament_id: string) {
   // }
 }
 
-export async function saveTourney(idtorneo: string) {
+type MsgType = {
+  messageFalse?: string;
+  messageTrue?: string;
+};
+export async function saveTourney(idtorneo: string): Promise<MsgType> {
   const supabase = supabaseClient();
   const numberTeams = await fetchNumberTeams(idtorneo!);
   let tournament = await fetchTournamentById(idtorneo!);
@@ -490,6 +494,11 @@ export async function saveTourney(idtorneo: string) {
         },
       ])
       .select();
+    if (insertData) {
+      return { messageTrue: "Tournament saved successfully" };
+    } else {
+      return { messageFalse: "Error saving the tournament" };
+    }
   } else {
     const { data: updateData, error: updateError } = await supabase
       .from("tournament_details")
@@ -500,6 +509,11 @@ export async function saveTourney(idtorneo: string) {
       })
       .eq("id_client_tourney", idtorneo)
       .select();
+    if (updateData) {
+      return { messageTrue: "Tournament saved successfully" };
+    } else {
+      return { messageFalse: "Error saving the tournament" };
+    }
   }
 }
 
@@ -510,6 +524,6 @@ export async function fetchTournamentDetails(idtorneo: string) {
     .select("*")
     .eq("id_client_tourney", idtorneo)
     .single();
-  
+
   return tournament;
 }

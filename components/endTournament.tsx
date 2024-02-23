@@ -1,10 +1,6 @@
 import {
-  fetchNumberTeams,
-  fetchLeaderboard,
-  fetchTournamentById,
   fetchTournamentDetails,
 } from "@/lib/data";
-import { notFound } from "next/navigation";
 import {
   Accordion,
   AccordionContent,

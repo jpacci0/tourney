@@ -19,7 +19,7 @@ export default function CreateTeam({ id, userid }: { id?: string, userid?: strin
     if (state?.success) {
       const idTimer: any = setTimeout(() => {
         router.push(`/tournament?id=${id}&tab=join`);
-      }, 4000);
+      }, 3000);
       setTimerId(idTimer);
 
       // Clean up the timer when the component unmounts
