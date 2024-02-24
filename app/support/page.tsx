@@ -8,6 +8,11 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import Link from "next/link";
+import { Metadata } from 'next';
+ 
+export const metadata: Metadata = {
+  title: 'Support',
+};
 
 export default function SupportPage() {
   return (

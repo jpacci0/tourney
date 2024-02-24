@@ -5,6 +5,11 @@ import SubHeader from "@/components/subHeader";
 import { notFound } from 'next/navigation';
 import {EndTournamentNav} from "@/components/tournamentNav";
 import {EndTournamentSection} from "@/components/tournamentSection";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Tournament',
+};
 
 export default function EndTournamentPage({
   searchParams,

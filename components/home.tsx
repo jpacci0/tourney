@@ -27,7 +27,7 @@ export default async function Home() {
           <h3 className="text-lg font-bold text-gray-500 uppercase my-6">
             in progress
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
             {inProgress}
           </div>
           {/* <Separator className="my-4" /> */}
@@ -38,7 +38,7 @@ export default async function Home() {
           <h3 className="text-lg font-bold text-gray-500 uppercase my-6">
             upcoming
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
             {upcoming}
           </div>
           {/* <Separator className="my-4" /> */}
@@ -49,7 +49,7 @@ export default async function Home() {
           <h3 className="text-lg font-bold text-gray-500 uppercase my-6">
             done
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-5 w-full">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 w-full">
             {done}
           </div>
           {/* <Separator className="my-4" /> */}

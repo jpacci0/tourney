@@ -3,6 +3,11 @@ import { XCircle } from "lucide-react";
 import Header from "@/components/header";
 import SubHeader from "@/components/subHeader";
 import Link from "next/link";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Canceled',
+};
 
 export default function CancelPage({
   searchParams,

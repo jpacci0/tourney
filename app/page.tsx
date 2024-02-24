@@ -1,5 +1,3 @@
-import { fetchTournaments } from "@/lib/data";
-import CardTorneo from "@/components/cardTorneo";
 import Header from "@/components/header";
 import SubHeader from "@/components/subHeader";
 import { Separator } from "@/components/ui/separator";

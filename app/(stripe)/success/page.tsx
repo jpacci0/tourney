@@ -2,6 +2,11 @@ import { Separator } from "@/components/ui/separator";
 import Header from "@/components/header";
 import SubHeader from "@/components/subHeader";
 import { CheckCircle } from "lucide-react";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Success',
+};
 
 export default function SuccessPage({
   searchParams,

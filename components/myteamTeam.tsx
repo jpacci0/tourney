@@ -2,7 +2,6 @@
 
 import { Button } from "@/components/ui/button";
 import { deleteTeamUser, deleteTeam } from "@/lib/actions";
-import { useEffect, useState } from "react";
 
 export default function MyteamTeam({ teammate }: { teammate: any }) {
   const leaveTeam = deleteTeamUser.bind(null, {
@@ -101,15 +100,18 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
           )}
         </div>
       ))}
-      {teammate.creator  ? (
+      {teammate.creator && teammate.price > 0 ? (
         <div className="mt-20 w-full">
           {!teammate.paid ? (
-            <Button
-              className="bg-green-500 text-gray-950 hover:bg-green-600 font-bold w-full md:w-1/3 text-md"
-              onClick={handlePayment}
-            >
-              Buy team slot {teammate.price}€
-            </Button>
+            <div>
+              <p className="text-orange-500 mb-3">Buy team slot</p>
+              <Button
+                className="bg-green-500 text-gray-950 hover:bg-green-600 font-bold w-full md:w-1/3 text-md"
+                onClick={handlePayment}
+              >
+                Buy now {teammate.price}€
+              </Button>
+            </div>
           ) : (
             <p className="text-gray-500">
               You have already bought the slot for the tournament.

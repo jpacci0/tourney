@@ -8,6 +8,11 @@ import Header from "@/components/header";
 import SubHeader from "@/components/subHeader";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'Edit Tournament',
+};
 
 export default async function EditTournamentPage({
   searchParams,

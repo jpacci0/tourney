@@ -3,12 +3,15 @@
 import Header from "@/components/header";
 import SearchUser from "@/components/searchUser";
 import SubHeader from "@/components/subHeader";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-// import { useRouter } from "next/navigation";
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
 export default function UserPage({ params }: { params: { username: string } }) {
-  // const router = useRouter();
+  const username = params.username;
 
   return (
     <main>
