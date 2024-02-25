@@ -32,7 +32,7 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
       {tournament.status === "done" ? (
         <Link href={`/fine-torneo?id=${tournament.idclient}&tab=leaderboard`}>
           <div
-            className="relative overflow-hidden rounded-md shadow-xl hover:shadow-xl hover:shadow-orange-500/10
+            className="relative overflow-hidden rounded-md shadow-2xl hover:shadow-2xl hover:shadow-gray-500/20
           p-1"
           >
             <div className="absolute inset-0 bg-gradient-to-r from-gray-500 to-gray-800 p-4 animate-pulse"></div>
