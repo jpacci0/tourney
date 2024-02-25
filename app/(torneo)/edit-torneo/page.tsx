@@ -26,7 +26,7 @@ export default async function EditTournamentPage({
   return (
     <>
       {("admin" === user?.level || user?.id === tournament?.created_by) &&
-      tournament?.status !== "done" ? (
+      (tournament?.status !== "done" && tournament !== null)  ? (
         <EditTorneo tournamentData={tournament} />
       ) : (
         <main>
