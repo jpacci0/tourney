@@ -32,6 +32,20 @@ import { useFormState } from "react-dom";
 import { updateTournament, deleteTournament } from "@/lib/actions";
 import { saveTourney } from "@/lib/data";
 
+const toolbarOptions = [
+  ["bold", "italic", "underline"], // toggled buttons
+  ["link"],
+
+  [{ header: 1 }, { header: 2 }], // custom button values
+  [{ list: "ordered" }, { list: "bullet" }],
+  [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
+
+  [{ color: [] }], // dropdown with defaults from theme
+  [{ align: [] }],
+
+  ["clean"], // remove formatting button
+];
+
 type MsgType = {
   messageFalse?: string;
   messageTrue?: string;
@@ -142,6 +156,7 @@ export default function EditTorneo({
           {/* <Textarea id="rules" name="rules" required /> */}
           <ReactQuill
             theme="snow"
+            modules={{ toolbar: toolbarOptions }}
             className="text-gray-200 pb-[42px]"
             value={quillValue}
             onChange={setQuillValue}

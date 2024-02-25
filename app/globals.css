@@ -114,21 +114,45 @@ body {
 #formatRules > ol {
   list-style: decimal !important;
   list-style-type: decimal !important;
+  margin-left: 50px;
+}
+#formatRules > ul {
+  list-style: disc !important;
+  list-style-type: disc !important;
+  margin-left: 50px;
 }
 #formatRules > h1 {
   font-size: 32px;
   /* color: #f97316; */
 }
 #formatRules > h2 {
-  color: aqua;
-  /* font-size: 24px; */
+  /* color: aqua; */
+  font-size: 24px;
 }
 #formatRules > h3 {
   font-size: 18px;
 }
-#formatRules > a {
+#formatRules > p > a {
   text-decoration: underline;
 }
 .ql-align-center {
   text-align: center;
+}
+.ql-align-right {
+  text-align: right;
+}
+.ql-align-left {
+  text-align: left;
+}
+.ql-indent-1 {
+  padding-left: 40px;
+}
+.ql-indent-2 {
+  padding-left: 80px;
+}
+.ql-indent-3 {
+  padding-left: 120px;
+}
+.ql-indent-4 {
+  padding-left: 120px;
 }
