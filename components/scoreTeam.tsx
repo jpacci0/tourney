@@ -166,7 +166,7 @@ export default function ScoreTeam({
                         type="text"
                         id={`proof_${round + 1}`}
                         name={`proof_${round}`}
-                        placeholder="Clip URL"
+                        placeholder="Clip URL or Img URL"
                         // value={score !== null ? score[index].placement : ""}
                       />
                     </div>
