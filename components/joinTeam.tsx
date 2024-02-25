@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { useFormState } from "react-dom";
 import { useFormStatus } from "react-dom";
 
-export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
+export default function JoinTeam({ id, teams, userid }: { id?: string; teams?: any, userid: any }) {
   const [dataTeams, setDataTeams] = useState([]);
   const [state, formAction] = useFormState(createTeamUser, null);
   const { pending } = useFormStatus();
@@ -40,13 +40,22 @@ export default function JoinTeam({ id, teams }: { id?: string; teams?: any }) {
       break;
   }
 
+  const handleSubmit = (event: any) => {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    formData.append("user_id", userid!);
+
+    formAction(formData);
+  };
+
   useEffect(() => {
     setDataTeams(teams.teams);
   }, []);
 
   return (
     <section>
-      <form action={formAction}>
+      <form onSubmit={handleSubmit}>
         <Label htmlFor="team">Select team</Label>
         <Input type="hidden" name="tournament_id" value={id} />
         <Select name="team_id">

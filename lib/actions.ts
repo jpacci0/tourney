@@ -398,12 +398,12 @@ export async function createTeam(prevState: any, formData: FormData) {
 // creazione team user
 export async function createTeamUser(prevState: any, formData: FormData) {
   const supabase = supabaseClient();
-  const {
-    data: { user },
-    error: userError,
-  } = await supabase.auth.getUser();
+  // const {
+  //   data: { user },
+  //   error: userError,
+  // } = await supabase.auth.getUser();
 
-  const user_id = user?.id;
+  const user_id = formData.get("user_id");
   const team_id = Number(formData.get("team_id"));
   const tournament_id = formData.get("tournament_id") as string;
 

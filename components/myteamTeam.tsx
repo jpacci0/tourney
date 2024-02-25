@@ -1,6 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import { deleteTeamUser, deleteTeam } from "@/lib/actions";
 
 export default function MyteamTeam({ teammate }: { teammate: any }) {
@@ -64,15 +75,39 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
       <div className="text-orange-500 text-xl mb-5 flex justify-between items-center">
         <p>{teammate.team.nome}</p>
         {teammate.creator ? (
-          <form action={removeTeam}>
-            <Button
-              variant="destructive"
-              className="text-red-500 bg-gray-950 hover:bg-gray-950 hover:underline font-bold px-2 py-1 rounded-full"
-            >
+          <AlertDialog>
+            <AlertDialogTrigger className="text-red-500 bg-gray-950 hover:bg-gray-950 hover:underline font-bold text-sm">
               Delete team
-            </Button>
-          </form>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. This will permanently delete
+                  this team and its participants from our servers.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                {/* <AlertDialogAction>   */}
+                <form action={removeTeam}>
+                  <Button variant="default" className="w-full" type="submit">
+                    Continue
+                  </Button>
+                </form>
+                {/* </AlertDialogAction> */}
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         ) : (
+          // <form action={removeTeam}>
+          //   <Button
+          //     variant="destructive"
+          //     className="text-red-500 bg-gray-950 hover:bg-gray-950 hover:underline font-bold px-2 py-1 rounded-full"
+          //   >
+          //     Delete team
+          //   </Button>
+          // </form>
           ""
         )}
       </div>
@@ -87,15 +122,38 @@ export default function MyteamTeam({ teammate }: { teammate: any }) {
             {member.nick_in_game}{" "}
           </p>
           {member.utenteloggato ? (
-            <form action={leaveTeam}>
-              <Button
-                variant="destructive"
-                className="text-red-500 hover:bg-gray-950 hover:underline bg-gray-950 font-bold px-2 py-1 rounded-full"
-              >
+            <AlertDialog>
+              <AlertDialogTrigger className="text-red-500 bg-gray-950 hover:bg-gray-950 hover:underline font-bold text-sm">
                 Leave team
-              </Button>
-            </form>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Do you really want to leave this team?
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  {/* <AlertDialogAction>   */}
+                  <form action={leaveTeam}>
+                    <Button variant="default" className="w-full" type="submit">
+                      Continue
+                    </Button>
+                  </form>
+                  {/* </AlertDialogAction> */}
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           ) : (
+            // <form action={leaveTeam}>
+            //   <Button
+            //     variant="destructive"
+            //     className="text-red-500 hover:bg-gray-950 hover:underline bg-gray-950 font-bold p-0"
+            //   >
+            //     Leave team
+            //   </Button>
+            // </form>
             ""
           )}
         </div>

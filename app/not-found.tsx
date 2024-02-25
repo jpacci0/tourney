@@ -16,10 +16,16 @@ export default function NotFound() {
       <section className="mt-10 flex flex-col items-center">
         <Image src={notFoundImage} alt="Not Found" height={370} />
         <p className="text-gray-200 mt-4 md:mt-10">
-          We can&apos;t find the page you were trying to view. If you need
-          support or have encountered a technical problem go to the{" "}
-          <Link href="/support" className="underline">support page</Link> please. Otherwise go back to
-          the <Link href="/" className="underline">home page</Link>.
+          We can&apos;t find the page you were trying to view. <br /> If you
+          need support or have encountered a technical problem go to the{" "}
+          <Link href="/support" className="underline">
+            support page
+          </Link>{" "}
+          please. <br /> Otherwise go back to the{" "}
+          <Link href="/" className="underline">
+            home page
+          </Link>
+          .
         </p>
       </section>
     </main>
