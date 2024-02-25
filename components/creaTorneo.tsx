@@ -20,6 +20,23 @@ import { useState } from "react";
 import { useFormState } from "react-dom";
 import { createTournament } from "@/lib/actions";
 
+const toolbarOptions = [
+  ["bold", "italic", "underline"], // toggled buttons
+  ["link"],
+
+  [{ 'header': 1 }, { 'header': 2 }],               // custom button values
+  [{ list: "ordered" }, { list: "bullet" }, { list: "check" }],
+
+  // [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
+  // [{ header: [1, 2, 3, 4, 5, 6, false] }],
+
+  [{ color: [] }], // dropdown with defaults from theme
+  // [{ 'font': [] }],
+  [{ align: [] }],
+
+  ["clean"], // remove formatting button
+];
+
 export default function CreaTorneo() {
   const [quillValue, setQuillValue] = useState("");
 
@@ -61,6 +78,7 @@ export default function CreaTorneo() {
           {/* <Textarea id="rules" name="rules" required /> */}
           <ReactQuill
             theme="snow"
+            modules={{ toolbar: toolbarOptions }}
             className="text-gray-200 pb-[42px]"
             value={quillValue}
             onChange={setQuillValue}
@@ -181,17 +199,17 @@ export default function CreaTorneo() {
               )}
             </div>
             <div>
-            <Label htmlFor="status">Status</Label>
-          <Select name="status" defaultValue="upcoming">
-            <SelectTrigger id="status">
-              <SelectValue placeholder="Upcoming" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="upcoming">Upcoming</SelectItem>
-              <SelectItem value="in_progress">In progress</SelectItem>
-              {/* <SelectItem value="done">Done</SelectItem> */}
-            </SelectContent>
-          </Select>
+              <Label htmlFor="status">Status</Label>
+              <Select name="status" defaultValue="upcoming">
+                <SelectTrigger id="status">
+                  <SelectValue placeholder="Upcoming" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="upcoming">Upcoming</SelectItem>
+                  <SelectItem value="in_progress">In progress</SelectItem>
+                  {/* <SelectItem value="done">Done</SelectItem> */}
+                </SelectContent>
+              </Select>
             </div>
           </div>
           {state?.message && (

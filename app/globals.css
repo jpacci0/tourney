@@ -117,15 +117,18 @@ body {
 }
 #formatRules > h1 {
   font-size: 32px;
-  color: #f97316;
+  /* color: #f97316; */
 }
 #formatRules > h2 {
   color: aqua;
-  font-size: 24px;
+  /* font-size: 24px; */
 }
 #formatRules > h3 {
   font-size: 18px;
 }
 #formatRules > a {
   text-decoration: underline;
+}
+.ql-align-center {
+  text-align: center;
 }
