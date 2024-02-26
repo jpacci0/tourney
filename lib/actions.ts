@@ -471,8 +471,8 @@ export async function createScore(prevState: any, formData: FormData) {
     if (placement <= 0) {
       return 0;
     }
-    const placementMultiplier = 2.0; // Puoi regolare questo valore per bilanciare il peso tra posizionamento e eliminazioni. Più alto è il valore, più le eliminazioni contano di meno
-    const placementScore = 100 - placement * 10 * placementMultiplier;
+    const placementMultiplier = 1.5; // Puoi regolare questo valore per bilanciare il peso tra posizionamento e eliminazioni. Più alto è il valore, più le eliminazioni contano di meno
+    const placementScore = 510 - placement * 10 * placementMultiplier;
     const eliminationsScore = eliminations * 10;
 
     return placementScore + eliminationsScore;
