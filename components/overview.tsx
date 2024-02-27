@@ -84,6 +84,10 @@ export default async function Overview({ id }: { id?: string }) {
         <p className="text-gray-200">{tournament.registration_price} €</p>
       </Prop>
       <Prop>
+        <p>Price pool</p>
+        <p className="text-gray-200">{tournament.price_pool} €</p>
+      </Prop>
+      <Prop>
         <p>Rounds</p>
         <p className="text-gray-200">{tournament.rounds}</p>
       </Prop>

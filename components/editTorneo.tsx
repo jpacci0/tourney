@@ -286,6 +286,26 @@ export default function EditTorneo({
                 </p>
               )}
             </div>
+            <div>
+              <Label htmlFor="price_pool">Price pool €</Label>
+              <Input
+                id="price_pool"
+                type="number"
+                name="price_pool"
+                value={(tData as any).price_pool}
+                onChange={hanleInputChange}
+                // placeholder="0.00"
+                min="0"
+                max="1000"
+                step="0.01"
+                required
+              />
+              {state?.errors?.price_pool && (
+                <p className="text-red-300 mt-3 text-sm">
+                  {state.errors.price_pool}
+                </p>
+              )}
+            </div>
           </div>
           <p className="text-gray-500 mt-5">
             Before setting the status to done please save the data by pressing
@@ -294,7 +314,7 @@ export default function EditTorneo({
           <div className="grid grid-cols-2 gap-x-2">
             <div className="w-full flex flex-col">
               <Label htmlFor="save">Screenshot data</Label>
-              <Button id="save" type="button" onClick={handleSaveTourney}>
+              <Button id="save" type="button" className="outline outline-1 text-gray-200" onClick={handleSaveTourney}>
                 Submit
               </Button>
             </div>

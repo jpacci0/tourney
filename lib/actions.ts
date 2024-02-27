@@ -193,6 +193,7 @@ const tournamentSchema = z.object({
   rounds: z.coerce.number().min(1),
   game_mode: z.string(),
   registration_price: z.coerce.number(),
+  price_pool: z.coerce.number(),
 });
 export async function createTournament(prevState: any, formData: FormData) {
   const supabase = supabaseClient();
@@ -205,15 +206,18 @@ export async function createTournament(prevState: any, formData: FormData) {
     start_time: formData.get("start_time") as string,
     map: formData.get("map") as string,
     max_players: formData.get("max_players") as unknown as number,
-    status: formData.get("status") as string,
+    status: "upcoming",
+    // status: formData.get("status") as string,
     rounds: formData.get("rounds") as unknown as number,
     game_mode: formData.get("game_mode") as string,
     registration_price: formData.get("registration_price") as unknown as number,
+    price_pool: formData.get("price_pool") as unknown as number,
   });
 
   if (!result.success) {
     const zodError = result.error as z.ZodError;
     const errorMap = zodError.flatten().fieldErrors;
+    
     return {
       message: "Please check if all fields are filled correctly",
       errors: {
@@ -224,6 +228,7 @@ export async function createTournament(prevState: any, formData: FormData) {
         max_players: errorMap["max_players"],
         rounds: errorMap["rounds"],
         registration_price: errorMap["registration_price"],
+        price_pool: errorMap["price_pool"],
       },
     };
   } else {
@@ -239,6 +244,7 @@ export async function createTournament(prevState: any, formData: FormData) {
       rounds,
       game_mode,
       registration_price,
+      price_pool,
     } = result.data;
 
     const { data: tournament, error: tournamentError } = await supabase
@@ -255,7 +261,8 @@ export async function createTournament(prevState: any, formData: FormData) {
           status,
           rounds,
           game_mode,
-          registration_price
+          registration_price,
+          price_pool
         },
       ])
       .select();
@@ -293,6 +300,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
     rounds: formData.get("rounds") as unknown as number,
     game_mode: formData.get("game_mode") as string,
     registration_price: formData.get("registration_price") as unknown as number,
+    price_pool: formData.get("price_pool") as unknown as number,
   });
 
   if (!result.success) {
@@ -308,6 +316,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
         max_players: errorMap["max_players"],
         rounds: errorMap["rounds"],
         registration_price: errorMap["registration_price"],
+        price_pool: errorMap["price_pool"],
       },
     };
   } else {
@@ -323,6 +332,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
       rounds,
       game_mode,
       registration_price,
+      price_pool,
     } = result.data;
 
     const { data: tournament, error: tournamentError } = await supabase
@@ -340,6 +350,7 @@ export async function updateTournament(prevState: any, formData: FormData) {
           rounds,
           game_mode,
           registration_price,
+          price_pool,
         },
       ])
       .eq("idclient", formData.get("idclient") as string)

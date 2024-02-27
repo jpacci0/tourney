@@ -196,6 +196,25 @@ export default function CreaTorneo() {
               )}
             </div>
             <div>
+              <Label htmlFor="price_pool">Price pool €</Label>
+              <Input
+                id="price_pool"
+                type="number"
+                name="price_pool"
+                defaultValue={0}
+                placeholder="0.00"
+                min="0"
+                max="1000"
+                step="0.01"
+                required
+              />
+              {state?.errors?.price_pool && (
+                <p className="text-red-300 mt-3 text-sm">
+                  {state.errors.price_pool}
+                </p>
+              )}
+            </div>
+            {/* <div>
               <Label htmlFor="status">Status</Label>
               <Select name="status" defaultValue="upcoming">
                 <SelectTrigger id="status">
@@ -204,10 +223,10 @@ export default function CreaTorneo() {
                 <SelectContent>
                   <SelectItem value="upcoming">Upcoming</SelectItem>
                   <SelectItem value="in_progress">In progress</SelectItem>
-                  {/* <SelectItem value="done">Done</SelectItem> */}
+                  <SelectItem value="done">Done</SelectItem>
                 </SelectContent>
               </Select>
-            </div>
+            </div> */}
           </div>
           {state?.message && (
             <p className="text-red-300 mt-3 text-sm">{state.message}</p>

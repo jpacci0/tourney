@@ -118,7 +118,7 @@ export default function Profile({ user }: { user: any }) {
           <form action={formActionEmail} className="w-full lg:w-1/2 mb-3">
             <p className="text-gray-200 mb-5">
               Please enter a valid username and ign to ensure you join
-              tournaments correctly
+              tournaments correctly.
             </p>
             <Label htmlFor="email">Email</Label>
             <Input

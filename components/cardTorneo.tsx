@@ -24,6 +24,7 @@ type cardTorneoProps = {
     status: string;
     idclient: string;
     registration_price: number;
+    price_pool: number;
   };
 };
 export default function CardTorneo({ tournament }: cardTorneoProps) {
@@ -72,22 +73,41 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
                   <p>{tournament.rounds}</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3 mt-4">
-                <div>
-                  <p className="text-gray-500">Price per team</p>
-                  {tournament.registration_price === 0 ? (
+              {tournament.registration_price === 0 ? (
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div>
+                    <p className="text-gray-500">Price per team</p>
                     <div className="flex gap-1">
                       <Euro className="text-green-500" />
                       <p>Free entry</p>
                     </div>
-                  ) : (
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Price pool</p>
+                    <div className="flex gap-1">
+                      <Euro className="text-green-500" />
+                      <p>{tournament.price_pool}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div>
+                    <p className="text-gray-500">Price per team</p>
                     <div className="flex gap-1">
                       <Euro className="text-green-500" />
                       <p>{tournament.registration_price}</p>
                     </div>
-                  )}
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Price pool</p>
+                    <div className="flex gap-1">
+                      <Euro className="text-green-500" />
+                      <p>{tournament.price_pool}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </Link>
@@ -134,22 +154,42 @@ export default function CardTorneo({ tournament }: cardTorneoProps) {
                   <p>{tournament.rounds}</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 gap-3 mt-4">
-                <div>
-                  <p className="text-gray-500">Price per team</p>
-                  {tournament.registration_price === 0 ? (
+
+              {tournament.registration_price === 0 ? (
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div>
+                    <p className="text-gray-500">Price per team</p>
                     <div className="flex gap-1">
                       <Euro className="text-green-500" />
                       <p>Free entry</p>
                     </div>
-                  ) : (
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Price pool</p>
+                    <div className="flex gap-1">
+                      <Euro className="text-green-500" />
+                      <p>{tournament.price_pool}</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <div className="grid grid-cols-2 gap-3 mt-4">
+                  <div>
+                    <p className="text-gray-500">Price per team</p>
                     <div className="flex gap-1">
                       <Euro className="text-green-500" />
                       <p>{tournament.registration_price}</p>
                     </div>
-                  )}
+                  </div>
+                  <div>
+                    <p className="text-gray-500">Price pool</p>
+                    <div className="flex gap-1">
+                      <Euro className="text-green-500" />
+                      <p>{tournament.price_pool}</p>
+                    </div>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </Link>

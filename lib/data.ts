@@ -314,7 +314,7 @@ export async function fetchRosters(id: string) {
       user_id,
       team_id,
       profiles (username, nick_in_game),
-      team (name)
+      team (name, paid)
     `
     )
     .eq("tournament_id", id);
@@ -332,6 +332,7 @@ export async function fetchRosters(id: string) {
       acc[team_id] = {
         team_id,
         team_name: team.name,
+        paid: team.paid,
         profiles: [],
       };
     }
@@ -432,40 +433,7 @@ export async function fetchNumberTeams(tournament_id: string) {
     .eq("tournament_id", tournament_id);
   return count;
 
-  // //! si può pensare nella select di selezionare solo i dati relativi ai partecipanti non *
-  // let { data: count, error: e } = await supabase
-  //   .from("team")
-  //   .select(`*, tournament(game_mode, max_players)`)
-  //   .eq("tournament_id", tournament_id);
-
-  // // numero di player per team, in base al game mode
-  // let teamPlayer = 0;
-  // // team già registrati
-  // let teamEntered = 0;
-
-  // if (count) {
-  //   teamEntered = count.length;
-  // }
-  // if (count?.[0]?.tournament?.game_mode === "Solos") {
-  //   teamPlayer = 1;
-  // } else if (count?.[0]?.tournament?.game_mode === "Duos") {
-  //   teamPlayer = 2;
-  // } else if (count?.[0]?.tournament?.game_mode === "Trios") {
-  //   teamPlayer = 3;
-  // } else if (count?.[0]?.tournament?.game_mode === "Squads") {
-  //   teamPlayer = 4;
-  // }
-
-  // let maxTeams = count?.[0]?.tournament?.max_players / teamPlayer;
-  // if (Number.isNaN(maxTeams)) {
-  //   maxTeams = 1;
-  // }
-
-  // if (teamEntered >= maxTeams || maxTeams < 1) {
-  //   return false;
-  // } else {
-  //   return true;
-  // }
+  //! si può pensare nella select di selezionare solo i dati relativi ai partecipanti non *
 }
 
 type MsgType = {
