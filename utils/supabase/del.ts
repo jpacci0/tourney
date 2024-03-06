@@ -13,6 +13,4 @@ const supabase = createClient(
 
 export async function delUser(id: string) {
     const { data, error } = await supabase.auth.admin.deleteUser(id);
-    console.log(data);
-    console.log(error);
 }

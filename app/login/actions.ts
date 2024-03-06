@@ -168,7 +168,6 @@ export async function updatePassword(formData: FormData) {
       return redirect(`/reset/update-password?message=${errori.confirm}`);
     }
   } else {
-    console.log(result.data);
     const { password } = result.data;
     const { data, error } = await supabase.auth.updateUser({
       password: password,
